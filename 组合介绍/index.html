@@ -512,6 +512,22 @@
         padding: 14px;
       }
 
+      .sidebar:not(.is-open) {
+        max-height: none;
+        overflow: visible;
+      }
+
+      .sidebar:not(.is-open) .report-switcher,
+      .sidebar:not(.is-open) .toc-wrap {
+        display: none;
+      }
+
+      .sidebar.is-open {
+        max-height: 72svh;
+        overflow: auto;
+        box-shadow: 0 14px 34px rgba(17, 24, 39, 0.12);
+      }
+
       .brand-title {
         font-size: 18px;
       }
@@ -557,6 +573,10 @@
     }
   </style>
   <style>
+    .mobile-toc-toggle {
+      display: none;
+    }
+
     .site-home-link {
       position: fixed;
       left: 18px;
@@ -584,6 +604,32 @@
     }
 
     @media (max-width: 640px) {
+      .mobile-toc-toggle {
+        display: flex;
+        width: 100%;
+        min-height: 38px;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 12px;
+        border: 1px solid rgba(15, 118, 110, 0.24);
+        border-radius: 8px;
+        background: #eef7f6;
+        color: #0f766e;
+        font: inherit;
+        font-size: 13px;
+        font-weight: 900;
+      }
+
+      .mobile-toc-toggle::after {
+        content: "⌄";
+        font-size: 16px;
+        line-height: 1;
+      }
+
+      .sidebar.is-open .mobile-toc-toggle::after {
+        content: "⌃";
+      }
+
       .site-home-link {
         left: 12px;
         bottom: 12px;
@@ -600,6 +646,7 @@
     <aside class="sidebar">
       <div class="brand-title">普林格轮动报告</div>
       <p class="brand-subtitle">三份报告整合呈现</p>
+      <button class="mobile-toc-toggle" type="button" aria-expanded="false">展开报告与目录</button>
       <div class="report-switcher" aria-label="报告切换">
         <button class="report-tab active" type="button" data-report-tab="main">主报告</button><button class="report-tab" type="button" data-report-tab="theory">理论补充</button><button class="report-tab" type="button" data-report-tab="factors">因子依据</button>
       </div>
@@ -1152,6 +1199,20 @@
     const reports = [...document.querySelectorAll("[data-report]")];
     const panels = [...document.querySelectorAll("[data-toc-panel]")];
     const tocLinks = [...document.querySelectorAll("[data-report-link]")];
+    const sidebar = document.querySelector(".sidebar");
+    const mobileTocToggle = document.querySelector(".mobile-toc-toggle");
+    const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
+
+    function setMobileTocOpen(open) {
+      if (!sidebar || !mobileTocToggle) return;
+      sidebar.classList.toggle("is-open", open);
+      mobileTocToggle.setAttribute("aria-expanded", String(open));
+      mobileTocToggle.textContent = open ? "收起报告与目录" : "展开报告与目录";
+    }
+
+    mobileTocToggle?.addEventListener("click", () => {
+      setMobileTocOpen(!sidebar.classList.contains("is-open"));
+    });
 
     function setActiveReport(id, updateHash = true) {
       tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.reportTab === id));
@@ -1193,6 +1254,7 @@
           event.preventDefault();
           history.replaceState(null, "", link.getAttribute("href"));
           target.scrollIntoView({ block: "start" });
+          if (isMobile()) setMobileTocOpen(false);
         }
       });
     });

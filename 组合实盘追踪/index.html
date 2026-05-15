@@ -663,19 +663,31 @@
       function renderAllocationChart(holdings) {
         if (allocationChart) allocationChart.dispose();
         allocationChart = echarts.init(document.getElementById("allocationChart"));
+        const isSmallScreen = window.innerWidth <= 640;
         allocationChart.setOption({
           backgroundColor: "transparent",
           tooltip: { trigger: "item" },
           legend: {
+            type: isSmallScreen ? "scroll" : "plain",
+            orient: "horizontal",
+            left: isSmallScreen ? 0 : "center",
+            right: isSmallScreen ? 0 : "auto",
             bottom: 0,
-            textStyle: { color: "#cbd5e1" }
+            height: isSmallScreen ? 42 : "auto",
+            textStyle: { color: "#cbd5e1", fontSize: isSmallScreen ? 10 : 12 }
           },
           color: ["#38bdf8", "#0ea5e9", "#0284c7", "#0369a1", "#155e75", "#1e3a8a", "#334155"],
           series: [
             {
               type: "pie",
-              radius: ["44%", "72%"],
-              label: { color: "#cbd5e1", formatter: "{b}\n{d}%" },
+              center: ["50%", isSmallScreen ? "42%" : "45%"],
+              radius: isSmallScreen ? ["34%", "56%"] : ["44%", "72%"],
+              label: {
+                show: !isSmallScreen,
+                color: "#cbd5e1",
+                formatter: "{b}\n{d}%"
+              },
+              labelLine: { show: !isSmallScreen },
               itemStyle: {
                 borderColor: "#0f172a",
                 borderWidth: 2
@@ -720,6 +732,12 @@
         const toggle = document.getElementById("sideNavToggle");
         const savedPosition = localStorage.getItem("sideNavPosition");
         let dragState = null;
+        let suppressClick = false;
+        const setCollapsed = (collapsed) => {
+          sideNav.classList.toggle("collapsed", collapsed);
+          toggle.setAttribute("aria-expanded", String(!collapsed));
+        };
+        setCollapsed(sideNav.classList.contains("collapsed"));
         if (savedPosition) {
           try {
             const position = JSON.parse(savedPosition);
@@ -727,6 +745,7 @@
               sideNav.classList.add("is-positioned");
               sideNav.style.left = `${position.left}px`;
               sideNav.style.top = `${position.top}px`;
+              requestAnimationFrame(() => placeSideNav(position.left, position.top));
             }
           } catch (error) {
             localStorage.removeItem("sideNavPosition");
@@ -771,13 +790,21 @@
             toggle.releasePointerCapture(event.pointerId);
           } catch (error) {}
           dragState = null;
-          if (!wasMoved) sideNav.classList.toggle("collapsed");
+          if (!wasMoved) {
+            setCollapsed(!sideNav.classList.contains("collapsed"));
+            suppressClick = true;
+            setTimeout(() => { suppressClick = false; }, 0);
+          }
+        });
+        toggle.addEventListener("click", () => {
+          if (suppressClick) return;
+          setCollapsed(!sideNav.classList.contains("collapsed"));
         });
         document.querySelectorAll(".side-nav-link").forEach((button) => {
           button.addEventListener("click", () => {
             const target = document.getElementById(button.dataset.target);
             if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-            sideNav.classList.add("collapsed");
+            setCollapsed(true);
           });
         });
       }
