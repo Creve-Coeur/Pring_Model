@@ -591,31 +591,47 @@
     }
 
     @media (max-width: 980px) {
-      html { scroll-snap-type: y proximity; }
+      html { scroll-snap-type: none; }
       .slide {
         height: auto;
-        min-height: 100svh;
+        min-height: auto;
+        scroll-snap-align: none;
         grid-template-columns: 1fr;
-        grid-template-rows: minmax(0, 0.34fr) minmax(0, 0.66fr);
+        grid-template-rows: auto auto;
         padding: 68px 14px 18px;
         gap: 14px;
         overflow: visible;
       }
       .narrative {
-        align-self: stretch;
-        height: 100%;
+        align-self: start;
+        height: auto;
         max-height: none;
         padding: 18px;
         overflow: visible;
       }
-      .visual { height: auto; min-height: 0; overflow: visible; }
+      .visual {
+        height: auto;
+        min-height: 0;
+        grid-template-rows: auto auto;
+        overflow: visible;
+      }
       .visual-body {
         min-height: 0;
-        overflow: auto;
+        display: block;
+        padding: 10px;
+        overflow-x: auto;
+        overflow-y: visible;
         -webkit-overflow-scrolling: touch;
       }
-      .visual-body img { max-height: 58svh; }
+      .visual-body img {
+        display: block;
+        width: 100%;
+        height: auto;
+        max-height: none;
+        object-fit: contain;
+      }
       .flow-map {
+        height: auto;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-auto-rows: minmax(78px, auto);
         gap: 8px;
@@ -633,28 +649,28 @@
       .keyboard,
       .story-nav { display: none; }
       .result-card {
-        width: max-content;
+        width: 100%;
         min-width: 100%;
         height: auto;
-        min-height: 100%;
+        min-height: 0;
         align-items: flex-start;
         justify-content: flex-start;
         overflow: visible;
       }
-      .big-number { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
-      .result-card:has(.big-number),
-      .result-card:has(.final-metric-panel),
-      .result-card:has(.flow-map) {
-        width: 100%;
+      .big-number {
+        height: auto;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-template-rows: none;
+        gap: 8px;
       }
-      .final-metric-panel { gap: 8px; }
+      .final-metric-panel { height: auto; grid-template-rows: auto auto; gap: 8px; }
       .metric-note { text-align: left; font-size: 10px; }
       table { min-width: 520px; font-size: 11px; }
       th, td { padding: 6px 7px; }
-      .result-card.audit-card { padding: 7px; }
+      .result-card.audit-card { width: max-content; min-width: 760px; padding: 7px; }
       .audit-note { display: none; }
-      .audit-stack { grid-template-rows: minmax(0, 1fr); min-width: 760px; }
-      .audit-table { min-width: 760px; font-size: 9.5px; line-height: 1.18; }
+      .audit-stack { height: auto; grid-template-rows: auto; min-width: 760px; }
+      .audit-table { height: auto; min-width: 760px; font-size: 9.5px; line-height: 1.18; }
       .audit-table th,
       .audit-table td { padding: 4px 5px; }
       .audit-table .range-col { width: 96px; }
@@ -669,7 +685,7 @@
       .progress a.active { width: 22px; }
       .slide { padding: 62px 12px 58px; }
       .narrative { height: auto; padding: 15px; }
-      .visual-body img { max-width: none; width: auto; min-width: 100%; }
+      .visual-body img { width: 100%; min-width: 100%; }
       h1 { font-size: 27px; }
       h2 { font-size: 23px; }
       .metrics { gap: 5px; }
