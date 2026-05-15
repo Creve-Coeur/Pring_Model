@@ -658,8 +658,36 @@
       .num span { font-size: 10px; }
     }
   </style>
+  <style>
+    .site-home-link {
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 40px;
+      padding: 0 14px;
+      border: 1px solid rgba(17, 24, 39, 0.14);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: 0 14px 34px rgba(17, 24, 39, 0.16);
+      color: #111827;
+      font-size: 13px;
+      font-weight: 900;
+      text-decoration: none;
+      backdrop-filter: blur(12px);
+    }
+
+    .site-home-link:hover {
+      color: #0f766e;
+      border-color: rgba(15, 118, 110, 0.3);
+    }
+  </style>
 </head>
 <body>
+  <a class="site-home-link" href="../index.html">返回首页</a>
   <header class="topbar">
     <div class="brand">组合的诞生</div>
     <nav class="progress" aria-label="幻灯片导航"></nav>

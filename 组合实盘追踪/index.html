@@ -109,9 +109,34 @@
         background: rgba(14, 165, 233, 0.24);
         font-size: 16px;
       }
+      .site-home-link {
+        position: fixed;
+        left: 18px;
+        bottom: 18px;
+        z-index: 1000;
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.86);
+        box-shadow: 0 14px 34px rgba(2, 6, 23, 0.34);
+        color: #f8fafc;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        backdrop-filter: blur(12px);
+      }
+      .site-home-link:hover {
+        border-color: rgba(56, 189, 248, 0.36);
+        color: #67e8f9;
+      }
     </style>
   </head>
   <body class="min-h-screen text-slate-100 antialiased">
+    <a class="site-home-link" href="../index.html">返回首页</a>
     <main id="app">
       <header class="sticky top-0 z-20 border-b border-slate-700/40 bg-slate-950/45 backdrop-blur">
         <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">

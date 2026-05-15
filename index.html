@@ -7,14 +7,14 @@
   <style>
     :root {
       --bg: #eef2f6;
-      --panel: #ffffff;
+      --paper: #ffffff;
       --ink: #111827;
       --muted: #667085;
       --line: #d7dee8;
       --accent: #9f3a2f;
-      --accent-2: #0f766e;
-      --accent-3: #a16207;
-      --shadow: 0 18px 46px rgba(17, 24, 39, 0.13);
+      --teal: #0f766e;
+      --gold: #a16207;
+      --shadow: 0 20px 48px rgba(17, 24, 39, 0.14);
     }
 
     * {
@@ -30,8 +30,8 @@
       margin: 0;
       color: var(--ink);
       background:
-        linear-gradient(135deg, rgba(159, 58, 47, 0.08), transparent 34%),
-        linear-gradient(315deg, rgba(15, 118, 110, 0.08), transparent 36%),
+        linear-gradient(135deg, rgba(159, 58, 47, 0.08), transparent 32%),
+        linear-gradient(315deg, rgba(15, 118, 110, 0.1), transparent 34%),
         var(--bg);
       font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
       letter-spacing: 0;
@@ -42,273 +42,302 @@
       text-decoration: none;
     }
 
-    .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 20;
+    .home {
+      min-height: 100vh;
       display: grid;
-      grid-template-columns: minmax(220px, 1fr) auto;
-      gap: 18px;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      display: flex;
       align-items: center;
-      padding: 14px clamp(14px, 3vw, 28px);
-      border-bottom: 1px solid rgba(215, 222, 232, 0.95);
-      background: rgba(255, 255, 255, 0.9);
-      box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
-      backdrop-filter: blur(16px);
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px clamp(18px, 4vw, 52px);
+    }
+
+    .brand-mark {
+      display: grid;
+      gap: 3px;
     }
 
     .brand-kicker {
-      margin: 0 0 3px;
-      color: var(--accent-2);
+      color: var(--teal);
       font-size: 12px;
-      font-weight: 800;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .status-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      display: grid;
+      align-content: center;
+      gap: clamp(28px, 5vh, 48px);
+      padding: clamp(24px, 5vw, 54px) 0 54px;
+    }
+
+    .hero-copy {
+      max-width: 850px;
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(20px, 2.5vw, 30px);
-      line-height: 1.2;
-      font-weight: 900;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.08;
+      font-weight: 950;
     }
 
-    .module-tabs {
-      display: flex;
-      gap: 8px;
-      padding: 5px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: #f8fafc;
-      overflow-x: auto;
+    .lead {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: #475467;
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.8;
+      font-weight: 600;
     }
 
-    .module-tab {
-      flex: 0 0 auto;
-      min-height: 38px;
-      padding: 0 14px;
-      border: 1px solid transparent;
-      border-radius: 6px;
-      background: transparent;
-      color: #344054;
-      font: inherit;
-      font-size: 14px;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-      transition: background 160ms ease, border-color 160ms ease, color 160ms ease;
-    }
-
-    .module-tab:hover {
-      background: #ffffff;
-      border-color: rgba(15, 118, 110, 0.26);
-      color: var(--accent-2);
-    }
-
-    .module-tab.active {
-      background: #ffffff;
-      border-color: rgba(159, 58, 47, 0.34);
-      color: var(--accent);
-      box-shadow: 0 8px 18px rgba(17, 24, 39, 0.08);
-    }
-
-    .workspace {
-      padding: clamp(12px, 2vw, 22px);
-    }
-
-    .module-panel {
-      display: none;
-      min-height: calc(100vh - 96px);
-    }
-
-    .module-panel.active {
+    .module-grid {
       display: grid;
-      grid-template-rows: auto 1fr;
-      gap: 12px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    .module-head {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      min-height: 48px;
-      padding: 10px 12px 10px 16px;
-      border: 1px solid rgba(215, 222, 232, 0.92);
+    .module-card {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      grid-template-rows: 176px 1fr;
+      border: 1px solid rgba(215, 222, 232, 0.96);
       border-radius: 8px;
-      background: rgba(255, 255, 255, 0.86);
-      box-shadow: 0 10px 26px rgba(17, 24, 39, 0.08);
-      backdrop-filter: blur(12px);
-    }
-
-    .module-title {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: baseline;
-      min-width: 0;
-    }
-
-    .module-title h2 {
-      margin: 0;
-      font-size: 17px;
-      line-height: 1.3;
-      font-weight: 900;
-    }
-
-    .module-badge {
-      color: var(--muted);
-      font-size: 12px;
-      font-weight: 800;
-    }
-
-    .module-badge.live {
-      color: var(--accent-2);
-    }
-
-    .open-link {
-      flex: 0 0 auto;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 34px;
-      padding: 0 12px;
-      border: 1px solid var(--line);
-      border-radius: 6px;
-      background: #ffffff;
-      color: #344054;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .open-link:hover {
-      border-color: rgba(15, 118, 110, 0.36);
-      color: var(--accent-2);
-    }
-
-    .frame-shell {
-      min-height: 0;
-      border: 1px solid rgba(17, 24, 39, 0.12);
-      border-radius: 8px;
-      background: var(--panel);
+      background: var(--paper);
       box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .module-card:hover,
+    .module-card:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(159, 58, 47, 0.36);
+      box-shadow: 0 26px 62px rgba(17, 24, 39, 0.18);
+      outline: none;
+    }
+
+    .module-media {
+      position: relative;
+      min-height: 0;
+      background: #e8edf3;
       overflow: hidden;
     }
 
-    iframe {
-      display: block;
+    .module-media img {
       width: 100%;
-      height: calc(100vh - 182px);
-      min-height: 660px;
-      border: 0;
-      background: #ffffff;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
 
-    @media (max-width: 820px) {
-      .topbar {
+    .module-media.live-preview {
+      display: grid;
+      align-content: end;
+      gap: 11px;
+      padding: 22px;
+      color: #f8fafc;
+      background:
+        linear-gradient(160deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.84)),
+        #111827;
+    }
+
+    .live-line {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.35);
+    }
+
+    .live-line:nth-child(1) { width: 72%; background: rgba(45, 212, 191, 0.72); }
+    .live-line:nth-child(2) { width: 54%; }
+    .live-line:nth-child(3) { width: 86%; background: rgba(248, 250, 252, 0.52); }
+
+    .module-body {
+      display: grid;
+      gap: 12px;
+      align-content: space-between;
+      padding: 22px;
+    }
+
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .module-title {
+      margin: 0;
+      font-size: clamp(22px, 2.2vw, 30px);
+      line-height: 1.18;
+      font-weight: 950;
+    }
+
+    .module-desc {
+      margin: 0;
+      color: #4b5565;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .module-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .module-action::after {
+      content: "→";
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .footer {
+      padding: 18px clamp(18px, 4vw, 52px) 26px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 980px) {
+      .module-grid {
         grid-template-columns: 1fr;
-        gap: 12px;
       }
 
-      .module-tabs {
-        width: 100%;
+      .module-card {
+        min-height: 0;
+        grid-template-columns: minmax(190px, 0.38fr) 1fr;
+        grid-template-rows: auto;
       }
+    }
 
-      .module-head {
+    @media (max-width: 640px) {
+      .topbar {
         align-items: flex-start;
         flex-direction: column;
       }
 
-      .open-link {
-        width: 100%;
+      .hero {
+        width: min(100% - 28px, 1180px);
+        padding-top: 10px;
       }
 
-      iframe {
-        height: calc(100svh - 236px);
-        min-height: 560px;
+      .module-card {
+        grid-template-columns: 1fr;
+        grid-template-rows: 150px auto;
+      }
+
+      .module-body {
+        padding: 18px;
       }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <p class="brand-kicker">红筹投资组合研究</p>
-      <h1>普林格新四核轮动组合</h1>
-    </div>
-    <nav class="module-tabs" aria-label="组合模块">
-      <button class="module-tab active" type="button" data-module="intro">组合介绍</button>
-      <button class="module-tab" type="button" data-module="birth">组合的诞生过程</button>
-      <button class="module-tab" type="button" data-module="live">实盘跟踪情况</button>
-    </nav>
-  </header>
-
-  <main class="workspace">
-    <section class="module-panel active" id="intro" aria-labelledby="intro-title">
-      <div class="module-head">
-        <div class="module-title">
-          <h2 id="intro-title">组合介绍</h2>
-          <span class="module-badge">静态报告</span>
-        </div>
-        <a class="open-link" href="组合介绍/index.html" target="_blank" rel="noreferrer">打开原页</a>
+  <div class="home">
+    <header class="topbar">
+      <div class="brand-mark">
+        <span class="brand-kicker">红筹投资组合研究</span>
+        <span class="brand-name">普林格新四核轮动组合</span>
       </div>
-      <div class="frame-shell">
-        <iframe src="组合介绍/index.html" title="组合介绍"></iframe>
-      </div>
-    </section>
+      <div class="status-pill">实盘模块每日更新</div>
+    </header>
 
-    <section class="module-panel" id="birth" aria-labelledby="birth-title">
-      <div class="module-head">
-        <div class="module-title">
-          <h2 id="birth-title">组合的诞生过程</h2>
-          <span class="module-badge">研究路演</span>
-        </div>
-        <a class="open-link" href="组合的诞生/index.html" target="_blank" rel="noreferrer">打开原页</a>
-      </div>
-      <div class="frame-shell">
-        <iframe src="组合的诞生/index.html" title="组合的诞生过程" loading="lazy"></iframe>
-      </div>
-    </section>
+    <main class="hero">
+      <section class="hero-copy" aria-labelledby="page-title">
+        <h1 id="page-title">选择一个模块进入</h1>
+        <p class="lead">三个页面保持各自完整体验：组合介绍和诞生过程作为静态研究内容保留，实盘跟踪情况由每日脚本自动刷新。</p>
+      </section>
 
-    <section class="module-panel" id="live" aria-labelledby="live-title">
-      <div class="module-head">
-        <div class="module-title">
-          <h2 id="live-title">实盘跟踪情况</h2>
-          <span class="module-badge live">每日更新</span>
-        </div>
-        <a class="open-link" href="组合实盘追踪/index.html" target="_blank" rel="noreferrer">打开原页</a>
-      </div>
-      <div class="frame-shell">
-        <iframe src="组合实盘追踪/index.html" title="实盘跟踪情况" loading="lazy"></iframe>
-      </div>
-    </section>
-  </main>
+      <nav class="module-grid" aria-label="组合模块入口">
+        <a class="module-card" href="组合介绍/index.html">
+          <div class="module-media">
+            <img src="组合介绍/report_assets/main/image1.png" alt="组合介绍报告图表">
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>静态报告</span>
+                <span>01</span>
+              </div>
+              <h2 class="module-title">组合介绍</h2>
+              <p class="module-desc">查看模型框架、资产池、风控机制、业绩概览与适用场景。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
 
-  <script>
-    const tabs = Array.from(document.querySelectorAll(".module-tab"));
-    const panels = Array.from(document.querySelectorAll(".module-panel"));
-    const moduleIds = new Set(panels.map((panel) => panel.id));
+        <a class="module-card" href="组合的诞生/index.html">
+          <div class="module-media">
+            <img src="组合的诞生/site_assets/figures/early/step42_fig01.png" alt="组合诞生过程图表">
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>研究路演</span>
+                <span>02</span>
+              </div>
+              <h2 class="module-title">组合的诞生过程</h2>
+              <p class="module-desc">沿着模型迭代路径，回看从原型、试错、诊断到四核形态的形成过程。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
 
-    function activateModule(moduleId, updateHash = true) {
-      const nextId = moduleIds.has(moduleId) ? moduleId : "intro";
-      tabs.forEach((tab) => {
-        tab.classList.toggle("active", tab.dataset.module === nextId);
-      });
-      panels.forEach((panel) => {
-        panel.classList.toggle("active", panel.id === nextId);
-      });
-      if (updateHash) {
-        history.replaceState(null, "", `#${nextId}`);
-      }
-    }
+        <a class="module-card" href="组合实盘追踪/index.html">
+          <div class="module-media live-preview" aria-hidden="true">
+            <div class="live-line"></div>
+            <div class="live-line"></div>
+            <div class="live-line"></div>
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>每日更新</span>
+                <span>03</span>
+              </div>
+              <h2 class="module-title">实盘跟踪情况</h2>
+              <p class="module-desc">进入持仓账本，查看最新净值、仓位结构、持仓明细与交易记录。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
+      </nav>
+    </main>
 
-    tabs.forEach((tab) => {
-      tab.addEventListener("click", () => activateModule(tab.dataset.module));
-    });
-
-    window.addEventListener("hashchange", () => {
-      activateModule(location.hash.slice(1), false);
-    });
-
-    activateModule(location.hash.slice(1), false);
-  </script>
+    <footer class="footer">GitHub Pages 首屏入口 · 点击模块直接打开原页面</footer>
+  </div>
 </body>
 </html>
