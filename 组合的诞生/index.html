@@ -1,0 +1,1466 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>组合的诞生 | 完整研究路演</title>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --paper: #ffffff;
+      --ink: #111827;
+      --muted: #5e6b7d;
+      --line: #d9e1eb;
+      --blue: #2563eb;
+      --red: #b42318;
+      --gold: #a16207;
+      --teal: #0f766e;
+      --violet: #6d28d9;
+      --green: #15803d;
+      --shadow: 0 22px 55px rgba(17, 24, 39, 0.12);
+      --radius: 8px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-snap-type: y mandatory;
+      background: var(--bg);
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans SC", Arial, sans-serif;
+      line-height: 1.58;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: fixed;
+      z-index: 50;
+      inset: 0 0 auto;
+      height: 54px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 22px;
+      color: #d8e6ff;
+      background: rgba(15, 23, 42, 0.86);
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .brand {
+      flex: 0 0 auto;
+      font-size: 14px;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .progress {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+
+    .progress::-webkit-scrollbar { display: none; }
+
+    .progress a {
+      flex: 0 0 auto;
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.32);
+      transition: 160ms ease;
+    }
+
+    .progress a.active,
+    .progress a:hover {
+      width: 28px;
+      background: #fff;
+    }
+
+    .story-nav {
+      position: fixed;
+      z-index: 40;
+      right: 18px;
+      top: 50%;
+      width: 132px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(17,24,39,0.12);
+      border-radius: 14px;
+      background: rgba(255,255,255,0.9);
+      box-shadow: 0 16px 34px rgba(17,24,39,0.12);
+      backdrop-filter: blur(14px);
+    }
+
+    .story-nav-title {
+      padding: 2px 4px 4px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .story-nav a {
+      display: grid;
+      gap: 1px;
+      padding: 8px 9px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--muted);
+      transition: 160ms ease;
+    }
+
+    .story-nav a b {
+      color: var(--ink);
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .story-nav a span {
+      font-size: 12px;
+      line-height: 1.2;
+    }
+
+    .story-nav a:hover,
+    .story-nav a.active {
+      color: #fff;
+      border-color: var(--ink);
+      background: var(--ink);
+    }
+
+    .story-nav a:hover b,
+    .story-nav a.active b { color: #fff; }
+
+    .slide {
+      height: 100svh;
+      min-height: 100svh;
+      scroll-snap-align: start;
+      scroll-snap-stop: always;
+      overflow: hidden;
+      padding: 76px clamp(154px, 14vw, 190px) 26px clamp(18px, 4vw, 54px);
+      display: grid;
+      grid-template-columns: minmax(240px, 0.28fr) minmax(0, 0.72fr);
+      gap: clamp(18px, 3vw, 34px);
+      align-items: stretch;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.94), rgba(238,242,246,0.9)),
+        var(--bg);
+    }
+
+    .slide:nth-child(4n+2) {
+      background:
+        linear-gradient(135deg, rgba(245,249,255,0.96), rgba(238,242,246,0.9)),
+        var(--bg);
+    }
+
+    .slide:nth-child(4n+3) {
+      background:
+        linear-gradient(135deg, rgba(250,250,255,0.96), rgba(238,242,246,0.92)),
+        var(--bg);
+    }
+
+    .narrative {
+      align-self: center;
+      height: auto;
+      max-height: 82svh;
+      min-height: 0;
+      overflow: hidden;
+      padding: clamp(22px, 3vw, 34px);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: rgba(255,255,255,0.88);
+      box-shadow: var(--shadow);
+    }
+
+    .visual {
+      height: calc(100svh - 102px);
+      min-height: 0;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .visual-body {
+      min-height: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: clamp(8px, 1.4vw, 18px);
+      background: #fff;
+    }
+
+    .visual-body img {
+      width: 100%;
+      height: 100%;
+      max-height: calc(100svh - 185px);
+      object-fit: contain;
+    }
+
+    .visual-caption {
+      min-height: 50px;
+      padding: 12px 15px;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      background: #fff;
+      font-size: 13px;
+    }
+
+    .visual-caption b { color: var(--ink); }
+
+    .step {
+      display: inline-flex;
+      align-self: flex-start;
+      margin-bottom: 14px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      color: #fff;
+      background: var(--ink);
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .stage {
+      margin: 0 0 7px;
+      color: var(--blue);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    h1, h2 {
+      margin: 0;
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+
+    h1 { font-size: clamp(34px, 4.4vw, 56px); }
+    h2 { font-size: clamp(26px, 3.2vw, 42px); }
+
+    .summary {
+      margin-top: 16px;
+      color: var(--muted);
+      font-size: clamp(15px, 1.35vw, 19px);
+    }
+
+    .takeaway {
+      margin-top: 18px;
+      padding: 14px 16px;
+      border-left: 5px solid var(--blue);
+      border-radius: var(--radius);
+      background: #f8fafc;
+      color: #263241;
+      font-weight: 700;
+    }
+
+    .slide[data-color="red"] .takeaway { border-left-color: var(--red); }
+    .slide[data-color="gold"] .takeaway { border-left-color: var(--gold); }
+    .slide[data-color="teal"] .takeaway { border-left-color: var(--teal); }
+    .slide[data-color="violet"] .takeaway { border-left-color: var(--violet); }
+    .slide[data-color="green"] .takeaway { border-left-color: var(--green); }
+
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 16px;
+    }
+
+    .metrics span {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 4px 9px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .flow-map {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-auto-rows: minmax(112px, auto);
+      gap: 14px;
+      align-content: center;
+      padding: clamp(16px, 2vw, 28px);
+      background:
+        linear-gradient(135deg, rgba(37,99,235,0.08), rgba(15,118,110,0.08)),
+        #fff;
+    }
+
+    .flow-node {
+      position: relative;
+      min-height: 112px;
+      padding: 15px;
+      border: 1px solid var(--line);
+      border-top: 5px solid var(--blue);
+      border-radius: var(--radius);
+      background: #fff;
+      box-shadow: 0 12px 24px rgba(17,24,39,0.08);
+    }
+
+    .flow-node:nth-child(2) { border-top-color: var(--green); }
+    .flow-node:nth-child(3) { border-top-color: var(--gold); }
+    .flow-node:nth-child(4) { border-top-color: var(--red); }
+    .flow-node:nth-child(5) { border-top-color: var(--violet); }
+    .flow-node:nth-child(6) { border-top-color: var(--teal); }
+    .flow-node:nth-child(7) { border-top-color: var(--green); }
+    .flow-node:nth-child(8) { border-top-color: var(--blue); }
+
+    .flow-node b {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 17px;
+    }
+
+    .flow-node span {
+      display: block;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .flow-node::after {
+      content: "→";
+      position: absolute;
+      right: -14px;
+      top: 40%;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .flow-node:nth-child(4)::after,
+    .flow-node:nth-child(8)::after { display: none; }
+
+    .result-card {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: #fff;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-size: clamp(12px, 1vw, 14px);
+    }
+
+    th, td {
+      padding: 10px 11px;
+      border-bottom: 1px solid var(--line);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      color: var(--ink);
+      background: #edf4fb;
+      font-weight: 800;
+    }
+
+    td { color: var(--muted); }
+    tr:last-child td { border-bottom: 0; }
+
+    .result-card.audit-card {
+      align-items: stretch;
+      justify-content: stretch;
+      padding: 12px;
+      overflow: hidden;
+    }
+
+    .audit-stack {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: auto minmax(0, 1fr);
+      gap: 8px;
+      min-height: 0;
+    }
+
+    .audit-note {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.25;
+    }
+
+    .audit-note span {
+      padding: 4px 8px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #f8fafc;
+      font-weight: 700;
+    }
+
+    .audit-table {
+      table-layout: fixed;
+      height: 100%;
+      font-size: clamp(10px, 0.72vw, 12px);
+      line-height: 1.16;
+    }
+
+    .audit-table th,
+    .audit-table td {
+      padding: 4px 6px;
+      vertical-align: middle;
+    }
+
+    .audit-table tbody tr:nth-child(even) td { background: #f8fafc; }
+    .audit-table .range-col { width: 116px; }
+    .audit-table .days-col { width: 42px; }
+    .audit-table .weight-col { width: 54px; text-align: center; }
+    .audit-table .state-col { width: auto; }
+    .audit-table .center { text-align: center; }
+    .audit-table .risk { color: var(--red); font-weight: 800; }
+    .audit-table .normal { color: var(--teal); font-weight: 800; }
+    .audit-table .reserve { color: #334155; font-weight: 800; }
+    .audit-table .muted { color: var(--muted); }
+
+    .big-number {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-rows: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      width: 100%;
+      height: 100%;
+    }
+
+    .num {
+      min-width: 0;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: #f8fafc;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .num strong {
+      display: block;
+      margin-bottom: 8px;
+      font-size: clamp(30px, 3.8vw, 54px);
+      line-height: 1;
+      color: var(--ink);
+      white-space: nowrap;
+    }
+
+    .num span {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .final-metric-panel {
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-rows: minmax(0, 1fr) auto;
+      gap: 12px;
+    }
+
+    .metric-note {
+      color: var(--muted);
+      font-size: 12px;
+      text-align: right;
+    }
+
+    .cover {
+      color: #fff;
+      background: #0f172a;
+    }
+
+    .cover .narrative,
+    .cover .visual {
+      color: #fff;
+      background: rgba(15, 23, 42, 0.72);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .cover .summary,
+    .cover .visual-caption { color: rgba(255,255,255,0.78); }
+    .cover .visual-body,
+    .cover .visual-caption { background: rgba(15, 23, 42, 0.54); }
+    .cover .flow-map { background: transparent; }
+    .cover .flow-node { color: var(--ink); }
+    .cover .takeaway {
+      color: #fff;
+      background: rgba(255,255,255,0.09);
+      border-left-color: #fff;
+    }
+    .cover .metrics span {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.18);
+    }
+
+    .keyboard {
+      position: fixed;
+      right: 20px;
+      bottom: 18px;
+      z-index: 30;
+      padding: 8px 11px;
+      border: 1px solid rgba(17,24,39,0.14);
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      color: var(--muted);
+      font-size: 12px;
+      box-shadow: 0 8px 22px rgba(17,24,39,0.1);
+      backdrop-filter: blur(10px);
+    }
+
+    @media (max-height: 940px) and (min-width: 981px) {
+      .topbar { height: 46px; padding: 0 18px; }
+      .slide {
+        padding-top: 58px;
+        padding-bottom: 22px;
+        gap: 22px;
+      }
+      .narrative {
+        max-height: calc(100svh - 96px);
+        padding: 18px 22px;
+      }
+      .visual { height: calc(100svh - 80px); }
+      .visual-body { padding: 8px; }
+      .visual-body img { max-height: calc(100svh - 140px); }
+      .step { margin-bottom: 10px; padding: 4px 9px; font-size: 11px; }
+      .stage { margin-bottom: 5px; font-size: 12px; }
+      h1 { font-size: clamp(30px, 3.15vw, 42px); }
+      h2 { font-size: clamp(24px, 2.45vw, 34px); }
+      .summary { margin-top: 12px; font-size: 15px; }
+      .takeaway { margin-top: 13px; padding: 11px 13px; font-size: 14px; }
+      .metrics { margin-top: 12px; gap: 6px; }
+      .metrics span { min-height: 26px; padding: 3px 8px; font-size: 12px; }
+      .visual-caption { min-height: 44px; padding: 9px 12px; font-size: 12px; }
+      .story-nav { right: 12px; width: 116px; gap: 6px; padding: 8px; }
+      .story-nav a { padding: 7px 8px; }
+      .story-nav a b,
+      .story-nav a span,
+      .story-nav-title { font-size: 11px; }
+      .flow-map { gap: 9px; padding: 14px; grid-auto-rows: minmax(94px, auto); }
+      .flow-node { min-height: 94px; padding: 11px; }
+      .flow-node b { font-size: 14px; }
+      .flow-node span { font-size: 11px; }
+      th, td { padding: 7px 8px; }
+      .result-card { padding: 14px; }
+      .big-number { gap: 9px; }
+      .num { padding: 14px 16px; }
+      .num strong { font-size: clamp(30px, 3vw, 42px); }
+      .num span { font-size: 12px; }
+      .metric-note { font-size: 11px; }
+      .result-card.audit-card { padding: 8px; }
+      .audit-stack { gap: 6px; }
+      .audit-note { gap: 5px; font-size: 10px; }
+      .audit-note span { padding: 3px 6px; }
+      .audit-table { font-size: 9.8px; line-height: 1.08; }
+      .audit-table th,
+      .audit-table td { padding: 3px 4px; }
+      .audit-table .range-col { width: 102px; }
+      .audit-table .days-col { width: 34px; }
+      .audit-table .weight-col { width: 44px; }
+      .keyboard { display: none; }
+    }
+
+    @media (max-width: 980px) {
+      html { scroll-snap-type: y proximity; }
+      .slide {
+        height: 100svh;
+        min-height: 100svh;
+        grid-template-columns: 1fr;
+        grid-template-rows: minmax(0, 0.34fr) minmax(0, 0.66fr);
+        padding: 68px 14px 18px;
+        gap: 14px;
+      }
+      .narrative {
+        align-self: stretch;
+        height: 100%;
+        max-height: none;
+        padding: 18px;
+        overflow: hidden;
+      }
+      .visual { height: 100%; }
+      .visual-body img { max-height: 58svh; }
+      .flow-map {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-auto-rows: minmax(78px, auto);
+        gap: 8px;
+        padding: 10px;
+      }
+      .flow-node {
+        min-height: 78px;
+        padding: 9px;
+      }
+      .flow-node::after { display: none; }
+      .flow-node b { font-size: 13px; }
+      .flow-node span { font-size: 11px; }
+      .takeaway { margin-top: 12px; padding: 12px; }
+      .summary { margin-top: 11px; font-size: 14px; }
+      .keyboard,
+      .story-nav { display: none; }
+      .big-number { grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-rows: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .final-metric-panel { gap: 8px; }
+      .metric-note { text-align: left; font-size: 10px; }
+      table { font-size: 11px; }
+      th, td { padding: 6px 7px; }
+      .result-card.audit-card { padding: 7px; }
+      .audit-note { display: none; }
+      .audit-stack { grid-template-rows: minmax(0, 1fr); }
+      .audit-table { font-size: 8.8px; line-height: 1.05; }
+      .audit-table th,
+      .audit-table td { padding: 2px 3px; }
+      .audit-table .range-col { width: 86px; }
+      .audit-table .days-col { width: 28px; }
+      .audit-table .weight-col { width: 34px; }
+    }
+
+    @media (max-width: 560px) {
+      .topbar { height: 50px; padding: 0 14px; }
+      .brand { max-width: 120px; overflow: hidden; text-overflow: ellipsis; }
+      .progress a { width: 7px; height: 7px; }
+      .progress a.active { width: 22px; }
+      h1 { font-size: 27px; }
+      h2 { font-size: 23px; }
+      .metrics { gap: 5px; }
+      .metrics span { font-size: 11px; min-height: 23px; }
+      .visual-caption { font-size: 11px; min-height: 42px; }
+      .flow-node span { display: none; }
+      .num { padding: 9px; }
+      .num strong { font-size: 24px; }
+      .num span { font-size: 10px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">组合的诞生</div>
+    <nav class="progress" aria-label="幻灯片导航"></nav>
+  </header>
+
+  <aside class="story-nav" aria-label="主线导航">
+    <div class="story-nav-title">主线</div>
+    <a href="#s01" data-story="overview"><b>总览</b><span>流程图</span></a>
+    <a href="#s02" data-story="prototype"><b>原型</b><span>三核形成</span></a>
+    <a href="#s04" data-story="investable"><b>落地</b><span>可投化</span></a>
+    <a href="#s11" data-story="risk"><b>试错</b><span>风控实验</span></a>
+    <a href="#s21" data-story="diagnosis"><b>诊断</b><span>同跌根因</span></a>
+    <a href="#s26" data-story="breakthrough"><b>突破</b><span>四核水库</span></a>
+    <a href="#s30" data-story="validation"><b>验证</b><span>消融测试</span></a>
+    <a href="#s34" data-story="live"><b>实盘</b><span>最终成果</span></a>
+  </aside>
+
+  <main>
+    <section class="slide cover" id="s01" data-story="overview" data-color="blue">
+      <div class="narrative">
+        <span class="step">研究流程图</span>
+        <p class="stage">完整路演版</p>
+        <h1>组合的诞生：先讲过程，再看结果</h1>
+        <p class="summary">路演按组合研究的真实推进顺序展开：从三核原型、可投化、风控试错，到四核水库与实盘组合。失败实验保留下来，是为了让投资框架的取舍可审计。</p>
+        <div class="takeaway">主线：三核增强收益 → 可投化验证 → 风控连续试错 → 发现三核同跌 → 引入纯债水库 → 四核成型 → 实盘收束。</div>
+        <div class="metrics"><span>49 个研究节点</span><span>实盘组合验证</span><span>图表 + 表格证据链</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body">
+          <div class="flow-map" aria-label="研究流程图">
+            <div class="flow-node"><b>1 三核原型</b><span>普林格 + 景气行业 + 可转债</span></div>
+            <div class="flow-node"><b>2 长区间拼接</b><span>补齐 2016-2020，验证十年长跑</span></div>
+            <div class="flow-node"><b>3 可投化</b><span>南华商品转 ETF，股票端控制变量</span></div>
+            <div class="flow-node"><b>4 风控试错</b><span>止损、MA20、平价、降频、海龟</span></div>
+            <div class="flow-node"><b>5 压力诊断</b><span>防抖、定向风控、股商双防守</span></div>
+            <div class="flow-node"><b>6 四核突破</b><span>逃逸资金全量进入纯债水库</span></div>
+            <div class="flow-node"><b>7 边界验证</b><span>黄金、宽基、久期、短债水库</span></div>
+            <div class="flow-node"><b>8 实盘收束</b><span>宽基 ETF + 商品 ETF + 转债 + 纯债</span></div>
+          </div>
+        </div>
+        <figcaption class="visual-caption"><b>研究流程图：</b>最终组合结果不抢占开场，而作为整条研究链条的结论。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s02" data-story="prototype" data-color="blue">
+      <div class="narrative">
+        <span class="step">Step 1-7</span>
+        <p class="stage">三核原型</p>
+        <h2>先用股、债、商三核解决收益来源。</h2>
+        <p class="summary">普林格模型决定大类资产权重，股票端从沪深300升级为高景气 TOP4 行业，债券/现金端用可转债替代，商品端保留南华商品暴露。</p>
+        <div class="takeaway">第一代组合的重点是收益增强：不是简单加股票，而是把股、债、商三类引擎都改成更有进攻效率的表达。</div>
+        <div class="metrics"><span>原版普林格 8.48%</span><span>改良版 12.16%</span><span>转债替代 14.08%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step04_fig01.png" alt="Step 4 双核改良版净值走势"></div>
+        <figcaption class="visual-caption"><b>Step 4：</b>可转债替代后的普林格模型抬高净值斜率，三核原型开始成形。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s03" data-story="prototype" data-color="red">
+      <div class="narrative">
+        <span class="step">Step 6-7</span>
+        <p class="stage">早期矛盾</p>
+        <h2>收益上去了，回撤问题也被放大了。</h2>
+        <p class="summary">早期三核版本已经显著优于大盘和原版普林格，但最大回撤仍然是组合进一步进化的主要约束。</p>
+        <div class="takeaway">这张回撤图解释了为什么后面会出现二十多个 Step 的风控试错。</div>
+        <div class="metrics"><span>转债替代版回撤 -15.27%</span><span>沪深300回撤 -45.10%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step06_fig01.png" alt="Step 6 最大回撤对比"></div>
+        <figcaption class="visual-caption"><b>Step 6：</b>最大回撤图把策略缺口暴露出来，推动后续风险控制研究。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s04" data-story="investable" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 8-14</span>
+        <p class="stage">拼接 2021 年前数据</p>
+        <h2>研究从 2021 年样本扩展到 2016-2026 全区间。</h2>
+        <p class="summary">早期文档的第二段重点是把 2021 年前的数据接上：前期用沪深300、中证转债、南华商品做可回溯代理，后期切换到景气行业与实操标的。</p>
+        <div class="takeaway">这一步不是为了追求更长净值曲线，而是为了检查策略能否穿越完整市场周期。</div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step09_fig01.png" alt="Step 9 2016-2026 拼接策略净值"></div>
+        <figcaption class="visual-caption"><b>Step 9：</b>把策略拉长到 2016-2026，为之后的十年压力测试做基础。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s04b" data-story="investable" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 10</span>
+        <p class="stage">年度收益率对比</p>
+        <h2>十年长跑不能只看终点，也要看每一年怎么赢。</h2>
+        <p class="summary">拼接版在多数年份保持正收益，尤其在沪深300承压的 2018、2022、2023 年明显更稳。年度柱状图把“穿越周期”从一句结论变成可逐年检验的证据。</p>
+        <div class="metrics"><span>2016-2026 年度对比</span><span>拼接版 9 年正收益</span><span>沪深300 5 年负收益</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step10_fig01.png" alt="Step 10 2016-2026 历年收益率对比"></div>
+        <figcaption class="visual-caption"><b>Step 10：</b>年度收益率对比显示，拼接版的价值不只是长期年化更高，也体现在弱市年份的回撤抵抗力。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s05" data-story="investable" data-color="violet">
+      <div class="narrative">
+        <span class="step">Step 12</span>
+        <p class="stage">转债防守端简化</p>
+        <h2>细分行业转债并不一定值得复杂化。</h2>
+        <p class="summary">Step 12 对比了高景气细分行业可转债与全区间中证转债指数，目的是判断防守端是否需要做得很细。</p>
+        <div class="takeaway">研究开始从“每个端都追求精细 Alpha”转向“哪里复杂有价值，哪里应该简化”。</div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step12_fig01.png" alt="Step 12 转债防守端宽基对比"></div>
+        <figcaption class="visual-caption"><b>Step 12：</b>宽基转债防守端提供了更易落地的替代表达。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s06" data-story="investable" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 15</span>
+        <p class="stage">商品端从不可投到可投</p>
+        <h2>南华商品指数需要替换成真实 ETF 篮子。</h2>
+        <p class="summary">商品端用大成有色、华安黄金、建信能化、华夏豆粕四只 ETF 等权替代南华商品指数，牺牲一点理论收益，换来可执行性。</p>
+        <div class="takeaway">这是组合从理论回测走向实盘的第一道门槛：资产必须买得到、跟得住。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>版本</th><th>年化收益率</th><th>最大回撤</th><th>解释</th></tr></thead>
+            <tbody>
+              <tr><td>理论原版（南华商品）</td><td>14.50%</td><td>-14.50%</td><td>商品端使用指数，理论性更强。</td></tr>
+              <tr><td>实操落地版（四只 ETF 等权）</td><td>13.43%</td><td>-14.17%</td><td>收益略降，但可投资性显著提升。</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>Step 15 阶段结论：</b>可投化不是免费午餐，但换来了执行可行性。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s07" data-story="investable" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 16</span>
+        <p class="stage">股票端控制变量</p>
+        <h2>TOP4 景气行业确实贡献了股票端超额。</h2>
+        <p class="summary">在债券和商品都保持一致的情况下，仅替换股票端，TOP4 景气行业组合显著优于沪深300版本。</p>
+        <div class="takeaway">股票端 Alpha 是独立贡献项，但后面仍需要继续检验它是否存在后验与样本期偏差。</div>
+        <div class="metrics"><span>基准股组合 10.14%</span><span>TOP4 组合 14.01%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step16_fig01.png" alt="Step 16 股票端超额收益分离"></div>
+        <figcaption class="visual-caption"><b>Step 16：</b>控制债商变量后，股票端 TOP4 相对沪深300提供超额。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s08" data-story="investable" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 17</span>
+        <p class="stage">三核模型初具雏形</p>
+        <h2>可落地三核版本完成十年长跑。</h2>
+        <p class="summary">股债商三核落地为：行业景气 TOP4、中证转债、四只商品 ETF 等权，并与原版普林格和沪深300基准对比。</p>
+        <div class="takeaway">三核模型在收益端已经成立，后续真正需要解决的是回撤和执行复杂度。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>策略版本</th><th>十年期年化收益</th><th>全区间最大回撤</th><th>期末总净值</th></tr></thead>
+            <tbody>
+              <tr><td>终极无缝拼接版（可实操落地）</td><td>13.81%</td><td>-15.19%</td><td>3.630</td></tr>
+              <tr><td>理论原版普林格</td><td>10.63%</td><td>-14.55%</td><td>2.736</td></tr>
+              <tr><td>沪深300基准</td><td>2.78%</td><td>-45.10%</td><td>1.314</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>Step 17 核心证据：</b>可落地三核在收益上胜出，但回撤仍未理想。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s09" data-story="investable" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 18</span>
+        <p class="stage">十年收益归因</p>
+        <h2>三核不是单一资产押注，而是多引擎接力。</h2>
+        <p class="summary">2016-2026 的归因显示，股、债、商都有绝对贡献，商品端贡献最高。这解释了为什么组合最初选择三核结构。</p>
+        <div class="metrics"><span>总累计收益 263.02%</span><span>股贡献 30.65%</span><span>债贡献 26.97%</span><span>商贡献 42.38%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step18_fig02.png" alt="Step 18 十年收益贡献拆解"></div>
+        <figcaption class="visual-caption"><b>Step 18：</b>收益拆解证明三类资产都参与创造收益，商品端不是装饰。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s10" data-story="investable" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 19</span>
+        <p class="stage">聚焦后五年实盘复刻期</p>
+        <h2>剥离早期模拟后，后五年仍然跑得通。</h2>
+        <p class="summary">2021Q2 之后，组合进入更接近实操的阶段。股、债、商贡献接近均衡，说明模型不是靠历史拼接硬撑出来的。</p>
+        <div class="metrics"><span>后五年累计收益 90.17%</span><span>股 32.96%</span><span>债 31.89%</span><span>商 35.15%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step19_fig02.png" alt="Step 19 后五年收益贡献"></div>
+        <figcaption class="visual-caption"><b>Step 19：</b>后五年三端贡献均衡，组合具备可落地雏形。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s11" data-story="risk" data-color="red">
+      <div class="narrative">
+        <span class="step">Step 20</span>
+        <p class="stage">固定止损失败</p>
+        <h2>固定止损看起来干脆，实际伤害修复能力。</h2>
+        <p class="summary">8% 固定止损释放资金给转债和商品，最大回撤只小幅改善，年化收益却大幅下降。</p>
+        <div class="metrics"><span>原组合年化 13.28%</span><span>止损版年化 9.01%</span><span>回撤 -13.49%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step20_fig01.png" alt="Step 20 固定止损资金跨界防守"></div>
+        <figcaption class="visual-caption"><b>Step 20：</b>固定止损组合的净值修复明显不足，风控不是越硬越好。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s12" data-story="risk" data-color="red">
+      <div class="narrative">
+        <span class="step">Step 21</span>
+        <p class="stage">动态接回修复</p>
+        <h2>只止损不够，还必须解决“什么时候回来”。</h2>
+        <p class="summary">Step 21 加入 20 日线动态接回，修复踏空问题，但收益和回撤仍然不如后来的 MA20 双向风控。</p>
+        <div class="takeaway">这一页说明：风控必须同时包含撤退和接回，不能只处理卖出。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>策略架构</th><th>最终净值</th><th>年化收益率</th><th>最大回撤</th><th>夏普</th></tr></thead>
+            <tbody>
+              <tr><td>原实操期组合</td><td>1.891</td><td>13.28%</td><td>-14.17%</td><td>0.73</td></tr>
+              <tr><td>动态接回组合</td><td>1.697</td><td>10.91%</td><td>-13.70%</td><td>0.60</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>Step 21 阶段结论：</b>动态接回改善逻辑，但还没有形成最终风控形态。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s13" data-story="risk" data-color="blue">
+      <div class="narrative">
+        <span class="step">Step 22</span>
+        <p class="stage">MA20 双向风控出现</p>
+        <h2>MA20 成为第一条真正有效的生命线。</h2>
+        <p class="summary">相比固定止损，MA20 同时解决逃逸和接回：跌破撤退，收复上车。它把收益和回撤重新拉回均衡。</p>
+        <div class="metrics"><span>年化 13.60%</span><span>最大回撤 -12.29%</span><span>夏普 0.89</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step22_fig01.png" alt="Step 22 MA20 双向风控"></div>
+        <figcaption class="visual-caption"><b>Step 22：</b>MA20 双向风控显著优于固定止损，成为后续风控主线。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s14" data-story="risk" data-color="violet">
+      <div class="narrative">
+        <span class="step">Step 23</span>
+        <p class="stage">等权 vs 风险平价</p>
+        <h2>风险平价能改变形状，但不是主矛盾。</h2>
+        <p class="summary">风险平价改变了行业内部权重，但最终绩效与等权接近，说明问题不在内部配权的精细程度。</p>
+        <div class="metrics"><span>等权年化 13.62%</span><span>平价年化 13.56%</span><span>回撤接近</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step23_fig02.png" alt="Step 23 等权与风险平价仓位对比"></div>
+        <figcaption class="visual-caption"><b>Step 23：</b>仓位差异明显，但绩效差异不大，权重优化边际有限。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s15" data-story="risk" data-color="blue">
+      <div class="narrative">
+        <span class="step">Step 24-25</span>
+        <p class="stage">三核避险版评测</p>
+        <h2>累计收益和超额收益都清楚拉开。</h2>
+        <p class="summary">三核避险版与沪深300放在同一时间轴上比较，累计收益持续领先，超额收益长期保持在正区间。它证明 MA20 双向风控不只是降低波动，也在实操期形成了稳定的相对优势。</p>
+        <div class="metrics"><span>年化 13.62%</span><span>最大回撤 -12.29%</span><span>沪深300回撤 -40.38%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step25_fig01.png" alt="Step 25 三核避险版累计收益与超额收益"></div>
+        <figcaption class="visual-caption"><b>Step 25：</b>红线是组合累计收益，灰线是沪深300累计收益，紫色区域显示组合相对基准的超额收益。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s15b" data-story="risk" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 25</span>
+        <p class="stage">年度绝对收益能力</p>
+        <h2>MA20 避险版的意义，是弱市也尽量有正收益。</h2>
+        <p class="summary">2021Q2 之后的单年度对比显示，组合在 2021、2022、2023 三个沪深300负收益年份仍保持正收益。它不是单纯追涨的股性组合，而是在风险资产切换中争取年度收益的连续性。</p>
+        <div class="metrics"><span>2022：10.7% vs -21.4%</span><span>2023：2.4% vs -11.1%</span><span>2025：20.1%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step25_fig03.png" alt="Step 25 单年度绝对收益能力检验"></div>
+        <figcaption class="visual-caption"><b>Step 25：</b>年度收益柱状图证明，MA20 避险版已经具备较强的年度绝对收益特征。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s16" data-story="risk" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 26</span>
+        <p class="stage">交易降频实验</p>
+        <h2>简单降低频率，会损失防守质量。</h2>
+        <p class="summary">日频、周频、月频对比后，周频和月频确实更省心，但收益和回撤都弱于日频 MA20。</p>
+        <div class="takeaway">降频不能靠“少看市场”，而要靠降低信号颗粒度。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>频率实验</th><th>最终净值</th><th>年化</th><th>最大回撤</th><th>夏普</th></tr></thead>
+            <tbody>
+              <tr><td>原组合</td><td>1.891</td><td>13.28%</td><td>-14.17%</td><td>0.73</td></tr>
+              <tr><td>日频 MA20</td><td>1.920</td><td>13.62%</td><td>-12.29%</td><td>0.89</td></tr>
+              <tr><td>周频风控</td><td>1.722</td><td>11.22%</td><td>-12.93%</td><td>0.70</td></tr>
+              <tr><td>月频风控</td><td>1.627</td><td>10.00%</td><td>-16.58%</td><td>0.61</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>Step 26 频率检验：</b>降频降低操作压力，但不能成为最终解决方案。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s17" data-story="risk" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 27-30</span>
+        <p class="stage">海龟交易法止损</p>
+        <h2>海龟法没有打败日频 MA20。</h2>
+        <p class="summary">快系统、持仓流水、周频海龟与 MA20 对比都被测试。结果显示，海龟法可以减少一些回撤，但收益和稳定性不如 MA20。</p>
+        <div class="metrics"><span>日频海龟年化 11.02%</span><span>周频海龟年化 10.09%</span><span>MA20 年化 13.62%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step29_fig01.png" alt="Step 29 三方策略绩效对比"></div>
+        <figcaption class="visual-caption"><b>Step 29：</b>无风控、MA20、周频海龟同台对比，MA20 保持优势。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s18" data-story="risk" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 31</span>
+        <p class="stage">股票端整体 MA20</p>
+        <h2>把 TOP4 从“各自为战”拧成一条组合净值线。</h2>
+        <p class="summary">每个行业独立 MA20 太碎。改用 TOP4 合成净值后，交易信号明显下降，绩效几乎不损失。</p>
+        <div class="metrics"><span>整体 MA20 年化 13.56%</span><span>最大回撤 -12.38%</span><span>信号 56 次</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step31_fig01.png" alt="Step 31 组合整体 MA20"></div>
+        <figcaption class="visual-caption"><b>Step 31：</b>组合级信号减少交易噪声，同时保留 MA20 的保护。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s19" data-story="risk" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 32-33</span>
+        <p class="stage">持仓复盘与审计</p>
+        <h2>组合不只要有净值，还要解释每一天持有什么。</h2>
+        <p class="summary">Step 32 将每日持仓压缩成区间账单，Step 33 用甘特图与仓位堆叠图展示真实持仓状态。</p>
+        <div class="metrics"><span>1235 天压缩至 76 个阶段</span><span>组合整体 MA20 持仓表</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step33_fig01.png" alt="Step 33 持仓甘特图与仓位拆解"></div>
+        <figcaption class="visual-caption"><b>Step 33：</b>每个持仓阶段和仓位变化都可以被追踪，后续实盘日志沿用这个思想。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s20" data-story="risk" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 34</span>
+        <p class="stage">收益贡献拆解</p>
+        <h2>组合整体 MA20 版本仍是股、债、商接力。</h2>
+        <p class="summary">大类资产累计贡献和年度贡献被拆开，说明三核结构并没有失去收益解释力。</p>
+        <div class="metrics"><span>股票贡献 27.84%</span><span>债券贡献 30.53%</span><span>商品贡献 33.11%</span><span>总收益 91.47%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step34_fig01.png" alt="Step 34 大类资产收益贡献"></div>
+        <figcaption class="visual-caption"><b>Step 34：</b>三核收益来源仍然均衡，问题尚未转向收益，而是转向长周期风险。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s20b" data-story="risk" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 34 补充</span>
+        <p class="stage">年度归因拆解</p>
+        <h2>年度收益的关键，不是某一核永远领先，而是三核接力。</h2>
+        <p class="summary">年度归因图把组合收益拆成股票、转债、商品三端。2021 和 2022 年商品端承担主要贡献，2024 年股票端接力，2025 年转债端贡献突出，说明三核结构的核心价值是跨年份分散收益来源。</p>
+        <div class="metrics"><span>2021 商品主导</span><span>2024 股票接力</span><span>2025 转债贡献突出</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step34_fig02.png" alt="Step 34 年度绝对收益归因拆解"></div>
+        <figcaption class="visual-caption"><b>Step 34 年度归因：</b>三核收益不是静态平均，而是在不同年份由不同资产承担主驱动力。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s21" data-story="diagnosis" data-color="red">
+      <div class="narrative">
+        <span class="step">Step 35</span>
+        <p class="stage">十年压力测试</p>
+        <h2>长周期回测给了当头一棒：MA20 失效了。</h2>
+        <p class="summary">把系统放到 2016-2026 全区间后，普林格底座加 MA20 逃逸的最大回撤反而更差。</p>
+        <div class="metrics"><span>无均线回撤 -15.19%</span><span>MA20 逃逸回撤 -17.75%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step35_fig01.png" alt="Step 35 十年全景甘特图"></div>
+        <figcaption class="visual-caption"><b>Step 35：</b>十年全景图显示，原先有效的 MA20 在长周期压力下没有解决根因。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s22" data-story="diagnosis" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 36-37</span>
+        <p class="stage">防抖带与动态波动率</p>
+        <h2>加缓冲带不是答案。</h2>
+        <p class="summary">1.5% 容错、防抖带、动态波动率都试过了，结果只是小修小补，没有改变长周期回撤结构。</p>
+        <div class="takeaway">研究开始意识到：根因可能不在信号，而在逃逸资金承接资产。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>方案</th><th>年化收益</th><th>最大回撤</th><th>夏普</th><th>卡玛</th></tr></thead>
+            <tbody>
+              <tr><td>无均线避险</td><td>13.81%</td><td>-15.19%</td><td>0.86</td><td>0.91</td></tr>
+              <tr><td>1.5% 缓冲区 MA20</td><td>12.47%</td><td>-16.35%</td><td>0.80</td><td>0.76</td></tr>
+              <tr><td>1.5倍动态波动率防抖</td><td>12.86%</td><td>-17.64%</td><td>0.83</td><td>0.73</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>Step 36-37 诊断结果：</b>防抖思路没有解决结构性回撤。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s23" data-story="diagnosis" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 38</span>
+        <p class="stage">时间过滤器</p>
+        <h2>等 3 天确认，也只是让信号更迟钝。</h2>
+        <p class="summary">3 日确认可以减少假突破，但没有从结构上解决回撤。信号更“稳”不等于组合更安全。</p>
+        <div class="metrics"><span>年化 12.24%</span><span>最大回撤 -15.93%</span><span>卡玛 0.77</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step38_fig03.png" alt="Step 38 时间过滤器防抖"></div>
+        <figcaption class="visual-caption"><b>Step 38：</b>时间过滤器让信号更迟钝，但没有真正改善风险结构。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s24" data-story="diagnosis" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 39</span>
+        <p class="stage">仅对 70% 主引擎启动</p>
+        <h2>只在重仓时防守，思路更简洁，但仍未解决根因。</h2>
+        <p class="summary">定向风控把防守动作集中在宏观配置 70% 的主引擎上，减少无意义动作，但结果与全时段 MA20 接近。</p>
+        <div class="metrics"><span>年化 12.78%</span><span>最大回撤 -17.64%</span><span>夏普 0.83</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step39_fig01.png" alt="Step 39 主引擎定向风控"></div>
+        <figcaption class="visual-caption"><b>Step 39：</b>定向风控确认“只在重仓时启动”是合理简化，但不是最终答案。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s25" data-story="diagnosis" data-color="red">
+      <div class="narrative">
+        <span class="step">Step 40</span>
+        <p class="stage">商品端也要风控吗</p>
+        <h2>股商双防守增加了动作，但没有压住回撤。</h2>
+        <p class="summary">仅股票避险和股商双避险都测试过。当避险资金仍在转债和商品之间流转时，扩大防守范围并没有解决问题。</p>
+        <div class="takeaway">关键发现：三核内部互相接盘，不等于真正避险。</div>
+        <div class="metrics"><span>股商双防守回撤 -17.64%</span><span>总动作 130 次</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step40_fig01.png" alt="Step 40 风控方案切片对比"></div>
+        <figcaption class="visual-caption"><b>Step 40：</b>防守范围扩大了，但资金仍留在同跌体系内，回撤没有改善。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s26" data-story="breakthrough" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 41</span>
+        <p class="stage">四核诞生</p>
+        <h2>真正的突破：给逃逸资金一个独立水库。</h2>
+        <p class="summary">当股票或商品跌破 MA20，释放资金不再分给转债或商品，而是 100% 进入纯债水库。四核防御形态由此诞生。</p>
+        <div class="takeaway">四核不是多买一类资产，而是改变风险资产出问题后的资金去向。</div>
+        <div class="metrics"><span>年化 13.57%</span><span>最大回撤 -10.63%</span><span>夏普 1.07</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step41_fig01.png" alt="Step 41 四核防御形态"></div>
+        <figcaption class="visual-caption"><b>Step 41：</b>一张图同时展示逃逸区间、资金分布和净值曲线，是组合诞生的核心证据。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s27" data-story="breakthrough" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 42</span>
+        <p class="stage">收益与回撤再拆解</p>
+        <h2>四核水库把风险结果改出来了。</h2>
+        <p class="summary">年度收益归因加入纯债水库后，四类资产角色被完整拆开；水下图显示最大回撤明显变浅。</p>
+        <div class="takeaway">这一步把“结构想法”变成了“风险结果”。</div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step42_fig02.png" alt="Step 42 最大回撤对决"></div>
+        <figcaption class="visual-caption"><b>Step 42：</b>水下图是四核防御最直观的风控证据。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s27b" data-story="breakthrough" data-color="green">
+      <div class="narrative">
+        <span class="step">Step 42 补充</span>
+        <p class="stage">四核年度收益检阅</p>
+        <h2>水库的价值，要落到年度体验上。</h2>
+        <p class="summary">四核防御版在十年自然年度中只有 2018 年小幅亏损，且在 2022、2023 这类基准大幅承压年份仍保持正收益。年度柱状图说明，纯债水库改善的不只是最大回撤，也改善了投资者逐年持有的体验。</p>
+        <div class="metrics"><span>10 个正收益年</span><span>2018：-3.2%</span><span>2022：8.9%</span><span>2023：2.1%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step42_fig01.png" alt="Step 42 四核防御体系历年收益率对比"></div>
+        <figcaption class="visual-caption"><b>Step 42 年度检阅：</b>四核水库把风险控制从“回撤变浅”推进到“年度收益更连续”。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s28" data-story="breakthrough" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 43</span>
+        <p class="stage">四核持仓审计</p>
+        <h2>2025 年以后，水库动作要按真实区间复盘。</h2>
+        <p class="summary">持仓审计把每日信号压缩为可核验的资金区间。2025 上半年，股票风控反复触发，国开债水库从底仓 10% 升至 80%，承接股票撤退释放的 70% 风险资金。</p>
+        <div class="metrics"><span>持仓审计</span><span>2025H1 高频切换</span><span>国开债最高 80%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="result-card audit-card">
+          <div class="audit-stack">
+            <div class="audit-note">
+              <span>2025.01.02-2025.06.30</span>
+              <span>商品核均维持 10%</span>
+              <span>国开债接盘股票避险资金</span>
+            </div>
+            <table class="audit-table">
+              <thead>
+                <tr>
+                  <th class="range-col">持仓区间</th>
+                  <th class="days-col">天数</th>
+                  <th class="weight-col">股票</th>
+                  <th class="weight-col">转债</th>
+                  <th class="weight-col">商品</th>
+                  <th class="weight-col">国开债</th>
+                  <th class="state-col">区间状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>2025.01.02-01.14</td><td class="center">9</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.01.15</td><td class="center">1</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.01.16</td><td class="center">1</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.01.17-03.13</td><td class="center">34</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.03.14</td><td class="center">1</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.03.17-03.19</td><td class="center">3</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.03.20-03.31</td><td class="center">8</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.04.01-04.21</td><td class="center">14</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.04.22-04.24</td><td class="center">3</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.04.25</td><td class="center">1</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.04.28</td><td class="center">1</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.04.29</td><td class="center">1</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.04.30-05.15</td><td class="center">9</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.05.16-05.19</td><td class="center">2</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.05.20-05.23</td><td class="center">4</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.05.26-06.04</td><td class="center">7</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.06.05-06.20</td><td class="center">12</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.06.23-06.24</td><td class="center">2</td><td class="center">0%</td><td class="center">10%</td><td class="center">10%</td><td class="center">80%</td><td><span class="risk">股票撤退</span>，国开接盘 +70%</td></tr>
+                <tr><td>2025.06.25-06.27</td><td class="center">3</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td class="center">10%</td><td><span class="normal">股票恢复 70%</span>，水库安静</td></tr>
+                <tr><td>2025.06.30</td><td class="center">1</td><td class="center">10%</td><td class="center">70%</td><td class="center">10%</td><td class="center">10%</td><td><span class="reserve">切至转债主仓</span>，股票降至 10%</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <figcaption class="visual-caption"><b>Step 43 持仓审计：</b>2025 上半年并非简单稳定持仓，而是股票风控反复触发、国开债水库多次升至 80%。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s29" data-story="breakthrough" data-color="violet">
+      <div class="narrative">
+        <span class="step">Step 44</span>
+        <p class="stage">防抖对称性测试</p>
+        <h2>不追求对称美学，追求有效接回。</h2>
+        <p class="summary">早期尝试给 MA20 加防抖带，也比较过对称通道设计。后期放弃复杂防抖，回到更纯粹的 MA20 单线逻辑。</p>
+        <div class="metrics"><span>无风控回撤 -14.78%</span><span>现行机制回撤 -10.63%</span><span>夏普 1.07</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step44_fig01.png" alt="Step 44 风控逻辑对比"></div>
+        <figcaption class="visual-caption"><b>Step 44：</b>现行机制不为形式对称牺牲接回效率。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s30" data-story="validation" data-color="gold">
+      <div class="narrative">
+        <span class="step">Step 45</span>
+        <p class="stage">黄金能不能代替商品</p>
+        <h2>黄金不能完全替代商品核。</h2>
+        <p class="summary">纯黄金版本年化显著低于综合商品版本，说明商品核承担的是工业 Beta 和通胀弹性，不只是避险资产。</p>
+        <div class="metrics"><span>综合商品 13.57%</span><span>纯黄金 8.26%</span><span>纯南华 12.59%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step45_fig01.png" alt="Step 45 商品端三维对比"></div>
+        <figcaption class="visual-caption"><b>Step 45：</b>商品端消融证明，黄金不能承担完整商品篮子的功能。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s31" data-story="validation" data-color="violet">
+      <div class="narrative">
+        <span class="step">Step 46-47</span>
+        <p class="stage">宽基能不能替代行业轮动</p>
+        <h2>宽基 Beta 表现不弱，行业 Alpha 要谨慎看待。</h2>
+        <p class="summary">宽基版本表现接近甚至部分区间更强，说明行业景气轮动有效，但不能忽视样本期、后验和可执行性问题。</p>
+        <div class="metrics"><span>原版 Alpha 12.72%</span><span>宽基 Beta 13.11%</span><span>股票动作 78 次</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step47_fig01.png" alt="Step 47 宽基版全景联动图"></div>
+        <figcaption class="visual-caption"><b>Step 47：</b>宽基版全景图把行业轮动与被动宽基放到同一框架里审计。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s32" data-story="validation" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 48</span>
+        <p class="stage">国开债水库久期测试</p>
+        <h2>短债水库牺牲收益，但降低久期风险。</h2>
+        <p class="summary">5-7 年长债水库收益更高，0-3 年短债水库更稳。这个测试明确了水库的收益和风险权衡。</p>
+        <div class="metrics"><span>长债 Alpha 12.72%</span><span>短债 Alpha 11.95%</span><span>短债回撤 -10.75%</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step48_fig01.png" alt="Step 48 水库久期敏感性测试"></div>
+        <figcaption class="visual-caption"><b>Step 48：</b>水库久期测试把收益弹性和利率风险边界讲清楚。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s33" data-story="validation" data-color="teal">
+      <div class="narrative">
+        <span class="step">Step 49</span>
+        <p class="stage">宽基 + 短债水库审计图</p>
+        <h2>更偏稳健的替代路线也被保留下来。</h2>
+        <p class="summary">宽基股票端加 0-3 年短债水库，是一个更重可执行性和利率风险控制的版本。</p>
+        <div class="takeaway">这不是最终选择，但它定义了一个重要备选：少一点收益弹性，换更稳的水库久期。</div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/early/step49_fig01.png" alt="Step 49 宽基加短债水库审计图"></div>
+        <figcaption class="visual-caption"><b>Step 49：</b>宽基 + 短债水库版本给出实盘稳健替代路径。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s34" data-story="live" data-color="blue">
+      <div class="narrative">
+        <span class="step">实盘 Step 1</span>
+        <p class="stage">本地数据与木桶效应</p>
+        <h2>实盘组合先解决共同起点问题。</h2>
+        <p class="summary">所有 ETF 必须站在同一条时间轴上比较。组合以最晚具备有效数据的恒生科技 ETF 作为统一起点，避免用更长历史的资产抬高可比性。</p>
+        <div class="metrics"><span>统一起点 2021-05-25</span><span>1195 个交易日</span><span>统一样本窗口</span></div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>资产</th><th>有效起始日</th><th>角色</th></tr></thead>
+            <tbody>
+              <tr><td>沪深300ETF / 中证1000ETF / 创业板指ETF</td><td>2019-12-31</td><td>股票核</td></tr>
+              <tr><td>恒生科技ETF</td><td>2021-05-25</td><td>股票核短板</td></tr>
+              <tr><td>博时可转债ETF</td><td>2020-04-07</td><td>转债核</td></tr>
+              <tr><td>商品 ETF 篮子</td><td>2019-12 至 2020-01</td><td>商品核</td></tr>
+              <tr><td>中欧纯债LOF</td><td>2019-12-31</td><td>水库核</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>实盘 Step 1：</b>数据起点不是随意设定，而由最短板资产决定。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s35" data-story="live" data-color="blue">
+      <div class="narrative">
+        <span class="step">实盘 Step 2-3</span>
+        <p class="stage">最终组合成果</p>
+        <h2>研究最终收束成可执行的实盘四核版本。</h2>
+        <p class="summary">股票核采用四大宽基 ETF 等权，商品核采用四只商品 ETF 等权，转债核用博时可转债 ETF，水库核用中欧纯债 LOF。</p>
+        <div class="metrics"><span>实盘年化 14.07%</span><span>最大回撤 -11.15%</span><span>卡玛 1.26</span></div>
+      </div>
+      <figure class="visual">
+        <div class="visual-body"><img src="site_assets/figures/live/step03_fig01.png" alt="实盘四核终极形态回测图"></div>
+        <figcaption class="visual-caption"><b>实盘 Step 3：</b>最新组合用 ETF 和 LOF 完成可交易化，并保留四核水库逻辑。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s36" data-story="live" data-color="blue">
+      <div class="narrative">
+        <span class="step">实盘 Step 3 绩效表</span>
+        <p class="stage">最终结果放在最后</p>
+        <h2>四核版本不仅收益更高，收益风险比也更好。</h2>
+        <p class="summary">关键绩效单独列示，目的是让收益、回撤、夏普和卡玛比率都能被直接比较，而不是只看一条净值曲线。</p>
+        <div class="takeaway">最终组合不是首页口号，而是前面 49 个研究 Step 推导出来的结果。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>策略</th><th>年化</th><th>回撤</th><th>夏普</th><th>波动率</th><th>卡玛</th></tr></thead>
+            <tbody>
+              <tr><td>沪深300ETF（大盘基准）</td><td>-2.25%</td><td>-40.38%</td><td>-0.24</td><td>17.68%</td><td>-0.06</td></tr>
+              <tr><td>理论原版（无避险满仓）</td><td>10.47%</td><td>-18.40%</td><td>0.58</td><td>14.48%</td><td>0.57</td></tr>
+              <tr><td>实盘四核终极版（全入纯债底仓）</td><td>14.07%</td><td>-11.15%</td><td>0.88</td><td>13.68%</td><td>1.26</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>实盘绩效表：</b>收益提升、回撤压缩、卡玛比率显著改善。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s37" data-story="live" data-color="green">
+      <div class="narrative">
+        <span class="step">实盘 Step 4</span>
+        <p class="stage">调仓审计日志</p>
+        <h2>最终组合不只是净值，还有可执行账单。</h2>
+        <p class="summary">调仓日志记录宏观季度调仓、股端/商端 MA20 触发价、合成价格和最终仓位，让每一次仓位变化都有据可查。</p>
+        <div class="takeaway">这让组合从研究结果变成可复盘、可执行、可交接的投资流程。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <table>
+            <thead><tr><th>开始日期</th><th>交易天数</th><th>触发逻辑</th><th>股端MA20</th><th>股合成价</th></tr></thead>
+            <tbody>
+              <tr><td>2025-04-29</td><td>1</td><td>股端击穿 MA20，撤退至纯债</td><td>1.0996</td><td>1.0989</td></tr>
+              <tr><td>2025-04-30</td><td>16</td><td>股端收复 MA20，买回宽基</td><td>1.0963</td><td>1.1069</td></tr>
+              <tr><td>2025-06-19</td><td>4</td><td>股端击穿 MA20，撤退至纯债</td><td>1.1410</td><td>1.1227</td></tr>
+              <tr><td>2025-06-30</td><td>202</td><td>宏观季度调仓</td><td>不适用</td><td>1.1757</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figcaption class="visual-caption"><b>实盘 Step 4：</b>调仓日志把“为什么动、何时动、动到哪里”记录下来。</figcaption>
+      </figure>
+    </section>
+
+    <section class="slide" id="s38" data-story="live" data-color="green">
+      <div class="narrative">
+        <span class="step">结论</span>
+        <p class="stage">组合诞生的核心逻辑</p>
+        <h2>风险结构比单个信号更重要。</h2>
+        <p class="summary">三核模型解决收益来源，MA20 解决趋势破位识别，但真正让组合成型的是第四核：独立纯债水库。</p>
+        <div class="takeaway">组合诞生的关键，是把“风险资产之间互相接盘”改成“风险资产与独立水库之间切换”。</div>
+      </div>
+      <figure class="visual">
+        <div class="result-card">
+          <div class="final-metric-panel">
+            <div class="big-number">
+              <div class="num"><strong>53</strong><span>迭代与验证次数（Step）</span></div>
+              <div class="num"><strong>14.07%</strong><span>年化收益率</span></div>
+              <div class="num"><strong>-11.15%</strong><span>最大回撤</span></div>
+              <div class="num"><strong>0.88</strong><span>夏普比率</span></div>
+              <div class="num"><strong>13.68%</strong><span>波动率</span></div>
+              <div class="num"><strong>1.26</strong><span>卡玛比率</span></div>
+            </div>
+            <div class="metric-note">注：绩效指标回测区间从 2021Q2 开始。</div>
+          </div>
+        </div>
+        <figcaption class="visual-caption"><b>研究底稿：</b>早期研究记录、回测图表、实盘组合说明与调仓日志共同构成证据链。</figcaption>
+      </figure>
+    </section>
+  </main>
+
+  <div class="keyboard">滚轮翻页 · ↑ ↓ 键也可翻页</div>
+
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const progress = document.querySelector(".progress");
+    const storyLinks = Array.from(document.querySelectorAll(".story-nav a"));
+
+    slides.forEach((slide, index) => {
+      const dot = document.createElement("a");
+      dot.href = `#${slide.id}`;
+      dot.setAttribute("aria-label", `第 ${index + 1} 页`);
+      progress.appendChild(dot);
+    });
+
+    const dots = Array.from(document.querySelectorAll(".progress a"));
+
+    const activate = (id) => {
+      dots.forEach((dot) => dot.classList.toggle("active", dot.getAttribute("href") === `#${id}`));
+      const slide = document.getElementById(id);
+      const story = slide?.dataset.story;
+      storyLinks.forEach((link) => link.classList.toggle("active", link.dataset.story === story));
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) activate(visible.target.id);
+      },
+      { threshold: [0.55] }
+    );
+
+    slides.forEach((slide) => observer.observe(slide));
+    activate("s01");
+
+    window.addEventListener("keydown", (event) => {
+      if (!["ArrowDown", "PageDown", "ArrowUp", "PageUp"].includes(event.key)) return;
+      const current = slides.findIndex((slide) => {
+        const rect = slide.getBoundingClientRect();
+        return rect.top <= window.innerHeight * 0.45 && rect.bottom >= window.innerHeight * 0.45;
+      });
+      if (current < 0) return;
+      const dir = event.key === "ArrowDown" || event.key === "PageDown" ? 1 : -1;
+      const next = Math.min(slides.length - 1, Math.max(0, current + dir));
+      slides[next].scrollIntoView({ behavior: "smooth", block: "start" });
+      event.preventDefault();
+    });
+  </script>
+</body>
+</html>
