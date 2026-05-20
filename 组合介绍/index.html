@@ -490,7 +490,7 @@
       }
 
       .report-switcher {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-template-columns: repeat(auto-fit, minmax(112px, 1fr));
       }
 
       .report-tab {
@@ -507,47 +507,12 @@
     }
 
     @media (max-width: 640px) {
-      .sidebar {
-        max-height: 46svh;
-        padding: 14px;
-      }
-
-      .sidebar:not(.is-open) {
-        max-height: none;
-        overflow: visible;
-      }
-
-      .sidebar:not(.is-open) .report-switcher,
-      .sidebar:not(.is-open) .toc-wrap {
-        display: none;
-      }
-
-      .sidebar.is-open {
-        max-height: 72svh;
-        overflow: auto;
-        box-shadow: 0 14px 34px rgba(17, 24, 39, 0.12);
-      }
-
-      .brand-title {
-        font-size: 18px;
-      }
-
-      .brand-subtitle {
-        margin-bottom: 14px;
-      }
-
       .report-switcher {
         grid-template-columns: 1fr;
-        gap: 6px;
-        margin-bottom: 14px;
-      }
-
-      .report-tab {
-        min-height: 38px;
       }
 
       .report-title {
-        font-size: 26px;
+        font-size: 29px;
       }
 
       h2 {
@@ -562,99 +527,23 @@
       table {
         font-size: 15px;
       }
-
-      .content {
-        padding: 14px 10px 76px;
-      }
-
-      .report {
-        padding: 22px 14px 34px;
-      }
-    }
-  </style>
-  <style>
-    .mobile-toc-toggle {
-      display: none;
-    }
-
-    .site-home-link {
-      position: fixed;
-      left: 18px;
-      bottom: 18px;
-      z-index: 1000;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 40px;
-      padding: 0 14px;
-      border: 1px solid rgba(17, 24, 39, 0.12);
-      border-radius: 8px;
-      background: rgba(255, 255, 255, 0.92);
-      box-shadow: 0 14px 34px rgba(17, 24, 39, 0.16);
-      color: #111827;
-      font-size: 13px;
-      font-weight: 900;
-      text-decoration: none;
-      backdrop-filter: blur(12px);
-    }
-
-    .site-home-link:hover {
-      color: #0f766e;
-      border-color: rgba(15, 118, 110, 0.28);
-    }
-
-    @media (max-width: 640px) {
-      .mobile-toc-toggle {
-        display: flex;
-        width: 100%;
-        min-height: 38px;
-        align-items: center;
-        justify-content: space-between;
-        padding: 0 12px;
-        border: 1px solid rgba(15, 118, 110, 0.24);
-        border-radius: 8px;
-        background: #eef7f6;
-        color: #0f766e;
-        font: inherit;
-        font-size: 13px;
-        font-weight: 900;
-      }
-
-      .mobile-toc-toggle::after {
-        content: "⌄";
-        font-size: 16px;
-        line-height: 1;
-      }
-
-      .sidebar.is-open .mobile-toc-toggle::after {
-        content: "⌃";
-      }
-
-      .site-home-link {
-        left: 12px;
-        bottom: 12px;
-        min-height: 36px;
-        padding: 0 12px;
-        font-size: 12px;
-      }
     }
   </style>
 </head>
 <body>
-  <a class="site-home-link" href="../index.html">返回首页</a>
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand-title">普林格轮动报告</div>
-      <p class="brand-subtitle">三份报告整合呈现</p>
-      <button class="mobile-toc-toggle" type="button" aria-expanded="false">展开报告与目录</button>
+      <p class="brand-subtitle">四份报告整合呈现</p>
       <div class="report-switcher" aria-label="报告切换">
-        <button class="report-tab active" type="button" data-report-tab="main">主报告</button><button class="report-tab" type="button" data-report-tab="theory">理论补充</button><button class="report-tab" type="button" data-report-tab="factors">因子依据</button>
+        <button class="report-tab active" type="button" data-report-tab="main">主报告</button><button class="report-tab" type="button" data-report-tab="theory">理论补充</button><button class="report-tab" type="button" data-report-tab="factors">因子依据</button><button class="report-tab" type="button" data-report-tab="convertible">可转债研究</button>
       </div>
       <div class="toc-wrap">
         <div class="toc-title">目录</div>
         <nav class="toc-panel active" aria-label="主报告目录" data-toc-panel="main"><a class="toc-link level-0" href="#main-title" data-report-link="main">普林格新四核轮动模型投资报告</a><a class="toc-link level-1" href="#main-h-1" data-report-link="main">传统普林格周期模型</a><a class="toc-link level-2" href="#main-h-2" data-report-link="main">什么是传统普林格周期模型</a><a class="toc-link level-3" href="#main-h-3" data-report-link="main">模型原理</a><a class="toc-link level-4" href="#main-h-4" data-report-link="main">1. 核心传导逻辑</a><a class="toc-link level-4" href="#main-h-5" data-report-link="main">2. 六阶段资产轮动规律</a><a class="toc-link level-4" href="#main-h-6" data-report-link="main">3. 周期阶段识别机制</a><a class="toc-link level-4" href="#main-h-7" data-report-link="main">4. 周期运行特征</a><a class="toc-link level-3" href="#main-h-8" data-report-link="main">在投资中的运用示例</a><a class="toc-link level-4" href="#main-h-9" data-report-link="main">1. 回测设定</a><a class="toc-link level-4" href="#main-h-10" data-report-link="main">2. 回测结果</a><a class="toc-link level-2" href="#main-h-11" data-report-link="main">传统普林格周期模型的缺点</a><a class="toc-link level-3" href="#main-h-12" data-report-link="main">缺点1：牛市表现不佳</a><a class="toc-link level-3" href="#main-h-13" data-report-link="main">缺点2：资产端存在拖累</a><a class="toc-link level-3" href="#main-h-14" data-report-link="main">缺点3：过度依赖择时</a><a class="toc-link level-3" href="#main-h-15" data-report-link="main">对传统普林格的改良思路</a><a class="toc-link level-1" href="#main-h-16" data-report-link="main">普林格新四核轮动模型</a><a class="toc-link level-2" href="#main-h-17" data-report-link="main">新普林格模型做了什么改进</a><a class="toc-link level-3" href="#main-h-18" data-report-link="main">资产端</a><a class="toc-link level-3" href="#main-h-19" data-report-link="main">风控端</a><a class="toc-link level-2" href="#main-h-20" data-report-link="main">新普林格模型是如何运作的</a><a class="toc-link level-3" href="#main-h-21" data-report-link="main">⭐一图讲解</a><a class="toc-link level-3" href="#main-h-22" data-report-link="main">1. 实盘资产池构建</a><a class="toc-link level-3" href="#main-h-23" data-report-link="main">2. 季度调仓与日度对齐</a><a class="toc-link level-4" href="#main-h-24" data-report-link="main">季度调仓触发与执行</a><a class="toc-link level-4" href="#main-h-25" data-report-link="main">日度权重对齐</a><a class="toc-link level-3" href="#main-h-26" data-report-link="main">3. 核心风控：MA20定向避险机制</a><a class="toc-link level-4" href="#main-h-27" data-report-link="main">避险触发前提</a><a class="toc-link level-4" href="#main-h-28" data-report-link="main">避险判定规则</a><a class="toc-link level-4" href="#main-h-29" data-report-link="main">避险资金流向</a><a class="toc-link level-4" href="#main-h-30" data-report-link="main">避险解除规则</a><a class="toc-link level-2" href="#main-h-31" data-report-link="main">新普林格模型的效果如何</a><a class="toc-link level-3" href="#main-h-32" data-report-link="main">业绩概览</a><a class="toc-link level-3" href="#main-h-33" data-report-link="main">归因分析</a><a class="toc-link level-4" href="#main-h-34" data-report-link="main">收益率归因</a><a class="toc-link level-4" href="#main-h-35" data-report-link="main">资产类型贡献归因</a><a class="toc-link level-4" href="#main-h-36" data-report-link="main">投资回报率（ROI）归因</a><a class="toc-link level-1" href="#main-h-37" data-report-link="main">产品解析</a><a class="toc-link level-2" href="#main-h-38" data-report-link="main">风格概述</a><a class="toc-link level-2" href="#main-h-39" data-report-link="main">适用人群</a></nav>
 <nav class="toc-panel" aria-label="理论补充目录" data-toc-panel="theory"><a class="toc-link level-0" href="#theory-title" data-report-link="theory">普林格周期模型</a><a class="toc-link level-2" href="#theory-h-1" data-report-link="theory">（一）历史背景</a><a class="toc-link level-3" href="#theory-h-2" data-report-link="theory">1. 时代背景：动荡的 70 年代与“滞胀”的冲击</a><a class="toc-link level-3" href="#theory-h-3" data-report-link="theory">2. 它是为了解决当时什么问题？</a><a class="toc-link level-4" href="#theory-h-4" data-report-link="theory">问题一：宏观经济数据“太慢”了（时效性问题）</a><a class="toc-link level-4" href="#theory-h-5" data-report-link="theory">问题二：单一市场分析的“盲人摸象”（关联性问题）</a><a class="toc-link level-4" href="#theory-h-6" data-report-link="theory">问题三：对“通胀”缺乏动态的应对策略（资产配置问题）</a><a class="toc-link level-2" href="#theory-h-7" data-report-link="theory">（二）模型相关理论</a><a class="toc-link level-3" href="#theory-h-8" data-report-link="theory">第一阶段：雏形期——从“经济数据”到“跨市场价格” (1980s - 1990s)</a><a class="toc-link level-3" href="#theory-h-9" data-report-link="theory">第二阶段：成型期——“六阶段模型”的系统化 (1990s - 2002)</a><a class="toc-link level-3" href="#theory-h-10" data-report-link="theory">第三阶段：深化期——板块轮动与ETF实战化 (2005 - 2015)</a><a class="toc-link level-3" href="#theory-h-11" data-report-link="theory">第四阶段：前沿与修正期——量化机制转换与新常态 (2016 - 至今)</a><a class="toc-link level-2" href="#theory-h-12" data-report-link="theory">（三）模型原理</a></nav>
 <nav class="toc-panel" aria-label="因子依据目录" data-toc-panel="factors"><a class="toc-link level-0" href="#factors-title" data-report-link="factors">普林格周期判断的因子依据</a><a class="toc-link level-1" href="#factors-h-1" data-report-link="factors">宏观因子在普林格中发挥的作用</a><a class="toc-link level-1" href="#factors-h-2" data-report-link="factors">统一进行的技术处理</a><a class="toc-link level-2" href="#factors-h-3" data-report-link="factors">1. 数据清洗</a><a class="toc-link level-2" href="#factors-h-4" data-report-link="factors">2. 历史样本长度约束</a><a class="toc-link level-2" href="#factors-h-5" data-report-link="factors">3. 单边滚动处理，避免未来函数</a><a class="toc-link level-2" href="#factors-h-6" data-report-link="factors">4. 周期提取</a><a class="toc-link level-1" href="#factors-h-7" data-report-link="factors">增长因子合成方法</a><a class="toc-link level-2" href="#factors-h-8" data-report-link="factors">1. 增长因子的定位</a><a class="toc-link level-2" href="#factors-h-9" data-report-link="factors">2. 增长因子的原始指标池</a><a class="toc-link level-2" href="#factors-h-10" data-report-link="factors">3. 增长因子的预处理方法</a><a class="toc-link level-2" href="#factors-h-11" data-report-link="factors">4. 增长因子的周期提取与筛选</a><a class="toc-link level-2" href="#factors-h-12" data-report-link="factors">5. 增长因子的合成方式</a><a class="toc-link level-2" href="#factors-h-13" data-report-link="factors">6. 增长因子的投资含义</a><a class="toc-link level-1" href="#factors-h-14" data-report-link="factors">通胀因子合成方法</a><a class="toc-link level-2" href="#factors-h-15" data-report-link="factors">1. 通胀因子的定位</a><a class="toc-link level-2" href="#factors-h-16" data-report-link="factors">2. 通胀因子的原始指标池</a><a class="toc-link level-2" href="#factors-h-17" data-report-link="factors">3. 通胀因子的预处理方法</a><a class="toc-link level-2" href="#factors-h-18" data-report-link="factors">4. 广义通胀基准的构建</a><a class="toc-link level-2" href="#factors-h-19" data-report-link="factors">5. 通胀因子的周期提取与筛选</a><a class="toc-link level-2" href="#factors-h-20" data-report-link="factors">6. 通胀因子的合成方式</a><a class="toc-link level-2" href="#factors-h-21" data-report-link="factors">7. 通胀因子的投资含义</a><a class="toc-link level-1" href="#factors-h-22" data-report-link="factors">货币因子合成方法</a><a class="toc-link level-2" href="#factors-h-23" data-report-link="factors">1. 货币因子的定位</a><a class="toc-link level-2" href="#factors-h-24" data-report-link="factors">2. 货币因子的指标选择</a><a class="toc-link level-2" href="#factors-h-25" data-report-link="factors">3. 货币因子的处理方法</a><a class="toc-link level-2" href="#factors-h-26" data-report-link="factors">4. 货币因子的投资含义</a><a class="toc-link level-1" href="#factors-h-27" data-report-link="factors">因子方向判定与平滑窗口选择</a><a class="toc-link level-2" href="#factors-h-28" data-report-link="factors">为什么因子合成后还需要判断“方向”</a><a class="toc-link level-2" href="#factors-h-29" data-report-link="factors">方向判定的基本方法：使用因子斜率而非原始水平</a><a class="toc-link level-2" href="#factors-h-30" data-report-link="factors">信号可得性处理：增长与通胀滞后一个月，货币使用当月</a><a class="toc-link level-2" href="#factors-h-31" data-report-link="factors">方向信号的平滑：降低单月噪声干扰</a><a class="toc-link level-2" href="#factors-h-32" data-report-link="factors">为什么需要研究 Rolling 窗口</a><a class="toc-link level-2" href="#factors-h-33" data-report-link="factors">基于资产胜率的窗口寻优</a><a class="toc-link level-2" href="#factors-h-34" data-report-link="factors">参数寻优结果及其解释</a><a class="toc-link level-2" href="#factors-h-35" data-report-link="factors">内在周期测量：用 ACF 与傅里叶频谱验证窗口合理性</a><a class="toc-link level-2" href="#factors-h-36" data-report-link="factors">为什么最终采用 12-12-12 窗口</a><a class="toc-link level-2" href="#factors-h-37" data-report-link="factors">最终方向判定规则</a><a class="toc-link level-2" href="#factors-h-38" data-report-link="factors">小结</a></nav>
+<nav class="toc-panel" aria-label="可转债研究目录" data-toc-panel="convertible"><a class="toc-link level-0" href="#convertible-title" data-report-link="convertible">可转债资产研究报告</a><a class="toc-link level-1" href="#convertible-h-1" data-report-link="convertible">什么是可转债</a><a class="toc-link level-2" href="#convertible-h-2" data-report-link="convertible">可转债的定义</a><a class="toc-link level-2" href="#convertible-h-3" data-report-link="convertible">公司发行可转债的原因</a><a class="toc-link level-2" href="#convertible-h-4" data-report-link="convertible">可转债的赎回条款</a><a class="toc-link level-3" href="#convertible-h-5" data-report-link="convertible">赎回条款（发行人权利）</a><a class="toc-link level-3" href="#convertible-h-6" data-report-link="convertible">转股价格向下修正条款（下修，投资者保护）</a><a class="toc-link level-3" href="#convertible-h-7" data-report-link="convertible">回售条款（投资者权利）</a><a class="toc-link level-3" href="#convertible-h-8" data-report-link="convertible">中美条款核心差异与总结</a><a class="toc-link level-2" href="#convertible-h-9" data-report-link="convertible">可转债的反稀释保护</a><a class="toc-link level-1" href="#convertible-h-10" data-report-link="convertible">可转债的常见概念</a><a class="toc-link level-2" href="#convertible-h-11" data-report-link="convertible">投资价值（纯债价值）</a><a class="toc-link level-2" href="#convertible-h-12" data-report-link="convertible">投资溢价（纯债溢价率）</a><a class="toc-link level-2" href="#convertible-h-13" data-report-link="convertible">转股价格和转换比例</a><a class="toc-link level-2" href="#convertible-h-14" data-report-link="convertible">转换价值</a><a class="toc-link level-2" href="#convertible-h-15" data-report-link="convertible">转股溢价</a><a class="toc-link level-2" href="#convertible-h-16" data-report-link="convertible">转换价值和投资价值的关系</a><a class="toc-link level-1" href="#convertible-h-17" data-report-link="convertible">国外市场</a><a class="toc-link level-2" href="#convertible-h-18" data-report-link="convertible">可转债历史上相对于股票和公司债的表现</a><a class="toc-link level-2" href="#convertible-h-19" data-report-link="convertible">危机＆扩张时期可转债的表现</a><a class="toc-link level-2" href="#convertible-h-20" data-report-link="convertible">美国可转债市场未来情况的可能性</a><a class="toc-link level-2" href="#convertible-h-21" data-report-link="convertible">对投资者的启示</a><a class="toc-link level-1" href="#convertible-h-22" data-report-link="convertible">中国市场</a><a class="toc-link level-2" href="#convertible-h-23" data-report-link="convertible">研究样本及口径</a><a class="toc-link level-2" href="#convertible-h-24" data-report-link="convertible">截面静态研究</a><a class="toc-link level-3" href="#convertible-h-25" data-report-link="convertible">价格及特征表现</a><a class="toc-link level-3" href="#convertible-h-26" data-report-link="convertible">行业分布情况</a><a class="toc-link level-2" href="#convertible-h-27" data-report-link="convertible">动态变化研究</a><a class="toc-link level-3" href="#convertible-h-28" data-report-link="convertible">等权基准与正股联动的情况</a><a class="toc-link level-3" href="#convertible-h-29" data-report-link="convertible">价格分组研究</a><a class="toc-link level-3" href="#convertible-h-30" data-report-link="convertible">双低策略的表现情况</a><a class="toc-link level-3" href="#convertible-h-31" data-report-link="convertible">长期估值时序</a><a class="toc-link level-2" href="#convertible-h-32" data-report-link="convertible">配置价值分析</a><a class="toc-link level-1" href="#convertible-h-33" data-report-link="convertible">资料及数据来源</a></nav>
       </div>
     </aside>
     <main class="content">
@@ -735,6 +624,12 @@
 <p class="report-paragraph">组合将宏观模型中的四大类资产，映射为10只可直接交易的ETF，并通过等权合成方式构建四大核心收益引擎，所有数据均来自天天基金接口的ETF累计净值，每日自动更新。</p>
 <div class="table-wrap"><table><tr><th>宏观大类</th><th>对应实盘ETF（代码）</th><th>引擎合成规则</th></tr><tr><td>股票资产</td><td>沪深300ETF(510300)、中证1000ETF(512100)、创业板指ETF(159915)、恒生科技ETF(513010)</td><td>4只ETF每日等权平均合成股票引擎收益率</td></tr><tr><td>商品资产</td><td>大成有色ETF(159980)、华安黄金ETF(518880)、建信能化ETF(159981)、华夏豆粕ETF(159985)</td><td>4只ETF每日等权平均合成商品引擎收益率</td></tr><tr><td>进攻型债券</td><td>博时可转债ETF(511380)</td><td>直接取用单只ETF收益率</td></tr><tr><td>防御型债券（蓄水池）</td><td>国开债ETF博时(159650)</td><td>直接取用单只ETF收益率，作为避险资金唯一承接方</td></tr></table></div>
 <p class="report-paragraph">注：在实盘追踪时由于资金量限制将国开债ETF博时(159650)替换成为中欧纯债LOF（166016）</p>
+<aside class="jump-callout">
+  <div class="jump-copy">想要了解更多关于可转债这类资产的信息？</div>
+  <a class="jump-button cross-report-link" href="#convertible-title" data-target-report="convertible">
+    <span>查看《可转债资产研究报告》</span>
+  </a>
+</aside>
 <h4 id="main-h-23"><span style="color: #3370FF;">2. </span><strong>季度调仓与日度对齐</strong></h4>
 <p class="report-paragraph">组合的核心资产配置比例由普林格宏观周期模型驱动，采用<strong>季度定调、日度对齐</strong>的执行方式，严格遵循预设调仓规则。</p>
 <h5 id="main-h-24"><strong>季度调仓触发与执行</strong></h5>
@@ -1188,6 +1083,184 @@
 <p class="report-paragraph">本模型通过单月差分提取因子方向，通过数据滞后处理保证信号可得性，通过 12 个月 Rolling 平滑降低短期噪声，并进一步使用资产胜率寻优与 ACF/傅里叶周期分析验证窗口选择的合理性。</p>
 <p class="report-paragraph">虽然纯胜率寻优结果中 G6-I9-M3 的 Top 1 胜率最高，但 G12-I12-M12 在 Top 2 和 Top 3 胜率上同样表现稳健，并且在宏观周期解释、信号稳定性和投资者理解层面更具优势。</p>
 <p class="report-paragraph">因此，最终采用 <strong>12-12-12</strong> 作为三因子方向判定窗口。这一设定兼顾了数学分析结果和投资逻辑解释，使三因子框架更适合用于中长期宏观资产配置。</p></article>
+<article class="report" data-report="convertible" aria-labelledby="convertible-title"><h1 id="convertible-title" class="report-title"><strong>可转债资产研究报告</strong></h1>
+<h2 id="convertible-h-1"><strong>什么是可转债</strong></h2>
+<h3 id="convertible-h-2"><strong>可转债的定义</strong></h3>
+<p class="report-paragraph">可转换公司债券（简称“可转债”），是由中国境内A股上市公司发行、兼具债性与股性双重属性的混合融资工具，本质上属于特殊的公司债券，同时附带投资者可将债券转换为发行方普通股的权利。</p>
+<p class="report-paragraph">从债性来看，可转债具备普通信用债的核心特征：约定固定面值、票息率与到期日，发行公司需按契约约定定期支付利息（国内主流为半年付息一次），到期时全额偿还债券面值。国内可转债标准面值为100元人民币，主流期限为6年，区别于海外市场历史10年、当前5年的期限惯例。与普通债券一致，发行方若逾期违约、无法足额兑付利息或本金，将触发信用违约流程，因此可转债天然具备本金保护属性，这是债券类资产的核心安全底线。</p>
+<p class="report-paragraph">从股性来看，可转债内嵌看涨期权，赋予投资者在转股期内，按发行时约定的转股价格，将债券面值全额转换为发行公司A股普通股的权利。这一转换权让可转债价格与正股（发行方普通股）价格紧密挂钩，正股上涨时，可转债价格会跟随抬升，投资者可通过转股或直接卖出可转债分享股价上涨收益；正股下跌时，可转债则依托债性形成价格支撑，跌幅通常小于正股。</p>
+<p class="report-paragraph">作为兼具双重属性的工具，可转债的票息水平显著低于同发行主体、同期限的普通不可转换公司债，国内利差通常在200-400个基点，这是投资者为获取潜在转股收益所支付的“期权溢价”，也是可转债区别于纯债资产的关键特征。</p>
+<h3 id="convertible-h-3"><strong>公司发行可转债的原因</strong></h3>
+<p class="report-paragraph">公司发行可转债有多种原因。可转债通常比可比不可转换债务提供更低票息，因此公司支付的利息较少。公司也可能偏好可转债，因为赎回特征提供了一种将债务转为权益的现成方式。对于需要资本来维持增长计划的公司，可转债提供了一种控制债务/权益比率的工具。随着股价上涨，可转债被赎回，债务转化为权益，从而改善资产负债表；之后公司可以再发行另一只可转债，以满足进一步资本需求。</p>
+<p class="report-paragraph">宣布任何类型融资通常都可能导致股价下跌。不过，可转债发行公告对股价的影响通常小于其他融资方式，这也是公司考虑发行可转债的又一优势。此外，可转债融资常常可以缓解一次性向市场增加大量普通股供给所造成的负面影响。</p>
+<p class="report-paragraph">可转债融资对成长型公司尤其有吸引力，因为这类公司通常资本需求旺盛。即便收入上升，许多成长型公司仍可能出现负现金流，因为支持销售增长所需的投资通常超过当前经营性净现金流。对这类公司来说，获得资本对于其股价至关重要。此外，发行人通常可以直接面向机构投资者迅速将可转债推向市场，这种去中介化相对于发行窗口更长的其他融资方式具有很强吸引力。</p>
+<h3 id="convertible-h-4"><strong>可转债的赎回条款</strong></h3>
+<h4 id="convertible-h-5"><strong>赎回条款（发行人权利）</strong></h4>
+<p class="report-paragraph">赎回、下修与回售是中国 A 股可转债的重要条款，构成了“上涨促转股、下跌可下修、长期低迷可回售”的条款体系。与美国市场相比，中国可转债更强调股价路径触发下的下修与回售机制；美国公开市场可转债则通常不采用中国式股价下跌触发型下修条款，也较少设置中国式正股低迷触发回售条款，但常见赎回保护、fundamental change put 以及 make-whole fundamental change 等安排。</p>
+<p class="report-paragraph">赎回条款赋予发行人到期前按约定条件赎回债券的权利，是影响可转债价格的关键因素。中美赎回保护分<strong>硬保护</strong>（固定期限内禁止赎回）与<strong>软保护</strong>（仅特定股价条件下可赎回）：美国普遍设1-3年硬赎回保护，中国无硬保护，转股期（发行6个月后）前形成实质赎回限制。</p>
+<p class="report-paragraph">中国可转债赎回核心为<strong>有条件强赎</strong>：转股期内，正股连续30个交易日中至少15个交易日收盘价≥当期转股价的130%，发行人有权按<strong>面值+当期应计利息</strong>赎回未转股债券。其核心目的是<strong>倒逼投资者转股</strong>，降低债务压力、改善资本结构。</p>
+<p class="report-paragraph">以兴业银行发行的可转债为例：</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image1.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image1.png" alt="Drawing 0" loading="lazy" width="552" height="419"></button></figure>
+<p class="report-paragraph">美国软赎回触发门槛更高（正股≥转股价140%-150%），常附带<strong>make-whole补偿</strong>（剩余票息现值等）；中国无此补偿，赎回价固定，投资者未及时转股或卖出将面临损失。此外，中国发行人触发强赎需及时披露，且决定不行使赎回权后，短期内不得再次行使赎回权。</p>
+<h4 id="convertible-h-6"><strong>转股价格向下修正条款（下修，投资者保护）</strong></h4>
+<p class="report-paragraph">下修条款是中国 A 股可转债非常典型、普遍的特色条款。相较之下，美国公开市场可转债通常不设置中国式的股价持续低于转股价后由发行人推动下修的机制。</p>
+<p class="report-paragraph">常见触发条件：任意连续30个交易日中，至少15个交易日收盘价≤当期转股价的80%-85%。下修需经股东大会2/3以上表决权通过（可转债股东回避），且修正后转股价不得低于股东大会召开日前20日与前1日正股均价，避免过度稀释股权。</p>
+<p class="report-paragraph">核心作用：发行人规避到期还本压力，投资者获得期权价值保护；美国可转债通常无下修条款，正股下跌时投资者无额外兜底机制。</p>
+<p class="report-paragraph">以兴业银行发行的可转债为例：</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image2.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image2.png" alt="Drawing 1" loading="lazy" width="552" height="368"></button></figure>
+<h4 id="convertible-h-7"><strong>回售条款（投资者权利）</strong></h4>
+<p class="report-paragraph">回售条款是投资者的“退出权”，正股长期低迷时，可按约定价格将可转债回售给发行人，构成债底保护。</p>
+<p class="report-paragraph">中国回售分两类：一是有条件回售，存续期最后2年，正股连续30个交易日收盘价≤转股价70%-80%，投资者可按面值+应计利息回售；二是附加回售，发行人变更募资用途时，投资者可额外行使一次回售权。</p>
+<p class="report-paragraph">但不是所有可转债都有有条件回售条款，以兴业银行为例，只有附加回售条款：</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image3.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image3.png" alt="Drawing 2" loading="lazy" width="552" height="179"></button></figure>
+<p class="report-paragraph">而有条件回售与下修高度联动：正股下跌触发回售压力时，发行人常推动下修转股价，提升转股价值、缓解兑付压力，形成“<strong>下跌→回售压力→下修→支撑债价</strong>”的传导逻辑。</p>
+<h4 id="convertible-h-8"><strong>中美条款核心差异与总结</strong></h4>
+<p class="report-paragraph">中国可转债通过赎回、下修和回售形成较完整的条款博弈体系：赎回偏向发行人权利，下修由发行人主导但可能保护转股价值，回售则体现投资者退出权。</p>
+<p class="report-paragraph">美国可转债侧重发行人权利，无下修、回售，依赖硬赎回保护与make-whole补偿，条款设计更灵活但投资者保护较弱。</p>
+<h3 id="convertible-h-9"><strong>可转债的反稀释保护</strong></h3>
+<p class="report-paragraph">反稀释条款通过允许在特定情形下上调或下调转换比例来保护可转换证券持有人。历史上，可转债通常通过按股票股利比例调整转换比例来防范拆股导致的稀释。如果某只可转债在二拆一之前转换比例为每张债券 30 股，拆股后转换比例将变为每张债券 60 股。股票收购情形下，可转债持有人长期以来也获得反稀释保护，只是程度不一。</p>
+<p class="report-paragraph">在美国市场，近几十年来，反稀释保护有所加强。虽然可转债持有人长期受到股票拆分和股票收购所致稀释的保护，但直到相对近期，他们才开始受到现金股息或现金收购所致稀释的保护。这些增强保护很大程度上由一家公司推动。2003 年，一家赌场公司在发行可转债后不久发放现金股息，由此造成的稀释激怒了持有该可转债的套利投资者。此后，市场参与者基本迫使承销商在现金股息情形下加入保护。股息保护在发行人发行可转债后提高或开始支付股息时保护债券持有人。若发生这种情况，发行人会提高转换比例以抵消股息增加，之后任何更高水平的股息也会按此调整。</p>
+<p class="report-paragraph">一年后，同一家赌场公司被现金收购，可转债持有人再次没有受到保护。为避免类似情况再发生，投资者开始要求在现金收购情形下也提供反稀释保护。现金收购保护的核心是补偿投资者本应遭受的经济损失。每只可转债都有一个矩阵，也称 make-whole 表（见下表）。如果可转债发行人被现金收购，可转债持有人可以转换，并根据矩阵在原有转换比例之外获得额外股份。其目的在于抵消可转债内嵌看涨期权时间价值的损失。该矩阵也常用于某些债券软性赎回保护的 make-whole 补偿。</p>
+<p class="report-paragraph">这些变化显著增强了债券持有人保护。在其他条件相同的情况下，今天发行的可转债比 2003 年以前发行的可转债更有价值。</p>
+<p class="report-paragraph"><strong>假设可转债发行的 make-whole 矩阵：每 1,000 美元本金票据在不同股价和生效日期下转换比例增加的额外股份数</strong></p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image4.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image4.png" alt="Drawing 3" loading="lazy" width="552" height="223"></button></figure>
+<p class="report-paragraph">中国可转债市场的反稀释条款安排与美国市场存在一些区别。在股票拆分、送股等情形下，中国可转债同样会按照对应比例调整转换比例，以防范股权稀释，这一机制与美国市场基本一致。对于现金股息发放，中国可转债设有标准化的强制保护规则，发行人派发每股现金红利时，将相应下调转股价格，等效于提高转换比例，以此对冲现金分红带来的稀释影响，该条款为境内可转债普遍适用的常规安排。</p>
+<p class="report-paragraph">而在现金收购场景中，中国可转债并无美国市场标配的 make-whole 补偿机制，不存在专门的补偿矩阵，当发行人遭遇现金收购时，可转债持有人仅能按照约定的常规转股价格进行转换，无法获得额外股份补偿，也没有针对可转债内嵌看涨期权时间价值损失的相关补偿设计，这是中美可转债反稀释保护体系的关键差异。</p>
+<h2 id="convertible-h-10"><strong>可转债的常见概念</strong></h2>
+<h3 id="convertible-h-11"><strong>投资价值（纯债价值）</strong></h3>
+<p class="report-paragraph">可转债的投资价值是其作为债券的价值，即可转债的固定收益组成部分。需要注意，投资价值只指可转债估值的这一方面，并不等同于可转换证券的市场价值。从概念上讲，它是不含转换特征的债券价值。投资价值按照标准固定收益分析确定，即假设该债券不可转换时应具有的价值，考虑因素包括公司基本面、债券类型（有抵押或无抵押债券）、票息和到期日、偿债基金要求、赎回条款以及到期收益率。普通债券的市场价值会随这些因素变化而波动。不过，由于可转债的投资价值内嵌在总市场价值中，是总价值的一部分，固定收益决定因素的变化不一定会直接影响可转债市场价格。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image5.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image5.png" alt="Drawing 4" loading="lazy" width="552" height="274"></button></figure>
+<p class="report-paragraph">以上图像用水平线形式展示了普通股价格与债券投资价值之间的关系。纵轴为可转债价值，横轴为股票价格，变量变化的影响可以清楚呈现。为简化起见，如果假设利率稳定，债券投资价值会在很大股票价格范围内保持稳定。公司的财务稳定性和多数其他债券质量因素变化缓慢，甚至不变。因此，在较短时期内投资价值通常保持不变，在图中表现为水平线。普通股价值上升不会影响债券价值，尽管可转债市场价格会受到影响。若信用状况恶化，股价开始向零下沉，显而易见的可能原因是公司财务基本面异常恶化，使全额本金回收前景受到质疑。此时，可转债价值也必须接近其破产价值。</p>
+<p class="report-paragraph">如果某只股票因整体负面市场情绪而下跌，尤其在短期内不应影响投资价值。只要发行人信用状况未变，投资价值会继续在可转债市场价格下方提供投资底线，可转债不应跌破其投资价值。这构成了可转债中的基本安全要素。此外，转换特征应确保可转换证券始终比收益相当的不可转换债券更有价值。</p>
+<p class="report-paragraph">然而，也有若干因素会影响可转换证券的投资价值。如果普通股因公司因素（非系统性风险）、盈利不佳或其他原因下跌，债券投资价值也会受到影响，类似于普通债券价值受到评级下调影响。事实上，公司基本面恶化应导致评级下调。由这些因素造成的股价下跌也会使投资价值下降，反映公司可能无法支付票息或本金。极端情况下，公司价值和债券投资价值都将趋近于零。研究表明，公司基本面的剧烈变化会立即影响债券投资价值。在评估可转债时忽视这些基本面的投资者将在市场上处于明显劣势。评级机构可以提供帮助，但其反应未必足够及时。</p>
+<p class="report-paragraph">在进行可转换证券数学分析时，为方便起见，可以假设短期投资价值稳定，并假设股票价格波动源于一般市场情绪。长期来看，投资价值会波动，而且无论普通股如何变化，到债券到期时投资价值必须升至面值。利率当然也会像影响普通债券一样影响可转债投资价值。利率上升时，投资价值下降；利率下降时，投资价值上升。投资价值与同等质量普通公司债价格同步波动。</p>
+<p class="report-paragraph">但由于可转债的独特性质，投资价值变化未必意味着市场价格也会变化。投资价值可能波动，但可转债市场价格可能相对稳定，因为利率变化只是任一时点影响市场价格的众多因素之一。接近投资价值交易的债券，会比接近转换价值并明显高于投资价值交易的债券更容易受到利率变化影响。如果正股在利率上升时也上涨，可转债将由其权益部分而非固定收益部分驱动，并可能升值。</p>
+<p class="report-paragraph">需要认识到，可转债发行时的投资价值很少接近面值。可转债不是按其票息率折现，而必须按适用于发行人不可转换债务的利率折现。例如，如果公司发行了一只票息为 2% 的可转债，而其不可转换债务收益率为 5%，那么该可转债应按 5% 折现。对于一只五年期、面值 1,000 美元的债券，其投资价值为 868.72 美元。</p>
+<p class="report-paragraph">正确估算投资底线在评估可转债时极其重要；它构成可转债不应跌破的最低价值，不受普通股波动影响，并影响所有其他可转债数学分析。由于投资价值是一切其他计算的枢纽，理解各种因素如何影响它十分重要。</p>
+<h3 id="convertible-h-12"><strong>投资溢价（纯债溢价率）</strong></h3>
+<p class="report-paragraph">可转债的投资溢价是可转债市场价格与其投资价值之间的差额，以百分比表示。衡量可转债基本价值的一个重要指标就是其高于投资价值的溢价。它指可转债市场价格与投资价值之间差额占投资价值的比例。这个数值很重要，因为它表明下行风险水平，并可以随市场价格变化持续监控。例如，一只面值 1,000 美元、投资价值为 868.72 美元的债券，其投资溢价为（1,000 - 868.72）/ 868.72 = 15.1%。</p>
+<p class="report-paragraph">投资溢价越高，可转债市场价格对标的普通股下跌越敏感。市场价格相对于投资价值较高，是因为正股价值上涨使可转债市场价值依赖股票价值。此时下行保护较少，因为股票必须大幅下跌，可转债市场价格才会接近投资价值并获得保护。相反，当投资溢价较小时，正股小幅下跌就会使市场价格接近投资价值，此时投资价值底线会提供下行保护。此外，当投资溢价较小时，可转债更具利率敏感性而非权益敏感性，通常更容易受到市场利率变化影响。Delta 是衡量可转换证券对其正股敏感性的指标，Delta 越高，权益敏感性越强。</p>
+<h3 id="convertible-h-13"><strong>转股价格和转换比例</strong></h3>
+<p class="report-paragraph">可转债的转股价格，是债券按面值转换为股票时的有效价格。发行时，招股说明书会列示债券面值对应的普通股价格。该价格进而决定每张面值债券可以转换为多少股股票；这就是转换比例。</p>
+<p class="report-paragraph">美国投资者常常困惑于：转股价格写在债券文件中，而转换比例通常没有直接写出，必须计算。转股价格只有在债券按面值计算时才有意义，转换比例可由面值除以转股价格得出。例如，如果普通股转换价格为 50 美元，那么每张可转债代表 20 股股票（1,000 美元面值除以 50 美元转股价格 = 20）。投资者常常关注转股价格，但实际上更应关注转换比例。从债券上市那一刻起，它会根据市场力量高于或低于面值交易。由于无论债券是否按面值交易，转换比例都保持不变，因此转换比例对投资者更重要。</p>
+<p class="report-paragraph">转换比例决定可转债持有人在将债券转换为股票时可获得的普通股数量。转换比例在证券发行时确定，并通常受到反稀释保护。它可能包含零碎股份，例如 21.3 股。转换比例通常会因拆股和股票股利而调整。在前述例子中，初始转换比例为每张可转债 20 股。若发生 10% 股票股利，转换比例将调整为 22 股。2003 年以前，可转债持有人很少受到普通现金股息保护；如今，他们通常受到普通现金股息、特别股息和分拆的保护。</p>
+<p class="report-paragraph">公式：转换比例 = 面值 / 转股价格。</p>
+<p class="report-paragraph">在中国市场，情况大同小异，以兴业银行发行的可转债为例：</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image6.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image6.png" alt="Drawing 5" loading="lazy" width="552" height="288"></button></figure>
+<p class="report-paragraph">以兴业银行A股可转换公司债券为例，其募集说明书规定，本次可转债每张面值为100元，按面值发行，初始转股价格为25.51元/股。该初始转股价格的确定受到多重约束：不得低于募集说明书公告日前30个交易日、前20个交易日公司A股股票交易均价及前一交易日交易均价，同时不得低于最近一期经审计的每股净资产和股票面值。这体现出中国可转债初始转股价格通常具有明确的监管约束和发行定价边界。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image7.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image7.png" alt="Drawing 6" loading="lazy" width="552" height="272"></button></figure>
+<p class="report-paragraph">按照“转换比例 = 面值 / 转股价格”的逻辑，兴业银行单张100元面值可转债对应的理论转换比例约为100 / 25.51 = 3.92股。若投资者持有1手，即10张、合计1000元面值，则理论可转换股数为1000 / 25.51 = 39.20股。根据募集说明书的规定，实际转股数量按照Q = V / P计算，并以去尾法取一股的整数倍，因此实际可转为39股，不足转换为1股的可转债余额由公司以现金兑付。由此可见，中国市场的可转债文件中通常不直接列示“转换比例”，而是通过“转股价格”和“转股数量计算公式”共同确定投资者最终可获得的股票数量。</p>
+<h3 id="convertible-h-14"><strong>转换价值</strong></h3>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image8.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image8.png" alt="Drawing 7" loading="lazy" width="552" height="331"></button></figure>
+<p class="report-paragraph">转换价值代表可转债的权益部分。它是可转债按当前市场价格转换为普通股时的价值。在图 4.2 中，对角线表示转换价值。对于任何股价，转换价值都等于该股价乘以每张债券可获得的普通股数量。例如，如果一只债券可以转换为 20 股股票，而股票当前价格为每股 42 美元，那么该可转债的转换价值为 840 美元。每张债券可转换股数即转换比例，在发行时设定。</p>
+<p class="report-paragraph">与债券投资价值一样，转换价值也是该证券预期出售价格的最低价值或最低价格。如果市场价格低于转换价值，专业交易商和做市商会迅速套利：套利者买入债券，并同时卖空等量标的普通股。两个价值之间的差额构成套利者的无风险利润。因此，转换价值与投资价值一样，成为可转债市场价格不应跌破的最低价值。确定转换价值的关键在于权益分析。</p>
+<div class="table-wrap"><table><tr><th>平价：把一张面值 100 元的可转债，当场全部转成对应的正股股票，现在能卖出值多少钱</th></tr></table></div>
+<h3 id="convertible-h-15"><strong>转股溢价</strong></h3>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image9.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image9.png" alt="Drawing 8" loading="lazy" width="552" height="278"></button></figure>
+<p class="report-paragraph">既然可转债的权益价值被确定为转换价值，转股溢价就可以很容易计算：它是可转债当前市场价格与转换价值之间的差额，以百分比表示。由于可转债比普通股更安全，且通常支付的利息高于股票股息，可转债买方愿意为其支付高于转换价值的溢价。市场力量决定具体可转债在市场上能够获得多大溢价。</p>
+<p class="report-paragraph">当可转债价格上升并高于其投资价值时，其固定收益属性会让位于权益属性，转股溢价会下降。另一方面，如果股价下跌，可转债价格会接近其固定收益价值，转股溢价会上升。接近固定收益价值交易、转股溢价较高的可转债被称为“busted converts”（破损可转债）。其权益部分价值很低，主要按照固定收益特征交易。</p>
+<p class="report-paragraph">图 4.3 描绘了典型可转债价格曲线，阴影区域代表转股溢价。可以看到，随着股票价值上升，转股溢价逐步下降，直到变为零。此时，可转债市场价格与转换价值相等。随着普通股价值下降，可转债因接近投资价值而获得转股溢价。通过建模和可转债分析，主动管理人建立可转债的公允价值价格轨迹。</p>
+<p class="report-paragraph">从另一角度看，可转债市场价值应始终高于转换价值或投资价值。如果假设某只可转债市场价值恰好等于其投资价值，则投资溢价为零，该可转债将像一只普通不可转换债券一样交易。然而，可转换证券具有隐含期权，只要期权到期前仍有时间，从而赋予持有人权益潜力，该期权本身就具有价值。</p>
+<p class="report-paragraph">可转债价格曲线既可以估计某只可转换证券在不同股价下可能获得的转股溢价，也可以历史性描绘普通股随时间波动时可转债实际交易情况。它是评估可转换证券极为重要的考虑因素，因为它决定上行潜力与下行风险。要准确估计可转债价格曲线，需要详细的数学公式。仅依赖简单历史价格关系来分析转股溢价水平是否公平是不充分的。</p>
+<h3 id="convertible-h-16"><strong>转换价值和投资价值的关系</strong></h3>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image10.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image10.png" alt="Drawing 9" loading="lazy" width="552" height="350"></button></figure>
+<p class="report-paragraph">为了说明转换价值与可转债投资价值的关系，我们暂时忽略许多现实市场因素。图 4.4 展示了股价变动（横轴）对可转债市场价格（纵轴）的影响。箭头表示该可转债的理想买入价格。在这一价格上，如果股票升值，可转债价值将以相同比例上升；另一方面，如果普通股价值下跌，可转债将受到投资价值支撑，并保持其市场价值。</p>
+<p class="report-paragraph">在这个简化例子中，当可转债以理想点定价时，它显然是优越的买入对象，因为它提供与普通股相同的上行潜力，却没有下行风险。当然，现实世界不会给投资者如此容易的获利机会。在金融市场中，债券投资价值的安全性与转换价值的机会之间存在权衡。投资者愿意为这种权衡支付多少，形成高于转换价值和高于投资价值的溢价，这也是可转债投资中最复杂的方面。衡量这种价值的指标就是可转换证券的转股溢价。</p>
+<p class="report-paragraph">持有可转债有两个基本情景。第一，如果公司股票表现良好，可转债升值，而且作为债券也可以大幅升值，而无需真正转换为股票。许多刚接触可转债的投资者并未意识到，要实现利润并不需要转换为标的普通股。可转债市场价格会随股价变化而变化，债券可以随时出售。股票价值上升会反映在可转债市场价格中。当然，债券持有人也有权将债券转换为股票，但这并非必要；转换只有在持有人要求时才会发生。</p>
+<p class="report-paragraph">第二，如果股票表现不佳，债券持有人保留债券并收取票息（几乎总是高于股票股息），到期时收回面值。当股票持平或下跌时，债券持有人仍保留债券投资价值，这构成证券的底线价值。理论上，在不利权益市场中，由于存在投资价值，可转债价格下跌幅度不应像正股那样大。此外，如果利率上升，转换特征也在一定程度上保护债券本金。</p>
+<p class="report-paragraph">虽然原理简单，可转债管理却很复杂。可转债具有股票和债券双重属性，这正是其难以分析的原因之一，评估过程必须同时考虑两个部分。不过，这种双重属性也正是其作为投资品的吸引力所在。</p>
+<p class="report-paragraph">投资者可以计算可转换证券的债券部分价值和权益部分价值，但这仍未说明全部问题。估值的最后一环可能也是最难的：给证券本身定价。投资者必须确定债券理论公允价值或正常预期价格，即市场上公允定价的价值，同时考虑债券价值、权益价值、赎回条款、波动率和利率期限结构。然后将该理论公允价值与市场价格比较，以确定获利机会和市场优势。可转债相对于股票可能被高估或低估。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image11.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image11.png" alt="Drawing 10" loading="lazy" width="552" height="326"></button></figure>
+<p class="report-paragraph">图 4.5 展示了一只可转债实际价格的历史，并叠加了理论可转债价格轨迹。随着股票价值下降，投资价值也因信用恶化而下降。这表明信用分析和基本面分析的重要性。投资者还必须评估在不同市场情景下债券会涨跌多少。单只证券的风险收益特征取决于其相对于权益价值和债券价值的位置，这进而决定该证券及其所在投资组合的表现。</p>
+<p class="report-paragraph">正确选择可转债需要审慎分析，简单经验规则很可能导致令人失望的表现。例如，“只在转股溢价低于 20% 时买入可转债”，或“只在盈亏平衡时间少于三年时买入”。此外，在某一利率环境下成立的情景，在另一利率环境下可能失效。例如，20 世纪 70 年代的收益率曲线和 2015 年的收益率曲线对可转债估值会产生截然不同的影响。</p>
+<h2 id="convertible-h-17"><strong>国外市场</strong></h2>
+<h3 id="convertible-h-18"><strong>可转债历史上相对于股票和公司债的表现</strong></h3>
+<p class="report-paragraph">可转债一直参与了相当部分权益上行，同时以标准差衡量的风险较低。它们也跑赢了公司债。图 5.1 和图 5.2 展示了美国过去 10 年和 25 年期间可转债相对于股票和债券的表现。在这些时期，可转债表现出显著上行能力和下行韧性。此外，在某些滚动五年期间（图 5.3），可转债以较低标准差跑赢股票。</p>
+<p class="report-paragraph"><strong>图 5.1 资产类别相对表现与风险摘要（2005-2015）</strong></p>
+<div class="table-wrap"><table><tr><th>资产类别</th><th>年化收益</th><th>标准差</th></tr><tr><td>可转债</td><td>6.68%</td><td>12.63%</td></tr><tr><td>股票</td><td>7.31%</td><td>15.06%</td></tr><tr><td>长期公司债</td><td>6.18%</td><td>10.45%</td></tr><tr><td>中期公司债</td><td>4.99%</td><td>4.72%</td></tr></table></div>
+<p class="report-paragraph"><strong>图 5.2 资产类别相对表现与风险摘要（1990-2015）</strong></p>
+<div class="table-wrap"><table><tr><th>资产类别</th><th>年化收益</th><th>标准差</th></tr><tr><td>可转债</td><td>9.11%</td><td>12.01%</td></tr><tr><td>股票</td><td>9.62%</td><td>14.54%</td></tr><tr><td>长期公司债</td><td>7.92%</td><td>8.61%</td></tr><tr><td>中期公司债</td><td>6.59%</td><td>4.22%</td></tr></table></div>
+<p class="report-paragraph"><strong>图 5.3 五年区间风险与收益（1991-2015）</strong></p>
+<div class="table-wrap"><table><tr><th>期间</th><th>可转债收益/标准差</th><th>股票收益/标准差</th><th>长期公司债收益/标准差</th><th>中期公司债收益/标准差</th></tr><tr><td>1991-1995</td><td>17.35% / 7.78%</td><td>16.59% / 10.10%</td><td>12.63% / 6.35%</td><td>10.19% / 4.03%</td></tr><tr><td>1996-2000</td><td>13.65% / 14.84%</td><td>18.32% / 16.08%</td><td>5.29% / 6.34%</td><td>5.95% / 3.38%</td></tr><tr><td>2001-2005</td><td>4.22% / 10.63%</td><td>0.54% / 14.94%</td><td>9.21% / 8.84%</td><td>6.45% / 4.19%</td></tr><tr><td>2006-2010</td><td>5.71% / 15.42%</td><td>2.29% / 17.82%</td><td>6.07% / 12.36%</td><td>6.07% / 6.01%</td></tr><tr><td>2011-2015</td><td>7.65% / 9.17%</td><td>12.57% / 11.70%</td><td>6.29% / 8.22%</td><td>3.93% / 2.94%</td></tr></table></div>
+<h3 id="convertible-h-19"><strong>危机＆扩张时期可转债的表现</strong></h3>
+<p class="report-paragraph">过去30年，可转债在市场下行期相较股票表现出持续的相对优势。这来自其债底提供的内在价值保护，同时仍能参与潜在股票修复。对1994-2025年长期总回报的分析显示，可转债和股票之间既有相似之处，也有显著差异。报告用MSCI全球所有国家指数代表股票，所有数值以欧元计价。可转债在市场下行期往往表现更强。报告识别了五次重大经济冲击：互联网泡沫危机、全球金融危机、2020年疫情冲击、2022年俄乌战争和通胀上升，以及2025年4月“解放日”。显然，股价大幅波动对可转债表现的影响较小。</p>
+<p class="report-paragraph">在稳定债底保护下（灰线代表JPM全球投资级债券指数），可转债只承担股票回撤的一部分。“解放日”冲击最能说明这一点：股票下跌12%，而可转债仅下跌3%。这一回报相当于30%股票和70%债券的组合，正好反转了其长期平均70%股票收益参与率。过去危机也呈现类似模式；只有2008年金融危机中，可转债回报特征与长期平均相符，承担了约70%的股票下跌。该时期出现大规模避险，即便可转债也低于公允价值交易，此后未再观察到类似情况。金融危机后至疫情前，市场情绪发生变化，可转债相对股票的累计落后达到243个百分点（见图5）。</p>
+<p class="report-paragraph">下图中展示了Refinitiv全球欧元对冲可转债指数、MSCI AC World欧元指数和JPM全球投资级欧元对冲债券指数自1994年以来的表现，并标注经济危机阶段。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image12.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image12.png" alt="Drawing 11" loading="lazy" width="552" height="267"></button></figure>
+<p class="report-paragraph">危机和扩张期间主要资产类别历史表现如下：</p>
+<div class="table-wrap"><table><tr><th>类别</th><th>时期/事件</th><th>可转债</th><th>股票</th><th>债券</th></tr><tr><td>危机</td><td>2000-2003 互联网泡沫危机</td><td>-12%</td><td>-58%</td><td>24%</td></tr><tr><td>危机</td><td>2007-2009 全球金融危机</td><td>-33%</td><td>-53%</td><td>12%</td></tr><tr><td>危机</td><td>2020 疫情冲击</td><td>-20%</td><td>-33%</td><td>2%</td></tr><tr><td>危机</td><td>2022 俄乌战争/通胀与加息</td><td>-19%</td><td>-15%</td><td>-10%</td></tr><tr><td>危机</td><td>2025 解放日</td><td>-3%</td><td>-11%</td><td>0%</td></tr><tr><td>扩张</td><td>2004-2007 金发姑娘经济</td><td>60%</td><td>114%</td><td>13%</td></tr><tr><td>扩张</td><td>2010-2020 低利率时代</td><td>179%</td><td>422%</td><td>40%</td></tr><tr><td>扩张</td><td>2021 疫情后再通胀</td><td>72%</td><td>61%</td><td>-1%</td></tr></table></div>
+<p class="report-paragraph">可转债也可能同时跑输股票和债券。如表所示，当风险偏好骤降而利率同时跳升时，可转债会面临挑战。2022年就是典型“完美风暴”：俄乌战争、通胀和政策加息共同触发调整，冲击债底并显著削弱保护功能。在此之前，2020和2021年可转债大幅上涨，甚至一度跑赢股票（+72%对+61%）。</p>
+<p class="report-paragraph">可转债因子暴露的Fama-French分析:</p>
+<div class="table-wrap"><table><tr><th>因子</th><th>系数</th><th>标准误</th><th>t统计量</th><th>P值</th></tr><tr><td>截距</td><td>-0.24</td><td>0.10</td><td>-2.44</td><td>1.51%</td></tr><tr><td>市场风险溢价</td><td>1.03</td><td>0.02</td><td>41.8</td><td>0.00%</td></tr><tr><td>小盘减大盘（SMB）</td><td>0.16</td><td>0.04</td><td>4.42</td><td>0.00%</td></tr><tr><td>高账面市值比减低账面市值比（HML）</td><td>-0.06</td><td>0.04</td><td>-1.54</td><td>12.36%</td></tr><tr><td>稳健减弱势（RMW）</td><td>-0.25</td><td>0.04</td><td>-5.65</td><td>0.00%</td></tr><tr><td>保守减激进（CMA）</td><td>-0.03</td><td>0.06</td><td>-0.54</td><td>59.17%</td></tr><tr><td>动量</td><td>-0.06</td><td>0.02</td><td>-2.82</td><td>0.51%</td></tr></table></div>
+<p class="report-paragraph">因子分析显示，可转债的股票部分集中于规模较小、盈利能力较弱的公司，这些公司在紧缩环境中承压，且在2022和2023年缺乏大型科技股动能。为理解这一时期表现，需要考察Refinitiv全球宽基可转债指数的基础股票（Equity Parity Index）及其因子暴露。一个简单的Fama-French五因子加动量回归揭示了若干特征：其股票篮子市场Beta略高于1，表示对整体市场走势敏感性较高；对SMB因子为正，说明偏向小盘股；最值得注意的是，对RMW因子为负，说明基础股票主要为规模较小、成熟度较低、盈利能力尚弱的公司。这类股票在宽松金融条件下往往大幅上涨，但市场情绪转变时也更容易出现严重回撤。</p>
+<p class="report-paragraph">2022年可转债跑输全球股票（MSCI ACWI），是因为其基础股票部分回吐了2020-2021年涨幅，同时债底崩塌进一步冲击表现。因子暴露也解释了其在随后牛市（2023年中至2024年）中偏离市场的原因：相对落后主要源于缺乏对“七巨头”的暴露。</p>
+<div class="table-wrap"><table><tr><th>注：七巨头（Magnificent Seven）——苹果 Apple（AAPL）、微软 Microsoft（MSFT）、英伟达 Nvidia（NVDA）、谷歌母公司 Alphabet（GOOGL）、亚马逊 Amazon（AMZN）、Meta（原 Facebook，META）、特斯拉 Tesla（TSLA）</th></tr></table></div>
+<h3 id="convertible-h-20"><strong>美国可转债市场未来情况的可能性</strong></h3>
+<p class="report-paragraph">如果AI驱动的大型科技股主导地位消退、宏观环境趋于稳定，可转债可能受益于被低估的小盘股暴露，并获得跑赢机会。可转债前景与股票和信用市场紧密相关。如果超大型股票引领上涨，可转债可能因股票敏感性较低而落后；相反，可转债基础股票中的小盘暴露未来可能跑赢大盘。当前小盘股相对大盘股存在显著折价，尤其体现在市净率（P/B）方面。美国小盘股相对大盘股的市净率比值低于0.4，意味着其估值便宜约60%（见图10）。</p>
+<p class="report-paragraph">自2024年以来，超大型科技股贡献了大盘股长期每股收益增长预期的大部分，而小盘股预期更谨慎。小盘股长期EPS增长处于较温和水平，低于大盘股，尤其低于疫情后时期（2021-2023年）。考虑到AI推动的大盘股增长预期显著抬升，小盘股当前预期可被视为更现实、更审慎。总体而言，如果大盘股失去主导地位，小盘股可能重新获得增长溢价，从而带来更强收益。历史上，在经济稳定阶段，小盘股曾跑赢大盘股，例如互联网泡沫后的2004-2006年，以及金融危机后的2009-2011年。如果当前不确定的宏观环境正常化，小盘股最终可能受益并再次跑赢。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image13.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image13.png" alt="Drawing 12" loading="lazy" width="552" height="282"></button></figure>
+<p class="report-paragraph">大盘股和小盘股的长期 EPS 增长预期在不同时期会变化，而橙色线显示市场给小盘股相对大盘股的估值溢价/折价也随之变化。近年来，即使小盘股盈利增长预期没有彻底崩塌，但市场给予小盘股的远期市盈率相对大盘股已经明显下降。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image14.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image14.png" alt="Drawing 13" loading="lazy" width="552" height="255"></button></figure>
+<h3 id="convertible-h-21"><strong>对投资者的启示</strong></h3>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>可转债能拓展有效前沿</strong></p>
+<p class="report-paragraph">可转债能够增强多资产组合的分散化，在追求目标收益的同时降低风险。这类工具位于股票和固定收益之间，有助于在两类资产之间实现更平滑的过渡。由于可转债能够通过凸性行为适应市场波动，它们可以改变自身收益特征，为组合收益构成引入新的维度。这一动态结合了股票和债券属性，并扩展了有效前沿。有效前沿代表在特定风险水平下能够提供最高预期收益的一组最优投资组合。</p>
+<p class="report-paragraph">图16展示了1999年3月至2025年8月两个组合的有效前沿。组合1包括股票、公司债和政府债；组合2加入可转债。分析显示，包含可转债的组合表现更优，再次表明可转债不只是股票和固定收益的简单组合，而是一个独立资产类别，能够提供实质性分散化收益。这不仅源于可转债凸性收益特征，也源于其对小盘股的倾斜；因子分析显示，小盘股在多数保守组合中代表性不足。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image15.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image15.png" alt="Drawing 14" loading="lazy" width="552" height="331"></button></figure>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>可转债全指优于精选指数</strong></p>
+<p class="report-paragraph">宽基指数跑赢了更精选的指数，尽管后者因风险特征更平衡而常被推荐。投资者在选择比较基准时应谨慎，因为基准选择会显著影响对可转债表现的评估。市场上有多种指数，每种指数都有自己的债券纳入标准。一些指数相当精选，例如FTSE Russell Global Focus Index。它只纳入较大规模发行（在美国市场至少5亿美元）且通常剔除太小或过度股票化的债券。它呈现的是更平衡的图景，避免被少数已大部分转换为股票价值的异常值扭曲。然而总体而言，只有宽基指数（如全球指数）才能捕捉可转债完整机会集，并提供最高收益，如图17所示。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image16.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image16.png" alt="Drawing 15" loading="lazy" width="552" height="260"></button></figure>
+<div class="table-wrap"><table><tr><th>中国市场的可转债指数投资范围有限，仅作为知识拓展即可</th></tr></table></div>
+<h2 id="convertible-h-22"><strong>中国市场</strong></h2>
+<div class="table-wrap"><table><tr><th>核心判断<br>当前样本的转债均价处于过去三年约 91.6% 分位，双低值处于约 93.0% 分位，价格水位偏高；但转股溢价率中位数 35.2% 处于约 3.3% 分位，说明本轮高价格更多来自平价和权益弹性修复，而不是期权溢价继续扩张。</th></tr></table></div>
+<h3 id="convertible-h-23"><strong>研究样本及口径</strong></h3>
+<p class="report-paragraph">本轮研究宇宙为 207 只沪深当前行情样本中日线跨度超过三年、且最近仍有交易记录的可转债。研究面板从 2023-05-19 至 2026-05-18，共 724 个交易日、149,762 条债券-日期记录。</p>
+<p class="report-paragraph"><strong>重要边界：</strong>207只长日线当前上市样本，不代表历史全发行样本。该口径有存续样本偏差，适合研究当前可交易长历史池的资产特征和组合表现，不适合直接回答发行制度、退市方式或条款事件问题。</p>
+<div class="table-wrap"><table><tr><th>项目</th><th>结果</th><th>说明</th></tr><tr><td>宇宙数量</td><td>207只</td><td>沪深、日线跨度&gt;3年、最近仍交易</td></tr><tr><td>研究区间</td><td>2023-05-19 至 2026-05-18</td><td>共同可用窗口</td></tr><tr><td>估值覆盖</td><td>207/207</td><td>转股价值、纯债价值、溢价率、双低值</td></tr><tr><td>正股覆盖</td><td>207/207</td><td>后复权用于收益，不复权用于校验</td></tr><tr><td>数据原则</td><td>月度调仓、等权、不扣成本</td><td>输出换手率和成本提示</td></tr></table></div>
+<h3 id="convertible-h-24"><strong>截面静态研究</strong></h3>
+<h4 id="convertible-h-25"><strong>价格及特征表现</strong></h4>
+<p class="report-paragraph">截至 2026-05-18，207只样本转债均价 151.7 元，价格中位数 132.1 元。价格分布上，低价券不足五分之一，中价券是当前主力，高价券虽然数量较少但显著抬高了均价。</p>
+<div class="table-wrap"><table><tr><th>指标</th><th>均值/中位数</th><th>25分位</th><th>75分位</th><th>历史分位</th></tr><tr><td>转债价格</td><td>151.7 / 132.1</td><td>124.5</td><td>143.4</td><td>91.6%</td></tr><tr><td>转股价值</td><td>113.1 / 96.4</td><td>73.0</td><td>126.5</td><td>92.3%</td></tr><tr><td>转股溢价率</td><td>53.5% / 35.2%</td><td>14.2%</td><td>68.8%</td><td>3.3%</td></tr><tr><td>纯债溢价率</td><td>39.3% / 19.8%</td><td>12.7%</td><td>37.2%</td><td>71.1%</td></tr><tr><td>双低值</td><td>205.2 / 183.1</td><td>155.6</td><td>213.7</td><td>93.0%</td></tr></table></div>
+<div class="table-wrap"><table><tr><th>价格组</th><th>数量</th><th>均价</th><th>转股溢价率中位数</th><th>纯债溢价率中位数</th><th>双低值中位数</th></tr><tr><td>低价(&lt;120)</td><td>36</td><td>109.3</td><td>39.3%</td><td>2.5%</td><td>149.5</td></tr><tr><td>中价(120-140)</td><td>110</td><td>130.3</td><td>52.5%</td><td>18.2%</td><td>184.9</td></tr><tr><td>高价(&gt;=140)</td><td>61</td><td>215.5</td><td>13.1%</td><td>61.7%</td><td>185.3</td></tr></table></div>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image17.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image17.png" alt="Drawing 16" loading="lazy" width="552" height="354"></button></figure>
+<h4 id="convertible-h-26"><strong>行业分布情况</strong></h4>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image18.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image18.png" alt="Drawing 17" loading="lazy" width="552" height="322"></button></figure>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image19.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image19.png" alt="Drawing 18" loading="lazy" width="552" height="322"></button></figure>
+<p class="report-paragraph">从申万一级行业分布看，207 只长日线可转债在“只数”和“规模”两个口径下呈现出明显差异。按发行只数计算，样本主要集中在医药生物、基础化工、电力设备、电子等中游制造和成长行业，其中医药生物占比最高，为 11.1%，基础化工和电力设备分别为 9.7% 和 9.2%，电子为 7.7%。这说明当前长历史可转债样本在数量上更偏向民营制造业、科技成长和中游周期成长板块，行业覆盖较分散，单一行业集中度不算极端。</p>
+<p class="report-paragraph">但按发行规模计算，行业结构明显向大盘金融和大额发行主体倾斜。银行虽然只有 6 只，占发行只数约 2.9%，但发行规模占比高达 23.2%，成为规模口径下第一大行业；电力设备规模占比也达到 14.6%，显著高于其只数占比。这说明可转债市场存在“数量由中小制造业贡献、规模由大金融和大型产业主体贡献”的结构特征。</p>
+<h3 id="convertible-h-27"><strong>动态变化研究</strong></h3>
+<h4 id="convertible-h-28"><strong>等权基准与正股联动的情况</strong></h4>
+<p class="report-paragraph">207只可转债等权基准在样本期累计收益 23.0%，年化收益 7.2%，年化波动 11.1%，最大回撤 -17.6%。正股等权指数同期累计收益 24.3%，但年化波动达到 23.9%，最大回撤 -33.1%。</p>
+<p class="report-paragraph">可转债与正股日收益相关系数为 0.85，上行捕获率 46.0%，下行捕获率 43.6%。这说明样本期可转债保留了约四成多的权益方向暴露，同时把正股下跌日的平均跌幅压缩在相近比例。</p>
+<div class="table-wrap"><table><tr><th>序列</th><th>累计收益</th><th>年化收益</th><th>年化波动</th><th>最大回撤</th><th>夏普</th><th>月度胜率</th></tr><tr><td>207只等权基准</td><td>23.0%</td><td>7.2%</td><td>11.1%</td><td>-17.6%</td><td>0.65</td><td>61.1%</td></tr><tr><td>正股等权指数</td><td>24.3%</td><td>7.6%</td><td>23.9%</td><td>-33.1%</td><td>0.32</td><td>61.1%</td></tr></table></div>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image20.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image20.png" alt="Drawing 19" loading="lazy" width="552" height="276"></button></figure>
+<h4 id="convertible-h-29"><strong>价格分组研究</strong></h4>
+<p class="report-paragraph">价格分组采用固定阈值，月末以前一交易日价格归组并持有下月。样本期高价组累计收益 63.2%，明显高于低价组 15.4% 和中价组 17.9%；但高价组最大回撤也达到 -31.7%，风险暴露更接近权益增强。</p>
+<div class="table-wrap"><table><tr><th>价格组</th><th>累计收益</th><th>年化收益</th><th>年化波动</th><th>最大回撤</th><th>月均换手</th></tr><tr><td>低价 &lt;120</td><td>15.4%</td><td>5.0%</td><td>9.0%</td><td>-15.4%</td><td>8.9%</td></tr><tr><td>中价 120-140</td><td>17.9%</td><td>5.7%</td><td>13.1%</td><td>-16.9%</td><td>24.3%</td></tr><tr><td>高价 &gt;=140</td><td>63.2%</td><td>18.0%</td><td>22.4%</td><td>-31.7%</td><td>18.4%</td></tr></table></div>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image21.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image21.png" alt="Drawing 20" loading="lazy" width="552" height="276"></button></figure>
+<h4 id="convertible-h-30"><strong>双低策略的表现情况</strong></h4>
+<p class="report-paragraph">双低前1/3组合累计收益 23.2%，年化收益 7.3%，最大回撤 -18.5%。双低后1/3组合累计收益 26.0%，反而略高于双低前1/3，说明在 2023-2026 年这个窗口内，双低信号没有呈现稳定单调优势。</p>
+<div class="table-wrap"><table><tr><th>本轮研究剔除了条款和事件，且市场自2024年四季度后权益弹性修复明显，高平价/高价格券收益更占优，这会削弱传统双低因子的相对表现。</th></tr></table></div>
+<div class="table-wrap"><table><tr><th>双低组</th><th>累计收益</th><th>年化收益</th><th>年化波动</th><th>最大回撤</th><th>月均换手</th></tr><tr><td>双低前1/3</td><td>23.2%</td><td>7.3%</td><td>12.6%</td><td>-18.5%</td><td>13.7%</td></tr><tr><td>双低后1/3</td><td>26.0%</td><td>8.1%</td><td>10.3%</td><td>-14.9%</td><td>12.1%</td></tr></table></div>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image22.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image22.png" alt="Drawing 21" loading="lazy" width="552" height="276"></button></figure>
+<h4 id="convertible-h-31"><strong>长期估值时序</strong></h4>
+<p class="report-paragraph">三年时序显示，转股溢价率中枢在2024年一度处于高位，随后明显回落；与此同时，转债均价和价格中位数自2024年四季度后快速抬升。因此，当前市场不是传统意义上的“低价高溢价”状态，而更接近“高价格、低转股溢价、纯债溢价偏高”的结构。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image23.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image23.png" alt="Drawing 22" loading="lazy" width="552" height="386"></button></figure>
+<p class="report-paragraph">年度表现统计如下：</p>
+<div class="table-wrap"><table><tr><th>年份</th><th>基准</th><th>正股</th><th>低价组</th><th>高价组</th><th>双低前1/3</th><th>双低后1/3</th></tr><tr><td>2023</td><td>-2.5%</td><td>-5.1%</td><td>-1.5%</td><td>-10.3%</td><td>0.1%</td><td>-3.6%</td></tr><tr><td>2024</td><td>1.8%</td><td>-2.7%</td><td>3.8%</td><td>0.9%</td><td>1.9%</td><td>6.0%</td></tr><tr><td>2025</td><td>18.4%</td><td>24.1%</td><td>17.0%</td><td>58.8%</td><td>17.3%</td><td>18.8%</td></tr><tr><td>2026</td><td>4.8%</td><td>8.5%</td><td>-3.5%</td><td>13.6%</td><td>2.9%</td><td>3.9%</td></tr></table></div>
+<h3 id="convertible-h-32"><strong>配置价值分析</strong></h3>
+<p class="report-paragraph">基于 207 只长日线当前上市可转债样本，本研究认为：当前可转债指数仍具备一定配置价值，但更适合作为“中等权益弹性 + 下行缓冲”的平衡型资产，而不是低估值防守资产。</p>
+<p class="report-paragraph">首先，从收益风险特征看，可转债指数的配置效率较高。样本期内，207 只可转债等权基准累计收益约 23.0%，年化收益约 7.2%，与正股等权指数的年化收益基本接近；但可转债年化波动仅约 11.1%，显著低于正股等权指数的 23.9%，最大回撤也由正股的 -33.1% 收窄至 -17.6%。这说明，在过去三年市场环境中，可转债指数并不是依靠更高收益取胜，而是通过较低波动和较浅回撤改善了持有体验和复利效率。</p>
+<p class="report-paragraph">其次，从正股联动看，可转债指数具备较清晰的缓冲属性。可转债与正股日收益相关系数约 0.85，说明其仍然高度受权益市场驱动；但上行捕获率约 46.0%，下行捕获率约 43.6%，在正股极端下跌和月度下跌阶段，下行捕获进一步下降。这意味着可转债指数并不能完全脱离权益市场，但在权益下跌时通常能够压缩损失幅度，在组合中可作为权益资产的低波动替代或增强型防守配置。</p>
+<p class="report-paragraph">但从估值角度看，当前并不是非常舒适的低位配置区间。截至最新截面，样本转债均价约 151.7 元，价格历史分位约 91.6%；双低值历史分位约 93.0%；纯债溢价率也处在偏高位置。这表明当前可转债整体价格水位不低，债底保护相较低价阶段有所减弱。与此同时，转股溢价率中位数约 35.2%，处于过去三年较低分位，说明当前高价格更多来自正股平价抬升，而不是单纯由期权溢价扩张推动。因此，当前配置可转债指数的核心逻辑不应是“便宜”，而应是“保留权益弹性，同时控制组合波动”。</p>
+<p class="report-paragraph">行业结构也决定了配置可转债指数的风险来源。按发行只数看，样本更集中于医药生物、基础化工、电力设备、电子、计算机等制造和成长行业；按发行规模看，银行和电力设备占比明显提升。所以若配置规模加权型指数，则会更偏金融、大型产业主体和偏信用属性。</p>
+<p class="report-paragraph">综合来看，当前可转债指数的配置价值主要体现在三点：第一，相比直接配置正股，可转债指数在历史样本中提供了接近的收益和更低的回撤；第二，相比纯债资产，可转债仍保留较强权益上行参与能力；第三，在市场不确定性较高、但仍希望保留权益敞口的环境下，可转债指数适合作为股债之间的中间资产。</p>
+<h2 id="convertible-h-33"><strong>资料及数据来源</strong></h2>
+<p class="report-paragraph"><strong>参考资料：</strong></p>
+<p class="report-paragraph">安联保险集团：2025_12_10_Convertible.pdf</p>
+<p class="report-paragraph">Calamos：Overview CB and MCB.pdf</p>
+<p class="report-paragraph"><strong>自建数据库（中国市场部分）：</strong></p>
+<p class="report-paragraph">cb_research_universe_207.csv</p>
+<p class="report-paragraph">cb_research_valuation_207.csv</p></article>
     </main>
   </div>
   <div class="lightbox" id="lightbox" aria-hidden="true">
@@ -1199,20 +1272,6 @@
     const reports = [...document.querySelectorAll("[data-report]")];
     const panels = [...document.querySelectorAll("[data-toc-panel]")];
     const tocLinks = [...document.querySelectorAll("[data-report-link]")];
-    const sidebar = document.querySelector(".sidebar");
-    const mobileTocToggle = document.querySelector(".mobile-toc-toggle");
-    const isMobile = () => window.matchMedia("(max-width: 640px)").matches;
-
-    function setMobileTocOpen(open) {
-      if (!sidebar || !mobileTocToggle) return;
-      sidebar.classList.toggle("is-open", open);
-      mobileTocToggle.setAttribute("aria-expanded", String(open));
-      mobileTocToggle.textContent = open ? "收起报告与目录" : "展开报告与目录";
-    }
-
-    mobileTocToggle?.addEventListener("click", () => {
-      setMobileTocOpen(!sidebar.classList.contains("is-open"));
-    });
 
     function setActiveReport(id, updateHash = true) {
       tabs.forEach((tab) => tab.classList.toggle("active", tab.dataset.reportTab === id));
@@ -1254,7 +1313,6 @@
           event.preventDefault();
           history.replaceState(null, "", link.getAttribute("href"));
           target.scrollIntoView({ block: "start" });
-          if (isMobile()) setMobileTocOpen(false);
         }
       });
     });
