@@ -1,0 +1,834 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ETF 实盘持仓账本</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+    <style>
+      :root {
+        color-scheme: dark;
+      }
+      body {
+        background: radial-gradient(circle at top, #182130 0%, #0c1320 42%, #090f18 100%);
+      }
+      .card {
+        background: linear-gradient(165deg, rgba(29, 41, 60, 0.88), rgba(15, 23, 38, 0.9));
+        border: 1px solid rgba(148, 163, 184, 0.12);
+        box-shadow: 0 16px 40px rgba(2, 6, 23, 0.28);
+      }
+      .table-row:hover {
+        background: rgba(51, 65, 85, 0.22);
+      }
+      .metric-label {
+        color: #94a3b8;
+        font-size: 12px;
+      }
+      .metric-value {
+        color: #f8fafc;
+        font-size: 1.35rem;
+        font-weight: 600;
+      }
+      .side-nav {
+        position: fixed;
+        right: 14px;
+        top: 50%;
+        z-index: 30;
+        display: flex;
+        transform: translateY(-50%);
+        flex-direction: column;
+        align-items: center;
+        gap: 7px;
+        user-select: none;
+        touch-action: none;
+      }
+      .side-nav.is-positioned {
+        right: auto;
+        transform: none;
+      }
+      .side-nav.collapsed .side-nav-menu {
+        display: none;
+      }
+      .side-nav.dragging .side-nav-toggle {
+        cursor: grabbing;
+        transform: scale(1.04);
+      }
+      .side-nav-menu {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 6px;
+        border: 1px solid rgba(148, 163, 184, 0.18);
+        border-radius: 999px;
+        background: rgba(15, 23, 42, 0.76);
+        box-shadow: 0 18px 46px rgba(2, 6, 23, 0.34);
+        backdrop-filter: blur(12px);
+      }
+      .side-nav button {
+        border: 0;
+        color: #cbd5e1;
+      }
+      .side-nav-toggle {
+        display: flex;
+        width: 42px;
+        height: 42px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(14, 165, 233, 0.24);
+        box-shadow: 0 14px 34px rgba(2, 6, 23, 0.34);
+        font-size: 16px;
+        font-weight: 700;
+        transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+      }
+      .side-nav.collapsed .side-nav-toggle {
+        cursor: grab;
+      }
+      .side-nav-link {
+        display: flex;
+        width: 42px;
+        height: 36px;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: rgba(30, 41, 59, 0.72);
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 1;
+        transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+      }
+      .side-nav-link:hover,
+      .side-nav-link.is-top:hover,
+      .side-nav-toggle:hover {
+        background: rgba(56, 189, 248, 0.26);
+        color: #f8fafc;
+        transform: translateX(-2px);
+      }
+      .side-nav-link.is-top {
+        background: rgba(14, 165, 233, 0.24);
+        font-size: 16px;
+      }
+      .site-home-link {
+        position: fixed;
+        left: 18px;
+        bottom: 18px;
+        z-index: 1000;
+        display: inline-flex;
+        min-height: 40px;
+        align-items: center;
+        justify-content: center;
+        padding: 0 14px;
+        border: 1px solid rgba(148, 163, 184, 0.22);
+        border-radius: 8px;
+        background: rgba(15, 23, 42, 0.86);
+        box-shadow: 0 14px 34px rgba(2, 6, 23, 0.34);
+        color: #f8fafc;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        backdrop-filter: blur(12px);
+      }
+      .site-home-link:hover {
+        border-color: rgba(56, 189, 248, 0.36);
+        color: #67e8f9;
+      }
+      @media (max-width: 640px) {
+        header > div {
+          flex-direction: column;
+          align-items: flex-start !important;
+          gap: 10px;
+        }
+        #portfolioTitle {
+          font-size: 18px;
+        }
+        #metaInfo {
+          line-height: 1.55;
+        }
+        #dataStatus {
+          max-width: 100%;
+          white-space: normal;
+        }
+        section.mx-auto {
+          padding: 12px 10px 76px;
+        }
+        .card {
+          border-radius: 8px !important;
+          padding: 14px !important;
+        }
+        #navChart,
+        #allocationChart {
+          height: 280px;
+        }
+        .side-nav {
+          right: 8px;
+        }
+        .side-nav-menu {
+          gap: 5px;
+          padding: 5px;
+        }
+        .side-nav-toggle {
+          width: 38px;
+          height: 38px;
+        }
+        .side-nav-link {
+          width: 38px;
+          height: 32px;
+        }
+        .site-home-link {
+          left: 12px;
+          bottom: 12px;
+          min-height: 36px;
+          padding: 0 12px;
+          font-size: 12px;
+        }
+      }
+    </style>
+  </head>
+  <body class="min-h-screen text-slate-100 antialiased">
+    <a class="site-home-link" href="../index.html">返回首页</a>
+    <main id="app">
+      <header class="sticky top-0 z-20 border-b border-slate-700/40 bg-slate-950/45 backdrop-blur">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4">
+          <div>
+            <h1 id="portfolioTitle" class="text-xl font-semibold">ETF 实盘持仓账本</h1>
+            <p id="metaInfo" class="mt-1 text-xs text-slate-400">数据日期：--</p>
+          </div>
+          <div id="dataStatus" class="rounded-md border border-slate-700 px-3 py-1.5 text-xs text-slate-400">
+            正在读取数据...
+          </div>
+        </div>
+      </header>
+
+      <section class="mx-auto max-w-7xl space-y-6 p-4">
+        <div id="overviewCards" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6"></div>
+
+        <div id="navSection" class="grid scroll-mt-24 grid-cols-1 gap-4 xl:grid-cols-3">
+          <div class="card rounded-xl p-4 xl:col-span-2">
+            <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div>
+                <h2 class="text-sm font-medium text-slate-300">组合净值对比</h2>
+                <span id="navChartHint" class="text-xs text-slate-500">真实资产快照归一化</span>
+              </div>
+              <select
+                id="benchmarkSelect"
+                class="rounded-md border border-slate-700 bg-slate-900 px-3 py-1.5 text-xs text-slate-200 outline-none focus:border-cyan-400"
+              ></select>
+            </div>
+            <div id="navChart" class="h-80"></div>
+          </div>
+          <div class="card rounded-xl p-4">
+            <h2 class="mb-3 text-sm font-medium text-slate-300">当前仓位结构</h2>
+            <div id="allocationChart" class="h-80"></div>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 gap-4 xl:grid-cols-3">
+          <div id="holdingsSection" class="card scroll-mt-24 rounded-xl p-4 xl:col-span-2">
+            <div class="mb-4 flex items-center justify-between gap-3">
+              <div>
+                <h2 class="text-sm font-medium text-slate-300">当前持仓明细</h2>
+                <p class="mt-1 text-xs text-slate-500">字段结构对齐 `持仓数据` 工作表</p>
+              </div>
+              <div id="holdingsHint" class="text-xs text-slate-500"></div>
+            </div>
+            <div class="overflow-x-auto">
+              <table class="w-full min-w-[1200px] text-sm">
+                <thead class="border-b border-slate-700/60 text-slate-400">
+                  <tr>
+                    <th class="py-2 pr-4 text-left">代码</th>
+                    <th class="py-2 pr-4 text-left">名称</th>
+                    <th class="py-2 pr-4 text-right">持有金额</th>
+                    <th class="py-2 pr-4 text-right">当日盈亏</th>
+                    <th class="py-2 pr-4 text-right">持有盈亏</th>
+                    <th class="py-2 pr-4 text-right">累计盈亏</th>
+                    <th class="py-2 pr-4 text-right">仓位占比</th>
+                    <th class="py-2 pr-4 text-right">持有数量</th>
+                    <th class="py-2 pr-4 text-right">持仓天数</th>
+                    <th class="py-2 pr-4 text-right">最新价</th>
+                    <th class="py-2 pr-4 text-right">单位成本</th>
+                    <th class="py-2 pr-4 text-right">回本涨幅</th>
+                    <th class="py-2 pr-4 text-right">近1月</th>
+                    <th class="py-2 pr-4 text-right">近3月</th>
+                    <th class="py-2 text-right">近1年</th>
+                  </tr>
+                </thead>
+                <tbody id="holdingsTableBody" class="text-slate-200"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="space-y-4">
+            <div id="summarySection" class="card scroll-mt-24 rounded-xl p-4">
+              <h2 class="mb-3 text-sm font-medium text-slate-300">汇总快照</h2>
+              <div id="summaryPanel" class="space-y-3 text-sm text-slate-300"></div>
+            </div>
+            <div class="card rounded-xl p-4">
+              <h2 class="mb-3 text-sm font-medium text-slate-300">策略说明</h2>
+              <div id="strategyInfo" class="space-y-3 text-sm text-slate-300"></div>
+            </div>
+          </div>
+        </div>
+
+        <div id="closedSection" class="card scroll-mt-24 rounded-xl p-4">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h2 class="text-sm font-medium text-slate-300">已清仓记录</h2>
+              <p class="mt-1 text-xs text-slate-500">字段结构对齐 `已清仓` 工作表</p>
+            </div>
+            <div id="closedHint" class="text-xs text-slate-500"></div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[1100px] text-sm">
+              <thead class="border-b border-slate-700/60 text-slate-400">
+                <tr>
+                  <th class="py-2 pr-4 text-left">清仓日期</th>
+                  <th class="py-2 pr-4 text-left">代码</th>
+                  <th class="py-2 pr-4 text-left">名称</th>
+                  <th class="py-2 pr-4 text-right">总盈亏</th>
+                  <th class="py-2 pr-4 text-right">盈亏比</th>
+                  <th class="py-2 pr-4 text-right">同期大盘</th>
+                  <th class="py-2 pr-4 text-right">跑赢大盘</th>
+                  <th class="py-2 pr-4 text-right">买入均价</th>
+                  <th class="py-2 pr-4 text-right">卖出均价</th>
+                  <th class="py-2 pr-4 text-right">持仓天数</th>
+                  <th class="py-2 pr-4 text-right">交易费用</th>
+                  <th class="py-2 text-right">建仓日期</th>
+                </tr>
+              </thead>
+              <tbody id="closedTableBody" class="text-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="transactionsSection" class="card scroll-mt-24 rounded-xl p-4">
+          <div class="mb-4 flex items-center justify-between gap-3">
+            <div>
+              <h2 class="text-sm font-medium text-slate-300">最新交易记录</h2>
+              <p class="mt-1 text-xs text-slate-500">字段结构对齐 `交易记录` 工作表</p>
+            </div>
+            <div id="tradeHint" class="text-xs text-slate-500"></div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full min-w-[1100px] text-sm">
+              <thead class="border-b border-slate-700/60 text-slate-400">
+                <tr>
+                  <th class="py-2 pr-4 text-left">成交日期</th>
+                  <th class="py-2 pr-4 text-left">成交时间</th>
+                  <th class="py-2 pr-4 text-left">代码</th>
+                  <th class="py-2 pr-4 text-left">名称</th>
+                  <th class="py-2 pr-4 text-left">交易类别</th>
+                  <th class="py-2 pr-4 text-right">成交数量</th>
+                  <th class="py-2 pr-4 text-right">成交价格</th>
+                  <th class="py-2 pr-4 text-right">发生金额</th>
+                  <th class="py-2 pr-4 text-right">成交金额</th>
+                  <th class="py-2 pr-4 text-right">费用</th>
+                  <th class="py-2 text-left">备注</th>
+                </tr>
+              </thead>
+              <tbody id="transactionsTableBody" class="text-slate-200"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+    <nav id="sideNav" class="side-nav collapsed" aria-label="页面导航">
+      <div class="side-nav-menu">
+        <button class="side-nav-link is-top" data-target="app" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
+        <button class="side-nav-link" data-target="navSection" type="button" title="组合净值">净</button>
+        <button class="side-nav-link" data-target="holdingsSection" type="button" title="当前持仓">持</button>
+        <button class="side-nav-link" data-target="summarySection" type="button" title="汇总快照">汇</button>
+        <button class="side-nav-link" data-target="closedSection" type="button" title="已清仓记录">清</button>
+        <button class="side-nav-link" data-target="transactionsSection" type="button" title="最新交易记录">交</button>
+      </div>
+      <button id="sideNavToggle" class="side-nav-toggle" type="button" aria-label="展开或折叠导航" title="折叠时可拖动">☰</button>
+    </nav>
+
+    <script>
+      let dashboardData = null;
+      let navChart = null;
+      let allocationChart = null;
+      const app = document.getElementById("app");
+      const dataStatus = document.getElementById("dataStatus");
+
+      function toNumber(value) {
+        const num = Number(value);
+        return Number.isFinite(num) ? num : 0;
+      }
+
+      function isNil(value) {
+        return value === null || value === undefined || value === "";
+      }
+
+      function formatCurrency(value) {
+        if (isNil(value)) return "--";
+        return new Intl.NumberFormat("zh-CN", {
+          style: "currency",
+          currency: "CNY",
+          maximumFractionDigits: 2
+        }).format(toNumber(value));
+      }
+
+      function formatNumber(value, digits = 2) {
+        if (isNil(value)) return "--";
+        return Number(value).toFixed(digits);
+      }
+
+      function formatPercent(value, digits = 2, scale = 100) {
+        if (isNil(value)) return "--";
+        return `${(Number(value) * scale).toFixed(digits)}%`;
+      }
+
+      function pnlClass(value) {
+        return toNumber(value) >= 0 ? "text-rose-400" : "text-emerald-400";
+      }
+
+      function codeText(value) {
+        if (isNil(value)) return "--";
+        return String(value).replace(/\.0$/, "");
+      }
+
+      function metricCard(label, value, extraClass = "text-slate-100") {
+        return `
+          <article class="card rounded-xl p-4">
+            <p class="metric-label">${label}</p>
+            <p class="metric-value mt-3 ${extraClass}">${value}</p>
+          </article>
+        `;
+      }
+
+      function renderOverview(overview) {
+        const cards = [
+          metricCard("总资产", formatCurrency(overview.totalAssets)),
+          metricCard("当日盈亏", formatCurrency(overview.dailyPnL), pnlClass(overview.dailyPnL)),
+          metricCard("当日盈亏率", formatPercent(overview.dailyPnLRate), pnlClass(overview.dailyPnLRate)),
+          metricCard("持有盈亏", formatCurrency(overview.holdingPnL), pnlClass(overview.holdingPnL)),
+          metricCard("持有盈亏率", formatPercent(overview.holdingPnLRate), pnlClass(overview.holdingPnLRate)),
+          metricCard("仓位占比", formatPercent(overview.positionRatio), "text-cyan-300"),
+          metricCard("本周盈亏", formatCurrency(overview.weeklyPnL), pnlClass(overview.weeklyPnL)),
+          metricCard("本月盈亏", formatCurrency(overview.monthlyPnL), pnlClass(overview.monthlyPnL)),
+          metricCard("今年盈亏", formatCurrency(overview.yearlyPnL), pnlClass(overview.yearlyPnL)),
+          metricCard("当前持仓数", `${overview.activeCount} 只`),
+          metricCard("已清仓记录", `${overview.closedCount} 条`),
+          metricCard("最大持仓", `${overview.topHoldingName || "--"} ${formatPercent(overview.topHoldingWeight)}`)
+        ];
+        document.getElementById("overviewCards").innerHTML = cards.join("");
+      }
+
+      function renderSummaryPanel(summary) {
+        const entries = [
+          ["持有金额", formatCurrency(summary["持有金额"])],
+          ["当日盈亏", `<span class="${pnlClass(summary["当日盈亏"])}">${formatCurrency(summary["当日盈亏"])}</span>`],
+          ["当日盈亏率", `<span class="${pnlClass(summary["当日盈亏率"])}">${formatPercent(summary["当日盈亏率"])}</span>`],
+          ["持有盈亏", `<span class="${pnlClass(summary["持有盈亏"])}">${formatCurrency(summary["持有盈亏"])}</span>`],
+          ["持有盈亏率", `<span class="${pnlClass(summary["持有盈亏率"])}">${formatPercent(summary["持有盈亏率"])}</span>`],
+          ["本周盈亏", `<span class="${pnlClass(summary["本周盈亏"])}">${formatCurrency(summary["本周盈亏"])}</span>`],
+          ["本月盈亏", `<span class="${pnlClass(summary["本月盈亏"])}">${formatCurrency(summary["本月盈亏"])}</span>`],
+          ["今年盈亏", `<span class="${pnlClass(summary["今年盈亏"])}">${formatCurrency(summary["今年盈亏"])}</span>`],
+          ["仓位占比", formatPercent(summary["仓位占比"]) ]
+        ];
+
+        document.getElementById("summaryPanel").innerHTML = entries
+          .map(
+            ([label, value]) => `
+              <div class="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                <span class="text-slate-400">${label}</span>
+                <span class="text-right">${value}</span>
+              </div>
+            `
+          )
+          .join("");
+      }
+
+      function renderHoldings(holdings) {
+        document.getElementById("holdingsHint").textContent = `共 ${holdings.length} 条当前持仓`;
+        document.getElementById("holdingsTableBody").innerHTML = holdings
+          .map(
+            (item) => `
+              <tr class="table-row border-b border-slate-800/70">
+                <td class="py-3 pr-4">${codeText(item["代码"])}</td>
+                <td class="py-3 pr-4">${item["名称"] || "--"}</td>
+                <td class="py-3 pr-4 text-right">${formatCurrency(item["持有金额"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["当日盈亏"])}">${formatCurrency(item["当日盈亏"])}<div class="text-xs ${pnlClass(item["当日盈亏率"])}">${formatPercent(item["当日盈亏率"])}</div></td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["持有盈亏"])}">${formatCurrency(item["持有盈亏"])}<div class="text-xs ${pnlClass(item["持有盈亏率"])}">${formatPercent(item["持有盈亏率"])}</div></td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["累计盈亏"])}">${formatCurrency(item["累计盈亏"])}<div class="text-xs ${pnlClass(item["累计盈亏率"])}">${formatPercent(item["累计盈亏率"])}</div></td>
+                <td class="py-3 pr-4 text-right">${formatPercent(item["仓位占比"])}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["持有数量"], 0)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["持仓天数"], 0)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["最新价"], 3)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["单位成本"], 3)}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(-toNumber(item["回本涨幅"]))}">${formatPercent(item["回本涨幅"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["近1月涨幅"])}">${formatPercent(item["近1月涨幅"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["近3月涨幅"])}">${formatPercent(item["近3月涨幅"])}</td>
+                <td class="py-3 text-right ${pnlClass(item["近1年涨幅"])}">${formatPercent(item["近1年涨幅"])}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderClosed(closedPositions) {
+        document.getElementById("closedHint").textContent = `共 ${closedPositions.length} 条历史清仓`;
+        document.getElementById("closedTableBody").innerHTML = closedPositions
+          .slice()
+          .reverse()
+          .map(
+            (item) => `
+              <tr class="table-row border-b border-slate-800/70">
+                <td class="py-3 pr-4">${item["清仓日期"] || "--"}</td>
+                <td class="py-3 pr-4">${codeText(item["代码"])}</td>
+                <td class="py-3 pr-4">${item["名称"] || "--"}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["总盈亏"])}">${formatCurrency(item["总盈亏"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["盈亏比"])}">${formatPercent(item["盈亏比"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["同期大盘"])}">${formatPercent(item["同期大盘"])}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["跑赢大盘"])}">${formatPercent(item["跑赢大盘"])}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["买入均价"], 2)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["卖出均价"], 2)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["持仓天数"], 0)}</td>
+                <td class="py-3 pr-4 text-right">${formatCurrency(item["交易费用"])}</td>
+                <td class="py-3 text-right">${item["建仓日期"] || "--"}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderTransactions(transactions) {
+        document.getElementById("tradeHint").textContent = `展示最近 ${transactions.length} 条记录`;
+        document.getElementById("transactionsTableBody").innerHTML = transactions
+          .map(
+            (item) => `
+              <tr class="table-row border-b border-slate-800/70">
+                <td class="py-3 pr-4">${item["成交日期"] || "--"}</td>
+                <td class="py-3 pr-4">${item["成交时间"] || "--"}</td>
+                <td class="py-3 pr-4">${codeText(item["代码"])}</td>
+                <td class="py-3 pr-4">${item["名称"] || "--"}</td>
+                <td class="py-3 pr-4">
+                  <span class="rounded-full border border-slate-700 px-2 py-0.5 text-xs text-slate-300">${item["交易类别"] || "--"}</span>
+                </td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["成交数量"], 0)}</td>
+                <td class="py-3 pr-4 text-right">${formatNumber(item["成交价格"], 3)}</td>
+                <td class="py-3 pr-4 text-right ${pnlClass(item["发生金额"])}">${formatCurrency(item["发生金额"])}</td>
+                <td class="py-3 pr-4 text-right">${formatCurrency(item["成交金额"])}</td>
+                <td class="py-3 pr-4 text-right">${formatCurrency(item["费用"])}</td>
+                <td class="py-3">${item["备注"] || "--"}</td>
+              </tr>
+            `
+          )
+          .join("");
+      }
+
+      function renderStrategy(strategy) {
+        document.getElementById("strategyInfo").innerHTML = `
+          <div>
+            <p class="font-medium text-slate-100">${strategy.title}</p>
+            <p class="mt-2 leading-6 text-slate-300">${strategy.positioning}</p>
+          </div>
+          <div>
+            <p class="mb-2 font-medium text-slate-100">说明</p>
+            <ul class="list-disc space-y-1 pl-5 text-slate-300">
+              ${strategy.riskRules.map((rule) => `<li>${rule}</li>`).join("")}
+            </ul>
+          </div>
+        `;
+      }
+
+      function getBenchmarkMap() {
+        if (dashboardData?.benchmarkSeriesMap) return dashboardData.benchmarkSeriesMap;
+        if (dashboardData?.benchmarkSeries) {
+          return { [dashboardData.meta?.benchmarkName || "沪深300"]: dashboardData.benchmarkSeries };
+        }
+        return {};
+      }
+
+      function renderBenchmarkSelector(selectedName) {
+        const select = document.getElementById("benchmarkSelect");
+        const benchmarkMap = getBenchmarkMap();
+        const names = Object.keys(benchmarkMap);
+        select.innerHTML = names.map((name) => `<option value="${name}">${name}</option>`).join("");
+        select.value = names.includes(selectedName) ? selectedName : names[0] || "";
+        select.disabled = names.length === 0;
+        select.onchange = () => {
+          const nextName = select.value;
+          renderNavChart(dashboardData.navSeries, benchmarkMap[nextName] || [], nextName);
+          updateNavChartHint(nextName);
+        };
+      }
+
+      function updateNavChartHint(selectedName) {
+        const errors = dashboardData.meta?.benchmarkErrors || {};
+        const hasSelectedData = Boolean(getBenchmarkMap()[selectedName]?.length);
+        if (hasSelectedData) {
+          document.getElementById("navChartHint").textContent = `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ 对比：${selectedName}`;
+          return;
+        }
+        document.getElementById("navChartHint").textContent = errors[selectedName]
+          ? `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ ${errors[selectedName]}`
+          : `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ 暂无可用对比指数`;
+      }
+
+      function renderNavChart(series, benchmarkSeries = [], benchmarkName = "对比指数") {
+        if (navChart) navChart.dispose();
+        navChart = echarts.init(document.getElementById("navChart"));
+        const normalizeBenchmarkSeries = (items) => {
+          const first = items.find((item) => Number.isFinite(Number(item.nav)) && Number(item.nav) > 0);
+          const base = first ? Number(first.nav) : 1;
+          return items.map((item) => ({
+            ...item,
+            nav: Number.isFinite(Number(item.nav)) && base ? Number(item.nav) / base : null
+          }));
+        };
+        const portfolioSeries = series.map((item) => ({
+          ...item,
+          nav: Number.isFinite(Number(item.nav)) ? Number(item.nav) : null
+        }));
+        const normalizedBenchmarkSeries = normalizeBenchmarkSeries(benchmarkSeries);
+        const dates = Array.from(new Set([
+          ...portfolioSeries.map((item) => item.date),
+          ...normalizedBenchmarkSeries.map((item) => item.date)
+        ])).sort();
+        const valueByDate = (items) => {
+          const map = new Map(items.map((item) => [item.date, item.nav]));
+          return dates.map((date) => (map.has(date) ? map.get(date) : null));
+        };
+        const portfolioValues = valueByDate(portfolioSeries);
+        const benchmarkValues = valueByDate(normalizedBenchmarkSeries);
+        const yValues = [...portfolioValues, ...benchmarkValues]
+          .filter((value) => value !== null && value !== undefined && value !== "")
+          .map((value) => Number(value))
+          .filter((value) => Number.isFinite(value));
+        const rawMin = yValues.length ? Math.min(...yValues) : 0.98;
+        const rawMax = yValues.length ? Math.max(...yValues) : 1.02;
+        const rawRange = rawMax - rawMin;
+        const padding = Math.max(rawRange * 0.45, 0.0008);
+        const targetSplitCount = 5;
+        const yMin = Math.max(0, Math.min(rawMin, 1) - padding);
+        const yMax = Math.max(rawMax, 1) + padding;
+        const yInterval = (yMax - yMin) / targetSplitCount;
+        const axisDigits = yInterval < 0.01 ? 4 : 3;
+        navChart.setOption({
+          backgroundColor: "transparent",
+          tooltip: { trigger: "axis" },
+          legend: {
+            top: 0,
+            right: 0,
+            textStyle: { color: "#cbd5e1" }
+          },
+          grid: { left: 46, right: 20, top: 36, bottom: 30 },
+          xAxis: {
+            type: "category",
+            data: dates,
+            axisLine: { lineStyle: { color: "#64748b" } },
+            axisLabel: { color: "#94a3b8" }
+          },
+          yAxis: {
+            type: "value",
+            min: Number(yMin.toFixed(4)),
+            max: Number(yMax.toFixed(4)),
+            interval: Number(yInterval.toFixed(4)),
+            scale: true,
+            axisLine: { lineStyle: { color: "#64748b" } },
+            splitLine: { lineStyle: { color: "rgba(148,163,184,0.15)" } },
+            axisLabel: {
+              color: "#94a3b8",
+              formatter: (value) => Number(value).toFixed(axisDigits)
+            }
+          },
+          series: [
+            {
+              name: "组合净值",
+              type: "line",
+              smooth: true,
+              symbol: "circle",
+              symbolSize: 6,
+              data: portfolioValues,
+              lineStyle: { color: "#38bdf8", width: 2.5 },
+              itemStyle: { color: "#38bdf8" },
+              areaStyle: { color: "rgba(56,189,248,0.15)" }
+            },
+            {
+              name: benchmarkName,
+              type: "line",
+              smooth: true,
+              symbol: "circle",
+              symbolSize: 5,
+              data: benchmarkValues,
+              lineStyle: { color: "#f59e0b", width: 2, type: "dashed" },
+              itemStyle: { color: "#f59e0b" }
+            }
+          ]
+        });
+      }
+
+      function renderAllocationChart(holdings) {
+        if (allocationChart) allocationChart.dispose();
+        allocationChart = echarts.init(document.getElementById("allocationChart"));
+        const isSmallScreen = window.innerWidth <= 640;
+        allocationChart.setOption({
+          backgroundColor: "transparent",
+          tooltip: { trigger: "item" },
+          legend: {
+            type: isSmallScreen ? "scroll" : "plain",
+            orient: "horizontal",
+            left: isSmallScreen ? 0 : "center",
+            right: isSmallScreen ? 0 : "auto",
+            bottom: 0,
+            height: isSmallScreen ? 42 : "auto",
+            textStyle: { color: "#cbd5e1", fontSize: isSmallScreen ? 10 : 12 }
+          },
+          color: ["#38bdf8", "#0ea5e9", "#0284c7", "#0369a1", "#155e75", "#1e3a8a", "#334155"],
+          series: [
+            {
+              type: "pie",
+              center: ["50%", isSmallScreen ? "42%" : "45%"],
+              radius: isSmallScreen ? ["34%", "56%"] : ["44%", "72%"],
+              label: {
+                show: !isSmallScreen,
+                color: "#cbd5e1",
+                formatter: "{b}\n{d}%"
+              },
+              labelLine: { show: !isSmallScreen },
+              itemStyle: {
+                borderColor: "#0f172a",
+                borderWidth: 2
+              },
+              data: holdings.map((item) => ({
+                name: item["名称"],
+                value: toNumber(item["仓位占比"]) * 100
+              }))
+            }
+          ]
+        });
+      }
+
+      function mountDashboard() {
+        const { meta, overview, navSeries, sheets, strategy } = dashboardData;
+        document.getElementById("portfolioTitle").textContent = meta.portfolioName;
+        const displayTime = meta.snapshotDate || meta.asOfDate || meta.generatedAt || "--";
+        const tradeDate = meta.tradeDate || "--";
+        const siteRefreshedAt = meta.siteRefreshedAt || "--";
+        document.getElementById("metaInfo").textContent = `账本日期：${displayTime} ｜ 交易日期：${tradeDate} ｜ 网站刷新：${siteRefreshedAt} ｜ 数据源：${meta.sourceFile}`;
+        const benchmarkMap = getBenchmarkMap();
+        const defaultBenchmark = benchmarkMap[meta.benchmarkName] ? meta.benchmarkName : Object.keys(benchmarkMap)[0];
+        renderBenchmarkSelector(defaultBenchmark);
+        updateNavChartHint(defaultBenchmark);
+        renderOverview(overview);
+        renderSummaryPanel(sheets.holdingSummary);
+        renderHoldings(sheets.currentHoldings);
+        renderClosed(sheets.closedPositions);
+        renderTransactions(sheets.transactions);
+        renderStrategy(strategy);
+        renderNavChart(navSeries, benchmarkMap[defaultBenchmark] || [], defaultBenchmark || "对比指数");
+        renderAllocationChart(sheets.currentHoldings);
+
+        window.addEventListener("resize", () => {
+          if (navChart) navChart.resize();
+          if (allocationChart) allocationChart.resize();
+        });
+      }
+
+      function setupSideNav() {
+        const sideNav = document.getElementById("sideNav");
+        const toggle = document.getElementById("sideNavToggle");
+        const savedPosition = localStorage.getItem("sideNavPosition");
+        let dragState = null;
+        let suppressClick = false;
+        const setCollapsed = (collapsed) => {
+          sideNav.classList.toggle("collapsed", collapsed);
+          toggle.setAttribute("aria-expanded", String(!collapsed));
+        };
+        setCollapsed(sideNav.classList.contains("collapsed"));
+        if (savedPosition) {
+          try {
+            const position = JSON.parse(savedPosition);
+            if (Number.isFinite(position.left) && Number.isFinite(position.top)) {
+              sideNav.classList.add("is-positioned");
+              sideNav.style.left = `${position.left}px`;
+              sideNav.style.top = `${position.top}px`;
+              requestAnimationFrame(() => placeSideNav(position.left, position.top));
+            }
+          } catch (error) {
+            localStorage.removeItem("sideNavPosition");
+          }
+        }
+        const placeSideNav = (left, top) => {
+          const rect = sideNav.getBoundingClientRect();
+          const nextLeft = Math.min(Math.max(left, 8), window.innerWidth - rect.width - 8);
+          const nextTop = Math.min(Math.max(top, 8), window.innerHeight - rect.height - 8);
+          sideNav.classList.add("is-positioned");
+          sideNav.style.left = `${nextLeft}px`;
+          sideNav.style.top = `${nextTop}px`;
+          localStorage.setItem("sideNavPosition", JSON.stringify({ left: nextLeft, top: nextTop }));
+        };
+        toggle.addEventListener("pointerdown", (event) => {
+          const rect = sideNav.getBoundingClientRect();
+          dragState = {
+            pointerId: event.pointerId,
+            startX: event.clientX,
+            startY: event.clientY,
+            left: rect.left,
+            top: rect.top,
+            moved: false
+          };
+          toggle.setPointerCapture(event.pointerId);
+        });
+        toggle.addEventListener("pointermove", (event) => {
+          if (!dragState || !sideNav.classList.contains("collapsed")) return;
+          const deltaX = event.clientX - dragState.startX;
+          const deltaY = event.clientY - dragState.startY;
+          if (Math.abs(deltaX) + Math.abs(deltaY) > 4) dragState.moved = true;
+          if (dragState.moved) {
+            sideNav.classList.add("dragging");
+            placeSideNav(dragState.left + deltaX, dragState.top + deltaY);
+          }
+        });
+        toggle.addEventListener("pointerup", (event) => {
+          if (!dragState) return;
+          const wasMoved = dragState.moved;
+          sideNav.classList.remove("dragging");
+          try {
+            toggle.releasePointerCapture(event.pointerId);
+          } catch (error) {}
+          dragState = null;
+          if (!wasMoved) {
+            setCollapsed(!sideNav.classList.contains("collapsed"));
+            suppressClick = true;
+            setTimeout(() => { suppressClick = false; }, 0);
+          }
+        });
+        toggle.addEventListener("click", () => {
+          if (suppressClick) return;
+          setCollapsed(!sideNav.classList.contains("collapsed"));
+        });
+        document.querySelectorAll(".side-nav-link").forEach((button) => {
+          button.addEventListener("click", () => {
+            const target = document.getElementById(button.dataset.target);
+            if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
+            setCollapsed(true);
+          });
+        });
+      }
+
+      async function loadData() {
+        const response = await fetch("./data.json");
+        if (!response.ok) throw new Error("data.json 加载失败");
+        return response.json();
+      }
+
+      async function init() {
+        try {
+          dashboardData = await loadData();
+          dataStatus.textContent = `当前展示：${dashboardData.meta?.sourceFile || "data.json"}`;
+        } catch (error) {
+          alert("页面初始化失败，请检查 data.json 是否存在且格式正确。");
+          return;
+        }
+
+        mountDashboard();
+        setupSideNav();
+      }
+
+      init();
+    </script>
+  </body>
+</html>

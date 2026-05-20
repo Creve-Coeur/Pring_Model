@@ -1,0 +1,410 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>普林格新四核轮动组合</title>
+  <style>
+    :root {
+      --bg: #eef2f6;
+      --paper: #ffffff;
+      --ink: #111827;
+      --muted: #667085;
+      --line: #d7dee8;
+      --accent: #9f3a2f;
+      --teal: #0f766e;
+      --gold: #a16207;
+      --shadow: 0 20px 48px rgba(17, 24, 39, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+    }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        linear-gradient(135deg, rgba(159, 58, 47, 0.08), transparent 32%),
+        linear-gradient(315deg, rgba(15, 118, 110, 0.1), transparent 34%),
+        var(--bg);
+      font-family: "Microsoft YaHei", "PingFang SC", "Noto Sans CJK SC", Arial, sans-serif;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .home {
+      min-height: 100vh;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 22px clamp(18px, 4vw, 52px);
+    }
+
+    .brand-mark {
+      display: grid;
+      gap: 3px;
+    }
+
+    .brand-kicker {
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .brand-name {
+      font-size: 18px;
+      line-height: 1.25;
+      font-weight: 900;
+    }
+
+    .status-pill {
+      min-height: 34px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 1px solid rgba(15, 118, 110, 0.2);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.72);
+      color: var(--teal);
+      font-size: 12px;
+      font-weight: 900;
+      backdrop-filter: blur(12px);
+    }
+
+    .hero {
+      width: min(1180px, calc(100% - 36px));
+      margin: 0 auto;
+      display: grid;
+      align-content: center;
+      gap: clamp(28px, 5vh, 48px);
+      padding: clamp(24px, 5vw, 54px) 0 54px;
+    }
+
+    .hero-copy {
+      max-width: 850px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.08;
+      font-weight: 950;
+    }
+
+    .lead {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: #475467;
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .module-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .module-card {
+      position: relative;
+      min-height: 360px;
+      display: grid;
+      grid-template-rows: 176px 1fr;
+      border: 1px solid rgba(215, 222, 232, 0.96);
+      border-radius: 8px;
+      background: var(--paper);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+    }
+
+    .module-card:hover,
+    .module-card:focus-visible {
+      transform: translateY(-4px);
+      border-color: rgba(159, 58, 47, 0.36);
+      box-shadow: 0 26px 62px rgba(17, 24, 39, 0.18);
+      outline: none;
+    }
+
+    .module-media {
+      position: relative;
+      min-height: 0;
+      background: #e8edf3;
+      overflow: hidden;
+    }
+
+    .module-media img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+    }
+
+    .module-media.live-preview {
+      display: grid;
+      align-content: end;
+      gap: 11px;
+      padding: 22px;
+      color: #f8fafc;
+      background:
+        linear-gradient(160deg, rgba(15, 23, 42, 0.18), rgba(15, 23, 42, 0.84)),
+        #111827;
+    }
+
+    .live-line {
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.35);
+    }
+
+    .live-line:nth-child(1) { width: 72%; background: rgba(45, 212, 191, 0.72); }
+    .live-line:nth-child(2) { width: 54%; }
+    .live-line:nth-child(3) { width: 86%; background: rgba(248, 250, 252, 0.52); }
+
+    .module-body {
+      display: grid;
+      gap: 12px;
+      align-content: space-between;
+      padding: 22px;
+    }
+
+    .module-meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 900;
+    }
+
+    .module-title {
+      margin: 0;
+      font-size: clamp(22px, 2.2vw, 30px);
+      line-height: 1.18;
+      font-weight: 950;
+    }
+
+    .module-desc {
+      margin: 0;
+      color: #4b5565;
+      font-size: 14px;
+      line-height: 1.7;
+      font-weight: 600;
+    }
+
+    .module-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--accent);
+      font-size: 14px;
+      font-weight: 950;
+    }
+
+    .module-action::after {
+      content: "→";
+      font-size: 18px;
+      line-height: 1;
+    }
+
+    .footer {
+      padding: 18px clamp(18px, 4vw, 52px) 26px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    @media (max-width: 980px) {
+      .module-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .module-card {
+        min-height: 0;
+        grid-template-columns: minmax(190px, 0.38fr) 1fr;
+        grid-template-rows: auto;
+      }
+    }
+
+    @media (max-width: 640px) {
+      body {
+        background:
+          linear-gradient(135deg, rgba(159, 58, 47, 0.07), transparent 28%),
+          linear-gradient(315deg, rgba(15, 118, 110, 0.09), transparent 30%),
+          var(--bg);
+      }
+
+      .topbar {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px 14px 8px;
+      }
+
+      .brand-name {
+        font-size: 16px;
+      }
+
+      .status-pill {
+        min-height: 30px;
+        padding: 0 10px;
+      }
+
+      .hero {
+        width: min(100% - 28px, 1180px);
+        gap: 18px;
+        padding: 10px 0 26px;
+      }
+
+      h1 {
+        font-size: 31px;
+      }
+
+      .lead {
+        margin-top: 12px;
+        font-size: 14px;
+        line-height: 1.65;
+      }
+
+      .module-grid {
+        gap: 12px;
+      }
+
+      .module-card {
+        min-height: 146px;
+        grid-template-columns: 118px minmax(0, 1fr);
+        grid-template-rows: auto;
+      }
+
+      .module-card:hover,
+      .module-card:focus-visible {
+        transform: none;
+      }
+
+      .module-media {
+        min-height: 146px;
+      }
+
+      .module-body {
+        gap: 8px;
+        padding: 14px;
+      }
+
+      .module-meta {
+        font-size: 11px;
+      }
+
+      .module-title {
+        font-size: 20px;
+      }
+
+      .module-desc {
+        display: -webkit-box;
+        overflow: hidden;
+        font-size: 12px;
+        line-height: 1.45;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+      }
+
+      .module-action {
+        font-size: 13px;
+      }
+
+      .footer {
+        padding: 10px 14px 18px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="home">
+    <header class="topbar">
+      <div class="brand-mark">
+        <span class="brand-kicker">红筹投资组合研究</span>
+        <span class="brand-name">普林格新四核轮动组合</span>
+      </div>
+      <div class="status-pill">实盘模块每日更新</div>
+    </header>
+
+    <main class="hero">
+      <section class="hero-copy" aria-labelledby="page-title">
+        <h1 id="page-title">选择一个模块进入</h1>
+        <p class="lead">三个页面保持各自完整体验：组合介绍和诞生过程作为静态研究内容保留，实盘跟踪情况由每日脚本自动刷新。</p>
+      </section>
+
+      <nav class="module-grid" aria-label="组合模块入口">
+        <a class="module-card" href="组合介绍/index.html">
+          <div class="module-media">
+            <img src="home_assets/module-intro.png" alt="组合介绍模块预览">
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>静态报告</span>
+                <span>01</span>
+              </div>
+              <h2 class="module-title">组合介绍</h2>
+              <p class="module-desc">查看模型框架、资产池、风控机制、业绩概览与适用场景。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
+
+        <a class="module-card" href="组合的诞生/index.html">
+          <div class="module-media">
+            <img src="home_assets/module-birth.png" alt="组合的诞生过程模块预览">
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>研究路演</span>
+                <span>02</span>
+              </div>
+              <h2 class="module-title">组合的诞生过程</h2>
+              <p class="module-desc">沿着模型迭代路径，回看从原型、试错、诊断到四核形态的形成过程。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
+
+        <a class="module-card" href="组合实盘追踪/index.html">
+          <div class="module-media">
+            <img src="home_assets/module-live.png" alt="实盘跟踪情况模块预览">
+          </div>
+          <div class="module-body">
+            <div>
+              <div class="module-meta">
+                <span>每日更新</span>
+                <span>03</span>
+              </div>
+              <h2 class="module-title">实盘跟踪情况</h2>
+              <p class="module-desc">进入持仓账本，查看最新净值、仓位结构、持仓明细与交易记录。</p>
+            </div>
+            <span class="module-action">进入模块</span>
+          </div>
+        </a>
+      </nav>
+    </main>
+
+    <footer class="footer">GitHub Pages 首屏入口 · 点击模块直接打开原页面</footer>
+  </div>
+</body>
+</html>
