@@ -30,7 +30,7 @@ PUBLISH_DIR = Path(r"C:\Users\Coeur\Desktop\红筹投资\组合构建\new_etf_we
 REMOTE_URL = "git@github.com:Creve-Coeur/Pring_Model.git"
 BRANCH = "main"
 
-SKIP_DIR_NAMES = {".git", ".netlify", "__pycache__"}
+SKIP_DIR_NAMES = {".git", ".git_backup", ".netlify", "__pycache__"}
 
 # 这些文件由每日实盘脚本维护，静态内容同步时不要覆盖或删除。
 LIVE_DATA_PATTERNS = [

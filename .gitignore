@@ -1,4 +1,4 @@
-# Local Netlify folder
-.netlify
 __pycache__/
-*.pyc
+*.py[cod]
+.netlify/
+.git_backup/
