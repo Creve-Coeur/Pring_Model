@@ -17,6 +17,7 @@
 from __future__ import annotations
 
 import fnmatch
+import re
 import shutil
 import subprocess
 import sys
@@ -38,6 +39,54 @@ LIVE_DATA_PATTERNS = [
     "组合实盘追踪/nav_history.json",
     "组合实盘追踪/20*.xlsx",
 ]
+
+MODULE_HOME_LINKS = {
+    Path("组合介绍/index.html"): "../index.html",
+    Path("组合的诞生/index.html"): "../index.html",
+    Path("组合实盘追踪/index.html"): "../index.html",
+}
+
+HOME_LINK_STYLE_MARKER = "site-home-link injected by sync script"
+HOME_LINK_STYLE = f"""
+  <style>
+    /* {HOME_LINK_STYLE_MARKER} */
+    .site-home-link {{
+      position: fixed;
+      left: 18px;
+      bottom: 18px;
+      z-index: 3000;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 0 18px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.92);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.24);
+      backdrop-filter: blur(10px);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }}
+
+    .site-home-link:hover {{
+      transform: translateY(-2px);
+      background: #0f172a;
+      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.3);
+    }}
+
+    @media (max-width: 640px) {{
+      .site-home-link {{
+        left: 12px;
+        bottom: 12px;
+        min-height: 36px;
+        padding: 0 12px;
+        font-size: 12px;
+      }}
+    }}
+  </style>"""
 
 
 def to_posix(path: Path) -> str:
@@ -70,6 +119,40 @@ def assert_safe_paths() -> None:
         raise RuntimeError(f"发布仓库没有 .git 目录：{PUBLISH_DIR}")
     if SOURCE_DIR == PUBLISH_DIR:
         raise RuntimeError("源文件夹和发布仓库不能是同一个目录。")
+
+
+def ensure_home_link(html_path: Path, href: str) -> None:
+    if not html_path.exists():
+        return
+
+    text = html_path.read_text(encoding="utf-8")
+    updated = text
+
+    if HOME_LINK_STYLE_MARKER not in updated and ".site-home-link" not in updated:
+        if "</head>" in updated:
+            updated = updated.replace("</head>", f"{HOME_LINK_STYLE}\n</head>", 1)
+        else:
+            print(f"未找到 </head>，跳过返回按钮样式：{html_path}")
+
+    has_link = 'class="site-home-link"' in updated or "class='site-home-link'" in updated
+    if not has_link:
+        link_html = f'<a class="site-home-link" href="{href}">返回首页</a>'
+        body_match = re.search(r"<body\b[^>]*>", updated, flags=re.IGNORECASE)
+        if body_match:
+            insert_at = body_match.end()
+            updated = updated[:insert_at] + f"\n  {link_html}" + updated[insert_at:]
+        else:
+            print(f"未找到 <body>，跳过返回首页按钮：{html_path}")
+
+    if updated != text:
+        html_path.write_text(updated, encoding="utf-8")
+        rel = html_path.relative_to(html_path.parents[1]) if len(html_path.parents) > 1 else html_path
+        print(f"已补返回首页按钮：{rel}")
+
+
+def ensure_module_home_links(root: Path) -> None:
+    for rel_path, href in MODULE_HOME_LINKS.items():
+        ensure_home_link(root / rel_path, href)
 
 
 def copy_file(src: Path, dest: Path) -> None:
@@ -190,7 +273,9 @@ def main() -> int:
         assert_safe_paths()
         print(f"源文件夹：{SOURCE_DIR}")
         print(f"发布仓库：{PUBLISH_DIR}")
+        ensure_module_home_links(SOURCE_DIR)
         sync_to_publish_repo()
+        ensure_module_home_links(PUBLISH_DIR)
         commit_and_push()
         return 0
     except Exception as exc:
