@@ -35,12 +35,44 @@
       "nav": 0.986928
     },
     {
+      "date": "2026-05-15",
+      "totalAssets": 29282.18,
+      "holdingMarketValue": 29273.4,
+      "dailyPnL": -248.0,
+      "positionRatio": 0.9997,
+      "nav": 0.978637
+    },
+    {
+      "date": "2026-05-18",
+      "totalAssets": 29487.14,
+      "holdingMarketValue": 29351.5,
+      "dailyPnL": 78.1,
+      "positionRatio": 0.9954,
+      "nav": 0.985487
+    },
+    {
+      "date": "2026-05-19",
+      "totalAssets": 29768.53,
+      "holdingMarketValue": 29604.8,
+      "dailyPnL": 358.2,
+      "positionRatio": 0.9945,
+      "nav": 0.994892
+    },
+    {
+      "date": "2026-05-20",
+      "totalAssets": 29485.95,
+      "holdingMarketValue": 29477.1,
+      "dailyPnL": -127.7,
+      "positionRatio": 0.9997,
+      "nav": 0.985448
+    },
+    {
       "date": "2026-05-22",
-      "totalAssets": 29242.72,
-      "holdingMarketValue": 29239.8,
-      "dailyPnL": 70.5,
+      "totalAssets": 29266.53,
+      "holdingMarketValue": 29263.6,
+      "dailyPnL": 94.3,
       "positionRatio": 0.9999,
-      "nav": 0.977319
+      "nav": 0.978114
     }
   ]
 }
