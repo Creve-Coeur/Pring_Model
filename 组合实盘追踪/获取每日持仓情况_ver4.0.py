@@ -22,9 +22,26 @@ import pandas as pd
 
 
 DOWNLOAD_DIR = r"C:\Users\Coeur\Downloads"
-PUBLISH_ROOT_DIR = r"C:\Users\Coeur\Desktop\红筹投资\组合构建\new_etf_website\etf-portfolio-dashboard"
 LIVE_MODULE_DIR_NAME = "组合实盘追踪"
-TARGET_DIR = os.path.join(PUBLISH_ROOT_DIR, LIVE_MODULE_DIR_NAME)
+
+
+def resolve_project_paths():
+    """根据脚本所在位置推导当前项目根目录和实盘追踪目录。"""
+    if "__file__" in globals():
+        base_dir = os.path.dirname(os.path.abspath(__file__))
+    else:
+        base_dir = os.path.abspath(os.getcwd())
+
+    if os.path.basename(base_dir) == LIVE_MODULE_DIR_NAME:
+        target_dir = base_dir
+    else:
+        target_dir = os.path.join(base_dir, LIVE_MODULE_DIR_NAME)
+
+    publish_root_dir = os.path.dirname(target_dir)
+    return publish_root_dir, target_dir
+
+
+PUBLISH_ROOT_DIR, TARGET_DIR = resolve_project_paths()
 
 TARGET_URL = "https://tzzb.10jqka.com.cn/pc/index.html#/myAccount/a/eKkOoy2"
 LATEST_FILE_NAME = "latest.xlsx"
