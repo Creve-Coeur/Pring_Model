@@ -264,14 +264,14 @@ def commit_and_push() -> None:
     run_git(["remote", "set-url", "origin", REMOTE_URL])
     run_git(["add", "."])
 
-    if not has_changes():
-        print("\n没有检测到需要同步的变化。")
-        return
+    if has_changes():
+        message = "Sync website content " + datetime.now().strftime("%Y-%m-%d %H:%M")
+        run_git(["commit", "-m", message])
+    else:
+        print("\n没有检测到需要提交的文件变化，仍会尝试推送到 GitHub。")
 
-    message = "Sync website content " + datetime.now().strftime("%Y-%m-%d %H:%M")
-    run_git(["commit", "-m", message])
     run_git(["push", "-u", "origin", BRANCH])
-    print("\n同步完成，GitHub Pages 稍等片刻会自动刷新。")
+    print("\n推送完成，GitHub Pages 稍等片刻会自动刷新。")
 
 
 def main() -> int:
