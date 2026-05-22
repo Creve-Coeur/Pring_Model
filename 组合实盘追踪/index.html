@@ -203,8 +203,8 @@
       <section class="mx-auto max-w-7xl space-y-6 p-4">
         <div id="overviewCards" class="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-6"></div>
 
-        <div id="navSection" class="grid scroll-mt-24 grid-cols-1 gap-4 xl:grid-cols-3">
-          <div class="card rounded-xl p-4 xl:col-span-2">
+        <div id="navSection" class="scroll-mt-24">
+          <div class="card rounded-xl p-4">
             <div class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 class="text-sm font-medium text-slate-300">组合净值对比</h2>
@@ -217,9 +217,19 @@
             </div>
             <div id="navChart" class="h-80"></div>
           </div>
+        </div>
+
+        <div id="allocationSection" class="grid scroll-mt-24 grid-cols-1 gap-4 xl:grid-cols-2">
           <div class="card rounded-xl p-4">
             <h2 class="mb-3 text-sm font-medium text-slate-300">当前仓位结构</h2>
-            <div id="allocationChart" class="h-80"></div>
+            <div class="grid gap-4 lg:grid-cols-[minmax(0,1fr)_220px]">
+              <div id="allocationChart" class="h-72 lg:h-80"></div>
+              <div id="allocationList" class="max-h-80 space-y-2 overflow-y-auto pr-1"></div>
+            </div>
+          </div>
+          <div class="card rounded-xl p-4">
+            <h2 class="mb-3 text-sm font-medium text-slate-300">持仓盈亏统计</h2>
+            <div id="holdingPnlChart" class="h-80"></div>
           </div>
         </div>
 
@@ -336,6 +346,7 @@
       <div class="side-nav-menu">
         <button class="side-nav-link is-top" data-target="app" type="button" aria-label="返回顶部" title="返回顶部">↑</button>
         <button class="side-nav-link" data-target="navSection" type="button" title="组合净值">净</button>
+        <button class="side-nav-link" data-target="allocationSection" type="button" title="仓位结构">仓</button>
         <button class="side-nav-link" data-target="holdingsSection" type="button" title="当前持仓">持</button>
         <button class="side-nav-link" data-target="summarySection" type="button" title="汇总快照">汇</button>
         <button class="side-nav-link" data-target="closedSection" type="button" title="已清仓记录">清</button>
@@ -348,6 +359,7 @@
       let dashboardData = null;
       let navChart = null;
       let allocationChart = null;
+      let holdingPnlChart = null;
       const app = document.getElementById("app");
       const dataStatus = document.getElementById("dataStatus");
 
@@ -381,6 +393,15 @@
 
       function pnlClass(value) {
         return toNumber(value) >= 0 ? "text-rose-400" : "text-emerald-400";
+      }
+
+      function escapeHtml(value) {
+        return String(value ?? "")
+          .replace(/&/g, "&amp;")
+          .replace(/</g, "&lt;")
+          .replace(/>/g, "&gt;")
+          .replace(/"/g, "&quot;")
+          .replace(/'/g, "&#039;");
       }
 
       function codeText(value) {
@@ -558,13 +579,14 @@
       function updateNavChartHint(selectedName) {
         const errors = dashboardData.meta?.benchmarkErrors || {};
         const hasSelectedData = Boolean(getBenchmarkMap()[selectedName]?.length);
+        const baseInfo = `组合本金：${formatCurrency(dashboardData.meta?.navBaseAssets)} ｜ 指数基日：${dashboardData.meta?.navBaseDate || "--"}`;
         if (hasSelectedData) {
-          document.getElementById("navChartHint").textContent = `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ 对比：${selectedName}`;
+          document.getElementById("navChartHint").textContent = `${baseInfo} ｜ 对比：${selectedName}`;
           return;
         }
         document.getElementById("navChartHint").textContent = errors[selectedName]
-          ? `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ ${errors[selectedName]}`
-          : `基日：${dashboardData.meta?.navBaseDate || "--"} ｜ 暂无可用对比指数`;
+          ? `${baseInfo} ｜ ${errors[selectedName]}`
+          : `${baseInfo} ｜ 暂无可用对比指数`;
       }
 
       function renderNavChart(series, benchmarkSeries = [], benchmarkName = "对比指数") {
@@ -664,38 +686,164 @@
         if (allocationChart) allocationChart.dispose();
         allocationChart = echarts.init(document.getElementById("allocationChart"));
         const isSmallScreen = window.innerWidth <= 640;
+        const allocationColors = ["#38bdf8", "#f59e0b", "#22c55e", "#a78bfa", "#fb7185", "#2dd4bf", "#60a5fa", "#f97316", "#84cc16", "#94a3b8"];
+        const allocationData = holdings
+          .map((item) => ({
+            name: item["名称"] || "--",
+            value: toNumber(item["仓位占比"]) * 100
+          }))
+          .filter((item) => item.value > 0)
+          .sort((a, b) => b.value - a.value);
+        const topHolding = allocationData[0] || { name: "--", value: 0 };
+        const maxWeight = Math.max(topHolding.value, 1);
+        document.getElementById("allocationList").innerHTML = allocationData
+          .map((item, index) => {
+            const color = allocationColors[index % allocationColors.length];
+            const width = Math.max((item.value / maxWeight) * 100, 3);
+            return `
+              <div class="rounded-md border border-slate-800/70 bg-slate-950/25 px-3 py-2">
+                <div class="flex items-center justify-between gap-3">
+                  <div class="flex min-w-0 items-center gap-2">
+                    <span class="h-2.5 w-2.5 shrink-0 rounded-sm" style="background:${color}"></span>
+                    <span class="truncate text-slate-200">${escapeHtml(item.name)}</span>
+                  </div>
+                  <span class="shrink-0 font-semibold text-slate-100">${item.value.toFixed(2)}%</span>
+                </div>
+                <div class="mt-2 h-1.5 overflow-hidden rounded-full bg-slate-800/80">
+                  <div class="h-full rounded-full" style="width:${width}%; background:${color}"></div>
+                </div>
+              </div>
+            `;
+          })
+          .join("");
+
         allocationChart.setOption({
           backgroundColor: "transparent",
-          tooltip: { trigger: "item" },
-          legend: {
-            type: isSmallScreen ? "scroll" : "plain",
-            orient: "horizontal",
-            left: isSmallScreen ? 0 : "center",
-            right: isSmallScreen ? 0 : "auto",
-            bottom: 0,
-            height: isSmallScreen ? 42 : "auto",
-            textStyle: { color: "#cbd5e1", fontSize: isSmallScreen ? 10 : 12 }
+          tooltip: {
+            trigger: "item",
+            formatter: (params) => `${params.marker}${params.name}<br/>仓位占比：${Number(params.value).toFixed(2)}%`
           },
-          color: ["#38bdf8", "#0ea5e9", "#0284c7", "#0369a1", "#155e75", "#1e3a8a", "#334155"],
+          legend: { show: false },
+          color: allocationColors,
+          graphic: [
+            {
+              type: "text",
+              left: "center",
+              top: "43%",
+              style: {
+                text: `${topHolding.name}\n${topHolding.value.toFixed(1)}%`,
+                fill: "#e2e8f0",
+                fontSize: isSmallScreen ? 12 : 14,
+                fontWeight: 700,
+                lineHeight: isSmallScreen ? 17 : 20,
+                textAlign: "center"
+              }
+            }
+          ],
           series: [
             {
               type: "pie",
-              center: ["50%", isSmallScreen ? "42%" : "45%"],
-              radius: isSmallScreen ? ["34%", "56%"] : ["44%", "72%"],
-              label: {
-                show: !isSmallScreen,
-                color: "#cbd5e1",
-                formatter: "{b}\n{d}%"
-              },
-              labelLine: { show: !isSmallScreen },
+              center: ["50%", "50%"],
+              radius: isSmallScreen ? ["42%", "68%"] : ["46%", "74%"],
+              minAngle: 4,
+              avoidLabelOverlap: true,
+              label: { show: false },
+              labelLine: { show: false },
               itemStyle: {
                 borderColor: "#0f172a",
                 borderWidth: 2
               },
-              data: holdings.map((item) => ({
-                name: item["名称"],
-                value: toNumber(item["仓位占比"]) * 100
-              }))
+              data: allocationData
+            }
+          ]
+        });
+      }
+
+      function renderHoldingPnlChart(holdings) {
+        if (holdingPnlChart) holdingPnlChart.dispose();
+        holdingPnlChart = echarts.init(document.getElementById("holdingPnlChart"));
+        const isSmallScreen = window.innerWidth <= 640;
+        const pnlData = holdings
+          .map((item) => ({
+            name: item["名称"] || "--",
+            holdingPnl: toNumber(item["持有盈亏"]),
+            dailyPnl: toNumber(item["当日盈亏"]),
+            amount: toNumber(item["持有金额"]),
+            weight: toNumber(item["仓位占比"])
+          }))
+          .sort((a, b) => a.holdingPnl - b.holdingPnl);
+
+        const values = pnlData.map((item) => item.holdingPnl);
+        const rawMin = Math.min(0, ...values);
+        const rawMax = Math.max(0, ...values);
+        const padding = Math.max((rawMax - rawMin) * 0.12, 12);
+        const maxAbs = Math.max(Math.abs(rawMin), Math.abs(rawMax));
+        const tickStep = maxAbs <= 50 ? 10 : maxAbs <= 100 ? 20 : maxAbs <= 300 ? 50 : maxAbs <= 800 ? 200 : Math.ceil(maxAbs / 400) * 100;
+        const xMin = rawMin < 0 ? -Math.ceil((Math.abs(rawMin) + padding) / tickStep) * tickStep : 0;
+        const xMax = rawMax > 0 ? Math.ceil((rawMax + padding) / tickStep) * tickStep : 0;
+
+        holdingPnlChart.setOption({
+          backgroundColor: "transparent",
+          grid: {
+            left: isSmallScreen ? 86 : 106,
+            right: isSmallScreen ? 60 : 74,
+            top: 18,
+            bottom: 28
+          },
+          tooltip: {
+            trigger: "axis",
+            axisPointer: { type: "shadow" },
+            formatter: (params) => {
+              const item = pnlData[params[0].dataIndex];
+              return [
+                `<strong>${item.name}</strong>`,
+                `持有盈亏：${formatCurrency(item.holdingPnl)}`,
+                `当日盈亏：${formatCurrency(item.dailyPnl)}`,
+                `持有金额：${formatCurrency(item.amount)}`,
+                `仓位占比：${formatPercent(item.weight)}`
+              ].join("<br/>");
+            }
+          },
+          xAxis: {
+            type: "value",
+            min: xMin,
+            max: xMax,
+            interval: tickStep,
+            axisLine: { lineStyle: { color: "#64748b" } },
+            axisLabel: {
+              color: "#94a3b8",
+              formatter: (value) => (Math.abs(value) >= 1000 ? `${(value / 1000).toFixed(1)}k` : Number(value).toFixed(0))
+            },
+            splitLine: { lineStyle: { color: "rgba(148,163,184,0.15)" } }
+          },
+          yAxis: {
+            type: "category",
+            inverse: true,
+            data: pnlData.map((item) => item.name),
+            axisLine: { lineStyle: { color: "#64748b" } },
+            axisTick: { show: false },
+            axisLabel: {
+              color: "#cbd5e1",
+              width: isSmallScreen ? 70 : 88,
+              overflow: "truncate"
+            }
+          },
+          series: [
+            {
+              name: "持有盈亏",
+              type: "bar",
+              barMaxWidth: 18,
+              data: pnlData.map((item) => ({
+                value: item.holdingPnl,
+                itemStyle: { color: item.holdingPnl >= 0 ? "#fb7185" : "#34d399" }
+              })),
+              label: {
+                show: true,
+                position: "right",
+                color: "#cbd5e1",
+                fontSize: 11,
+                formatter: (params) => (isSmallScreen ? `¥${Number(params.value).toFixed(0)}` : formatCurrency(params.value))
+              }
             }
           ]
         });
@@ -720,10 +868,12 @@
         renderStrategy(strategy);
         renderNavChart(navSeries, benchmarkMap[defaultBenchmark] || [], defaultBenchmark || "对比指数");
         renderAllocationChart(sheets.currentHoldings);
+        renderHoldingPnlChart(sheets.currentHoldings);
 
         window.addEventListener("resize", () => {
           if (navChart) navChart.resize();
           if (allocationChart) allocationChart.resize();
+          if (holdingPnlChart) holdingPnlChart.resize();
         });
       }
 
@@ -731,13 +881,15 @@
         const sideNav = document.getElementById("sideNav");
         const toggle = document.getElementById("sideNavToggle");
         const savedPosition = localStorage.getItem("sideNavPosition");
+        const savedCollapsed = localStorage.getItem("sideNavCollapsed");
         let dragState = null;
         let suppressClick = false;
         const setCollapsed = (collapsed) => {
           sideNav.classList.toggle("collapsed", collapsed);
           toggle.setAttribute("aria-expanded", String(!collapsed));
+          localStorage.setItem("sideNavCollapsed", String(collapsed));
         };
-        setCollapsed(sideNav.classList.contains("collapsed"));
+        setCollapsed(savedCollapsed === null ? sideNav.classList.contains("collapsed") : savedCollapsed === "true");
         if (savedPosition) {
           try {
             const position = JSON.parse(savedPosition);
@@ -804,7 +956,6 @@
           button.addEventListener("click", () => {
             const target = document.getElementById(button.dataset.target);
             if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-            setCollapsed(true);
           });
         });
       }

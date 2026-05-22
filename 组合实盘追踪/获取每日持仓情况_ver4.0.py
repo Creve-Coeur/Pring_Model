@@ -50,6 +50,7 @@ NAV_HISTORY_NAME = "nav_history.json"
 GIT_REMOTE_NAME = "origin"
 GIT_REMOTE_SSH_URL = "git@github.com:Creve-Coeur/Pring_Model.git"
 
+INITIAL_PORTFOLIO_ASSETS = 30000.0
 DEFAULT_BENCHMARK_NAME = "沪深300"
 INDEX_HISTORY_START_DATE = "20160101"
 
@@ -157,9 +158,9 @@ def estimate_total_assets(holding_summary):
 
 
 def update_nav_history(as_of_date, holding_summary):
-    """维护真实净值历史。建仓日净值为 1，之后按真实总资产相对建仓日总资产计算。"""
+    """维护真实净值历史。首日固定为 1.0，后续净值按当天总资产 / 建仓投入本金计算。"""
     history_path = os.path.join(TARGET_DIR, NAV_HISTORY_NAME)
-    history = load_json_file(history_path, {"baseDate": as_of_date, "baseAssets": None, "series": []})
+    history = load_json_file(history_path, {"baseDate": as_of_date, "baseAssets": INITIAL_PORTFOLIO_ASSETS, "series": []})
 
     total_assets = estimate_total_assets(holding_summary)
     holding_market_value = safe_float(holding_summary.get("持有金额"))
@@ -176,12 +177,14 @@ def update_nav_history(as_of_date, holding_summary):
     }
 
     series = sorted(existing.values(), key=lambda item: item["date"])
-    base_assets = safe_float(series[0]["totalAssets"]) if series else total_assets
+    base_assets = INITIAL_PORTFOLIO_ASSETS
     history["baseDate"] = series[0]["date"] if series else as_of_date
     history["baseAssets"] = base_assets
+    history.pop("baseSnapshotAssets", None)
 
-    for item in series:
-        item["nav"] = round(safe_float(item.get("totalAssets")) / base_assets, 6) if base_assets else 1.0
+    for index, item in enumerate(series):
+        total_assets = safe_float(item.get("totalAssets"))
+        item["nav"] = 1.0 if index == 0 else round(total_assets / base_assets, 6) if base_assets else 1.0
 
     history["series"] = series
     with open(history_path, "w", encoding="utf-8") as f:
@@ -412,11 +415,11 @@ def build_dashboard_data_from_excel(excel_path, benchmark_map=None, benchmark_er
         },
         "strategy": {
             "title": "自动同步 Excel 展示",
-            "positioning": "页面数据由最新导出的 Excel 自动生成，无需再手工维护持仓、清仓和交易记录。净值曲线来自每日真实资产快照，并可选择多个指数作为同步基日对比。",
+            "positioning": "页面数据由最新导出的 Excel 自动生成，无需再手工维护持仓、清仓和交易记录。组合净值首日从 1.0 起步，后续按当天总资产 / 建仓投入本金 30000 计算，并可选择多个指数作为同步基日对比。",
             "riskRules": [
                 "每日运行下载脚本后，网页会同步刷新为最新账本数据。",
                 "持仓明细、已清仓和交易记录全部来自 Excel 原始工作表。",
-                "组合净值以首次记录日为基日，后续每日更新同一份净值历史。",
+                "组合净值首日固定为 1.0，后续按当天总资产 / 30000 更新。",
             ],
         },
     }

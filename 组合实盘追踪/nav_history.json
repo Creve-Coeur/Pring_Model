@@ -1,6 +1,6 @@
 {
   "baseDate": "2026-05-11",
-  "baseAssets": 29921.38,
+  "baseAssets": 30000.0,
   "series": [
     {
       "date": "2026-05-11",
@@ -16,7 +16,7 @@
       "holdingMarketValue": 29918.2,
       "dailyPnL": -46.4,
       "positionRatio": 0.9997,
-      "nav": 1.000194
+      "nav": 0.997573
     },
     {
       "date": "2026-05-13",
@@ -24,7 +24,7 @@
       "holdingMarketValue": 29898.1,
       "dailyPnL": 129.0,
       "positionRatio": 0.9997,
-      "nav": 0.999522
+      "nav": 0.996902
     },
     {
       "date": "2026-05-14",
@@ -32,7 +32,7 @@
       "holdingMarketValue": 29521.4,
       "dailyPnL": -376.7,
       "positionRatio": 0.9997,
-      "nav": 0.986928
+      "nav": 0.984342
     },
     {
       "date": "2026-05-15",
@@ -40,7 +40,7 @@
       "holdingMarketValue": 29273.4,
       "dailyPnL": -248.0,
       "positionRatio": 0.9997,
-      "nav": 0.978637
+      "nav": 0.976073
     },
     {
       "date": "2026-05-18",
@@ -48,7 +48,7 @@
       "holdingMarketValue": 29351.5,
       "dailyPnL": 78.1,
       "positionRatio": 0.9954,
-      "nav": 0.985487
+      "nav": 0.982905
     },
     {
       "date": "2026-05-19",
@@ -56,7 +56,7 @@
       "holdingMarketValue": 29604.8,
       "dailyPnL": 358.2,
       "positionRatio": 0.9945,
-      "nav": 0.994892
+      "nav": 0.992284
     },
     {
       "date": "2026-05-20",
@@ -64,7 +64,7 @@
       "holdingMarketValue": 29477.1,
       "dailyPnL": -127.7,
       "positionRatio": 0.9997,
-      "nav": 0.985448
+      "nav": 0.982865
     },
     {
       "date": "2026-05-21",
@@ -72,17 +72,17 @@
       "holdingMarketValue": 29169.4,
       "dailyPnL": -307.8,
       "positionRatio": 0.9997,
-      "nav": 0.975161,
+      "nav": 0.972605,
       "isSimulated": true,
       "note": "由补齐缺失组合净值脚本根据上一条总资产和手工输入当日盈亏模拟"
     },
     {
       "date": "2026-05-22",
-      "totalAssets": 29207.36,
-      "holdingMarketValue": 29198.6,
-      "dailyPnL": 29.3,
+      "totalAssets": 29263.18,
+      "holdingMarketValue": 29254.4,
+      "dailyPnL": 85.1,
       "positionRatio": 0.9997,
-      "nav": 0.976137
+      "nav": 0.975439
     }
   ]
 }

@@ -26,7 +26,7 @@ from pathlib import Path
 
 
 SOURCE_DIR = Path(__file__).resolve().parent
-PUBLISH_DIR = Path(r"C:\Users\Coeur\Desktop\红筹投资\组合构建\new_etf_website\etf-portfolio-dashboard")
+PUBLISH_DIR = SOURCE_DIR
 REMOTE_URL = "git@github.com:Creve-Coeur/Pring_Model.git"
 BRANCH = "main"
 
@@ -110,6 +110,10 @@ def should_preserve_destination(rel_path: Path) -> bool:
     return matches_any(rel_path, LIVE_DATA_PATTERNS)
 
 
+def is_in_place_repo() -> bool:
+    return SOURCE_DIR.resolve() == PUBLISH_DIR.resolve()
+
+
 def assert_safe_paths() -> None:
     if not SOURCE_DIR.exists():
         raise FileNotFoundError(f"源文件夹不存在：{SOURCE_DIR}")
@@ -117,8 +121,6 @@ def assert_safe_paths() -> None:
         raise FileNotFoundError(f"发布仓库文件夹不存在：{PUBLISH_DIR}")
     if not (PUBLISH_DIR / ".git").exists():
         raise RuntimeError(f"发布仓库没有 .git 目录：{PUBLISH_DIR}")
-    if SOURCE_DIR == PUBLISH_DIR:
-        raise RuntimeError("源文件夹和发布仓库不能是同一个目录。")
 
 
 def ensure_home_link(html_path: Path, href: str) -> None:
@@ -226,6 +228,10 @@ def sync_item(src_item: Path) -> None:
 
 
 def sync_to_publish_repo() -> None:
+    if is_in_place_repo():
+        print("\n当前文件夹已是发布仓库，跳过文件复制步骤。")
+        return
+
     for src_item in SOURCE_DIR.iterdir():
         sync_item(src_item)
 
@@ -275,7 +281,8 @@ def main() -> int:
         print(f"发布仓库：{PUBLISH_DIR}")
         ensure_module_home_links(SOURCE_DIR)
         sync_to_publish_repo()
-        ensure_module_home_links(PUBLISH_DIR)
+        if not is_in_place_repo():
+            ensure_module_home_links(PUBLISH_DIR)
         commit_and_push()
         return 0
     except Exception as exc:

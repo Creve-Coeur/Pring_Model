@@ -19,6 +19,7 @@ from pathlib import Path
 
 NAV_HISTORY_NAME = "nav_history.json"
 DATA_JSON_NAME = "data.json"
+INITIAL_PORTFOLIO_ASSETS = 30000.0
 DEFAULT_BENCHMARK_NAME = "沪深300"
 
 
@@ -162,17 +163,16 @@ def recalculate_history(history: dict) -> dict:
     if not series:
         return history
 
-    base_assets = safe_float(history.get("baseAssets"))
-    if not base_assets:
-        base_assets = safe_float(series[0].get("totalAssets"))
+    base_assets = INITIAL_PORTFOLIO_ASSETS
 
     history["baseDate"] = history.get("baseDate") or series[0]["date"]
     history["baseAssets"] = round(base_assets, 2)
+    history.pop("baseSnapshotAssets", None)
 
-    for item in series:
+    for index, item in enumerate(series):
         total_assets = safe_float(item.get("totalAssets"))
         item["totalAssets"] = round(total_assets, 2)
-        item["nav"] = round(total_assets / base_assets, 6) if base_assets else 1.0
+        item["nav"] = 1.0 if index == 0 else round(total_assets / base_assets, 6) if base_assets else 1.0
 
     history["series"] = series
     return history
@@ -192,6 +192,7 @@ def sync_data_json_nav_series(data: dict, history: dict) -> dict:
     meta = data.setdefault("meta", {})
     meta["navBaseDate"] = history.get("baseDate")
     meta["navBaseAssets"] = history.get("baseAssets")
+    meta.pop("navBaseSnapshotAssets", None)
     meta["navHistoryPatchedAt"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     return data
 
@@ -215,7 +216,7 @@ def main() -> None:
         print(f"  - {date_text}")
 
     series_by_date = {item["date"]: item for item in get_sorted_history_series(history)}
-    base_assets = safe_float(history.get("baseAssets"))
+    base_assets = INITIAL_PORTFOLIO_ASSETS
     added_records = []
 
     for date_text in missing_dates:
