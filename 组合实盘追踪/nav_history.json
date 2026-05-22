@@ -67,12 +67,22 @@
       "nav": 0.985448
     },
     {
+      "date": "2026-05-21",
+      "totalAssets": 29178.15,
+      "holdingMarketValue": 29169.4,
+      "dailyPnL": -307.8,
+      "positionRatio": 0.9997,
+      "nav": 0.975161,
+      "isSimulated": true,
+      "note": "由补齐缺失组合净值脚本根据上一条总资产和手工输入当日盈亏模拟"
+    },
+    {
       "date": "2026-05-22",
-      "totalAssets": 29266.53,
-      "holdingMarketValue": 29263.6,
-      "dailyPnL": 94.3,
-      "positionRatio": 0.9999,
-      "nav": 0.978114
+      "totalAssets": 29207.36,
+      "holdingMarketValue": 29198.6,
+      "dailyPnL": 29.3,
+      "positionRatio": 0.9997,
+      "nav": 0.976137
     }
   ]
 }
