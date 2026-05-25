@@ -10,6 +10,7 @@
 说明：
 - 当前文件夹是内容源。
 - GitHub Pages 发布仓库是 PUBLISH_DIR。
+- 推送前会先刷新首页三个模块卡片的更新时间。
 - 为了避免覆盖每日实盘更新，本脚本默认保留发布仓库中
   组合实盘追踪/data.json、latest.xlsx、nav_history.json、20*.xlsx。
 """
@@ -45,6 +46,24 @@ MODULE_HOME_LINKS = {
     Path("组合的诞生/index.html"): "../index.html",
     Path("组合实盘追踪/index.html"): "../index.html",
 }
+
+MODULE_INDEX_UPDATES = [
+    {
+        "key": "intro",
+        "directory": Path("组合介绍"),
+        "href": "组合介绍/index.html",
+    },
+    {
+        "key": "birth",
+        "directory": Path("组合的诞生"),
+        "href": "组合的诞生/index.html",
+    },
+    {
+        "key": "live",
+        "directory": Path("组合实盘追踪"),
+        "href": "组合实盘追踪/index.html",
+    },
+]
 
 HOME_LINK_STYLE_MARKER = "site-home-link injected by sync script"
 HOME_LINK_STYLE = f"""
@@ -155,6 +174,94 @@ def ensure_home_link(html_path: Path, href: str) -> None:
 def ensure_module_home_links(root: Path) -> None:
     for rel_path, href in MODULE_HOME_LINKS.items():
         ensure_home_link(root / rel_path, href)
+
+
+def should_skip_update_time_file(rel_path: Path) -> bool:
+    if any(part in SKIP_DIR_NAMES for part in rel_path.parts):
+        return True
+    if rel_path.suffix.lower() in {".pyc", ".pyo"}:
+        return True
+    if rel_path.name.lower() in {".ds_store", "thumbs.db"}:
+        return True
+    return False
+
+
+def get_module_update_time(root: Path, module_dir: Path) -> str | None:
+    full_dir = root / module_dir
+    if not full_dir.exists():
+        print(f"未找到模块目录，跳过更新时间：{full_dir}")
+        return None
+
+    latest_mtime: float | None = None
+    for file_path in full_dir.rglob("*"):
+        if not file_path.is_file():
+            continue
+        rel_path = file_path.relative_to(full_dir)
+        if should_skip_update_time_file(rel_path):
+            continue
+        file_mtime = file_path.stat().st_mtime
+        if latest_mtime is None or file_mtime > latest_mtime:
+            latest_mtime = file_mtime
+
+    if latest_mtime is None:
+        print(f"模块目录没有可用于更新时间的文件：{full_dir}")
+        return None
+
+    return datetime.fromtimestamp(latest_mtime).strftime("%Y-%m-%d %H:%M")
+
+
+def upsert_module_update_marker(html: str, href: str, key: str, update_text: str) -> str:
+    marker_pattern = re.compile(
+        rf'(<span\b[^>]*\bdata-module-updated=["\']{re.escape(key)}["\'][^>]*>)(.*?)(</span>)',
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    if marker_pattern.search(html):
+        return marker_pattern.sub(rf"\1{update_text}\3", html, count=1)
+
+    card_pattern = re.compile(
+        rf'(<a\b[^>]*href=["\']{re.escape(href)}["\'][^>]*>.*?'
+        rf'<div class=["\']module-meta["\']>\s*<span>)(.*?)(</span>)',
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+
+    def add_marker(match: re.Match[str]) -> str:
+        first_label = match.group(2).strip()
+        marker = f'{first_label} · <span class="module-updated" data-module-updated="{key}">{update_text}</span>'
+        return f"{match.group(1)}{marker}{match.group(3)}"
+
+    updated_html, replacements = card_pattern.subn(add_marker, html, count=1)
+    if replacements == 0:
+        print(f"未找到首页模块卡片，跳过更新时间标记：{href}")
+        return html
+    return updated_html
+
+
+def update_homepage_index(root: Path) -> None:
+    index_path = root / "index.html"
+    if not index_path.exists():
+        print(f"未找到首页 index.html，跳过首页更新时间：{index_path}")
+        return
+
+    text = index_path.read_text(encoding="utf-8")
+    updated = text
+
+    for module in MODULE_INDEX_UPDATES:
+        update_time = get_module_update_time(root, module["directory"])
+        if update_time is None:
+            continue
+        update_text = f"更新于 {update_time}"
+        updated = upsert_module_update_marker(
+            updated,
+            href=module["href"].as_posix() if isinstance(module["href"], Path) else module["href"],
+            key=module["key"],
+            update_text=update_text,
+        )
+
+    if updated != text:
+        index_path.write_text(updated, encoding="utf-8")
+        print("已刷新首页模块更新时间。")
+    else:
+        print("首页模块更新时间已是最新。")
 
 
 def copy_file(src: Path, dest: Path) -> None:
@@ -280,6 +387,7 @@ def main() -> int:
         print(f"源文件夹：{SOURCE_DIR}")
         print(f"发布仓库：{PUBLISH_DIR}")
         ensure_module_home_links(SOURCE_DIR)
+        update_homepage_index(SOURCE_DIR)
         sync_to_publish_repo()
         if not is_in_place_repo():
             ensure_module_home_links(PUBLISH_DIR)
