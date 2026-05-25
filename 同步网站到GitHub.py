@@ -58,11 +58,6 @@ MODULE_INDEX_UPDATES = [
         "directory": Path("组合的诞生"),
         "href": "组合的诞生/index.html",
     },
-    {
-        "key": "live",
-        "directory": Path("组合实盘追踪"),
-        "href": "组合实盘追踪/index.html",
-    },
 ]
 
 HOME_LINK_STYLE_MARKER = "site-home-link injected by sync script"
@@ -236,6 +231,14 @@ def upsert_module_update_marker(html: str, href: str, key: str, update_text: str
     return updated_html
 
 
+def remove_module_update_marker(html: str, key: str) -> str:
+    marker_pattern = re.compile(
+        rf"\s*·\s*<span\b[^>]*\bdata-module-updated=[\"']{re.escape(key)}[\"'][^>]*>.*?</span>",
+        flags=re.IGNORECASE | re.DOTALL,
+    )
+    return marker_pattern.sub("", html, count=1)
+
+
 def update_homepage_index(root: Path) -> None:
     index_path = root / "index.html"
     if not index_path.exists():
@@ -244,6 +247,7 @@ def update_homepage_index(root: Path) -> None:
 
     text = index_path.read_text(encoding="utf-8")
     updated = text
+    updated = remove_module_update_marker(updated, "live")
 
     for module in MODULE_INDEX_UPDATES:
         update_time = get_module_update_time(root, module["directory"])
