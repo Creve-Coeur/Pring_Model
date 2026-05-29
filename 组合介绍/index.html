@@ -152,6 +152,12 @@
       color: #667085;
     }
 
+    .toc-link.level-5 {
+      padding-left: 54px;
+      font-size: 12px;
+      color: #7a8494;
+    }
+
     .content {
       min-width: 0;
       padding: 38px clamp(18px, 4vw, 58px) 72px;
@@ -529,49 +535,8 @@
       }
     }
   </style>
-
-  <style>
-    /* site-home-link injected by sync script */
-    .site-home-link {
-      position: fixed;
-      left: 18px;
-      bottom: 18px;
-      z-index: 3000;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-height: 42px;
-      padding: 0 18px;
-      border-radius: 999px;
-      background: rgba(15, 23, 42, 0.92);
-      color: #fff;
-      font-size: 14px;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 14px 34px rgba(15, 23, 42, 0.24);
-      backdrop-filter: blur(10px);
-      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
-    }
-
-    .site-home-link:hover {
-      transform: translateY(-2px);
-      background: #0f172a;
-      box-shadow: 0 18px 42px rgba(15, 23, 42, 0.3);
-    }
-
-    @media (max-width: 640px) {
-      .site-home-link {
-        left: 12px;
-        bottom: 12px;
-        min-height: 36px;
-        padding: 0 12px;
-        font-size: 12px;
-      }
-    }
-  </style>
 </head>
 <body>
-  <a class="site-home-link" href="../index.html">返回首页</a>
   <div class="app-shell">
     <aside class="sidebar">
       <div class="brand-title">普林格轮动报告</div>
@@ -584,7 +549,7 @@
         <nav class="toc-panel active" aria-label="主报告目录" data-toc-panel="main"><a class="toc-link level-0" href="#main-title" data-report-link="main">普林格新四核轮动模型投资报告</a><a class="toc-link level-1" href="#main-h-1" data-report-link="main">传统普林格周期模型</a><a class="toc-link level-2" href="#main-h-2" data-report-link="main">什么是传统普林格周期模型</a><a class="toc-link level-3" href="#main-h-3" data-report-link="main">模型原理</a><a class="toc-link level-4" href="#main-h-4" data-report-link="main">1. 核心传导逻辑</a><a class="toc-link level-4" href="#main-h-5" data-report-link="main">2. 六阶段资产轮动规律</a><a class="toc-link level-4" href="#main-h-6" data-report-link="main">3. 周期阶段识别机制</a><a class="toc-link level-4" href="#main-h-7" data-report-link="main">4. 周期运行特征</a><a class="toc-link level-3" href="#main-h-8" data-report-link="main">在投资中的运用示例</a><a class="toc-link level-4" href="#main-h-9" data-report-link="main">1. 回测设定</a><a class="toc-link level-4" href="#main-h-10" data-report-link="main">2. 回测结果</a><a class="toc-link level-2" href="#main-h-11" data-report-link="main">传统普林格周期模型的缺点</a><a class="toc-link level-3" href="#main-h-12" data-report-link="main">缺点1：牛市表现不佳</a><a class="toc-link level-3" href="#main-h-13" data-report-link="main">缺点2：资产端存在拖累</a><a class="toc-link level-3" href="#main-h-14" data-report-link="main">缺点3：过度依赖择时</a><a class="toc-link level-3" href="#main-h-15" data-report-link="main">对传统普林格的改良思路</a><a class="toc-link level-1" href="#main-h-16" data-report-link="main">普林格新四核轮动模型</a><a class="toc-link level-2" href="#main-h-17" data-report-link="main">新普林格模型做了什么改进</a><a class="toc-link level-3" href="#main-h-18" data-report-link="main">资产端</a><a class="toc-link level-3" href="#main-h-19" data-report-link="main">风控端</a><a class="toc-link level-2" href="#main-h-20" data-report-link="main">新普林格模型是如何运作的</a><a class="toc-link level-3" href="#main-h-21" data-report-link="main">⭐一图讲解</a><a class="toc-link level-3" href="#main-h-22" data-report-link="main">1. 实盘资产池构建</a><a class="toc-link level-3" href="#main-h-23" data-report-link="main">2. 季度调仓与日度对齐</a><a class="toc-link level-4" href="#main-h-24" data-report-link="main">季度调仓触发与执行</a><a class="toc-link level-4" href="#main-h-25" data-report-link="main">日度权重对齐</a><a class="toc-link level-3" href="#main-h-26" data-report-link="main">3. 核心风控：MA20定向避险机制</a><a class="toc-link level-4" href="#main-h-27" data-report-link="main">避险触发前提</a><a class="toc-link level-4" href="#main-h-28" data-report-link="main">避险判定规则</a><a class="toc-link level-4" href="#main-h-29" data-report-link="main">避险资金流向</a><a class="toc-link level-4" href="#main-h-30" data-report-link="main">避险解除规则</a><a class="toc-link level-2" href="#main-h-31" data-report-link="main">新普林格模型的效果如何</a><a class="toc-link level-3" href="#main-h-32" data-report-link="main">业绩概览</a><a class="toc-link level-3" href="#main-h-33" data-report-link="main">归因分析</a><a class="toc-link level-4" href="#main-h-34" data-report-link="main">收益率归因</a><a class="toc-link level-4" href="#main-h-35" data-report-link="main">资产类型贡献归因</a><a class="toc-link level-4" href="#main-h-36" data-report-link="main">投资回报率（ROI）归因</a><a class="toc-link level-1" href="#main-h-37" data-report-link="main">产品解析</a><a class="toc-link level-2" href="#main-h-38" data-report-link="main">风格概述</a><a class="toc-link level-2" href="#main-h-39" data-report-link="main">适用人群</a></nav>
 <nav class="toc-panel" aria-label="理论补充目录" data-toc-panel="theory"><a class="toc-link level-0" href="#theory-title" data-report-link="theory">普林格周期模型</a><a class="toc-link level-2" href="#theory-h-1" data-report-link="theory">（一）历史背景</a><a class="toc-link level-3" href="#theory-h-2" data-report-link="theory">1. 时代背景：动荡的 70 年代与“滞胀”的冲击</a><a class="toc-link level-3" href="#theory-h-3" data-report-link="theory">2. 它是为了解决当时什么问题？</a><a class="toc-link level-4" href="#theory-h-4" data-report-link="theory">问题一：宏观经济数据“太慢”了（时效性问题）</a><a class="toc-link level-4" href="#theory-h-5" data-report-link="theory">问题二：单一市场分析的“盲人摸象”（关联性问题）</a><a class="toc-link level-4" href="#theory-h-6" data-report-link="theory">问题三：对“通胀”缺乏动态的应对策略（资产配置问题）</a><a class="toc-link level-2" href="#theory-h-7" data-report-link="theory">（二）模型相关理论</a><a class="toc-link level-3" href="#theory-h-8" data-report-link="theory">第一阶段：雏形期——从“经济数据”到“跨市场价格” (1980s - 1990s)</a><a class="toc-link level-3" href="#theory-h-9" data-report-link="theory">第二阶段：成型期——“六阶段模型”的系统化 (1990s - 2002)</a><a class="toc-link level-3" href="#theory-h-10" data-report-link="theory">第三阶段：深化期——板块轮动与ETF实战化 (2005 - 2015)</a><a class="toc-link level-3" href="#theory-h-11" data-report-link="theory">第四阶段：前沿与修正期——量化机制转换与新常态 (2016 - 至今)</a><a class="toc-link level-2" href="#theory-h-12" data-report-link="theory">（三）模型原理</a></nav>
 <nav class="toc-panel" aria-label="因子依据目录" data-toc-panel="factors"><a class="toc-link level-0" href="#factors-title" data-report-link="factors">普林格周期判断的因子依据</a><a class="toc-link level-1" href="#factors-h-1" data-report-link="factors">宏观因子在普林格中发挥的作用</a><a class="toc-link level-1" href="#factors-h-2" data-report-link="factors">统一进行的技术处理</a><a class="toc-link level-2" href="#factors-h-3" data-report-link="factors">1. 数据清洗</a><a class="toc-link level-2" href="#factors-h-4" data-report-link="factors">2. 历史样本长度约束</a><a class="toc-link level-2" href="#factors-h-5" data-report-link="factors">3. 单边滚动处理，避免未来函数</a><a class="toc-link level-2" href="#factors-h-6" data-report-link="factors">4. 周期提取</a><a class="toc-link level-1" href="#factors-h-7" data-report-link="factors">增长因子合成方法</a><a class="toc-link level-2" href="#factors-h-8" data-report-link="factors">1. 增长因子的定位</a><a class="toc-link level-2" href="#factors-h-9" data-report-link="factors">2. 增长因子的原始指标池</a><a class="toc-link level-2" href="#factors-h-10" data-report-link="factors">3. 增长因子的预处理方法</a><a class="toc-link level-2" href="#factors-h-11" data-report-link="factors">4. 增长因子的周期提取与筛选</a><a class="toc-link level-2" href="#factors-h-12" data-report-link="factors">5. 增长因子的合成方式</a><a class="toc-link level-2" href="#factors-h-13" data-report-link="factors">6. 增长因子的投资含义</a><a class="toc-link level-1" href="#factors-h-14" data-report-link="factors">通胀因子合成方法</a><a class="toc-link level-2" href="#factors-h-15" data-report-link="factors">1. 通胀因子的定位</a><a class="toc-link level-2" href="#factors-h-16" data-report-link="factors">2. 通胀因子的原始指标池</a><a class="toc-link level-2" href="#factors-h-17" data-report-link="factors">3. 通胀因子的预处理方法</a><a class="toc-link level-2" href="#factors-h-18" data-report-link="factors">4. 广义通胀基准的构建</a><a class="toc-link level-2" href="#factors-h-19" data-report-link="factors">5. 通胀因子的周期提取与筛选</a><a class="toc-link level-2" href="#factors-h-20" data-report-link="factors">6. 通胀因子的合成方式</a><a class="toc-link level-2" href="#factors-h-21" data-report-link="factors">7. 通胀因子的投资含义</a><a class="toc-link level-1" href="#factors-h-22" data-report-link="factors">货币因子合成方法</a><a class="toc-link level-2" href="#factors-h-23" data-report-link="factors">1. 货币因子的定位</a><a class="toc-link level-2" href="#factors-h-24" data-report-link="factors">2. 货币因子的指标选择</a><a class="toc-link level-2" href="#factors-h-25" data-report-link="factors">3. 货币因子的处理方法</a><a class="toc-link level-2" href="#factors-h-26" data-report-link="factors">4. 货币因子的投资含义</a><a class="toc-link level-1" href="#factors-h-27" data-report-link="factors">因子方向判定与平滑窗口选择</a><a class="toc-link level-2" href="#factors-h-28" data-report-link="factors">为什么因子合成后还需要判断“方向”</a><a class="toc-link level-2" href="#factors-h-29" data-report-link="factors">方向判定的基本方法：使用因子斜率而非原始水平</a><a class="toc-link level-2" href="#factors-h-30" data-report-link="factors">信号可得性处理：增长与通胀滞后一个月，货币使用当月</a><a class="toc-link level-2" href="#factors-h-31" data-report-link="factors">方向信号的平滑：降低单月噪声干扰</a><a class="toc-link level-2" href="#factors-h-32" data-report-link="factors">为什么需要研究 Rolling 窗口</a><a class="toc-link level-2" href="#factors-h-33" data-report-link="factors">基于资产胜率的窗口寻优</a><a class="toc-link level-2" href="#factors-h-34" data-report-link="factors">参数寻优结果及其解释</a><a class="toc-link level-2" href="#factors-h-35" data-report-link="factors">内在周期测量：用 ACF 与傅里叶频谱验证窗口合理性</a><a class="toc-link level-2" href="#factors-h-36" data-report-link="factors">为什么最终采用 12-12-12 窗口</a><a class="toc-link level-2" href="#factors-h-37" data-report-link="factors">最终方向判定规则</a><a class="toc-link level-2" href="#factors-h-38" data-report-link="factors">小结</a><a class="toc-link level-1" href="#factors-h-39" data-report-link="factors">Q＆A</a><a class="toc-link level-2" href="#factors-h-40" data-report-link="factors">Q1：底层指标采用等权合成是否科学？是否应该相关性越高权重越高？</a><a class="toc-link level-2" href="#factors-h-41" data-report-link="factors">Q2：领先月数为 0 的指标是否应该被过滤？</a><a class="toc-link level-2" href="#factors-h-42" data-report-link="factors">Q3：猪肉价格对 CPI 影响很大，为什么最终通胀因子没有采用猪肉价格？</a><a class="toc-link level-2" href="#factors-h-43" data-report-link="factors">Q4：货币因子只使用 1 年期国债收益率是否合理？是否应该加入 10 年期国债收益率、准备金率等其他指标？</a></nav>
-<nav class="toc-panel" aria-label="可转债研究目录" data-toc-panel="convertible"><a class="toc-link level-0" href="#convertible-title" data-report-link="convertible">可转债资产研究报告</a><a class="toc-link level-1" href="#convertible-h-1" data-report-link="convertible">什么是可转债</a><a class="toc-link level-2" href="#convertible-h-2" data-report-link="convertible">可转债的定义</a><a class="toc-link level-2" href="#convertible-h-3" data-report-link="convertible">公司发行可转债的原因</a><a class="toc-link level-2" href="#convertible-h-4" data-report-link="convertible">可转债的赎回条款</a><a class="toc-link level-3" href="#convertible-h-5" data-report-link="convertible">赎回条款（发行人权利）</a><a class="toc-link level-3" href="#convertible-h-6" data-report-link="convertible">转股价格向下修正条款（下修，投资者保护）</a><a class="toc-link level-3" href="#convertible-h-7" data-report-link="convertible">回售条款（投资者权利）</a><a class="toc-link level-3" href="#convertible-h-8" data-report-link="convertible">中美条款核心差异与总结</a><a class="toc-link level-2" href="#convertible-h-9" data-report-link="convertible">可转债的反稀释保护</a><a class="toc-link level-1" href="#convertible-h-10" data-report-link="convertible">可转债的常见概念</a><a class="toc-link level-2" href="#convertible-h-11" data-report-link="convertible">投资价值（纯债价值）</a><a class="toc-link level-2" href="#convertible-h-12" data-report-link="convertible">投资溢价（纯债溢价率）</a><a class="toc-link level-2" href="#convertible-h-13" data-report-link="convertible">转股价格和转换比例</a><a class="toc-link level-2" href="#convertible-h-14" data-report-link="convertible">转换价值</a><a class="toc-link level-2" href="#convertible-h-15" data-report-link="convertible">转股溢价</a><a class="toc-link level-2" href="#convertible-h-16" data-report-link="convertible">转换价值和投资价值的关系</a><a class="toc-link level-1" href="#convertible-h-17" data-report-link="convertible">国外市场</a><a class="toc-link level-2" href="#convertible-h-18" data-report-link="convertible">可转债历史上相对于股票和公司债的表现</a><a class="toc-link level-2" href="#convertible-h-19" data-report-link="convertible">危机＆扩张时期可转债的表现</a><a class="toc-link level-2" href="#convertible-h-20" data-report-link="convertible">美国可转债市场未来情况的可能性</a><a class="toc-link level-2" href="#convertible-h-21" data-report-link="convertible">对投资者的启示</a><a class="toc-link level-1" href="#convertible-h-22" data-report-link="convertible">中国市场</a><a class="toc-link level-2" href="#convertible-h-23" data-report-link="convertible">研究样本及口径</a><a class="toc-link level-2" href="#convertible-h-24" data-report-link="convertible">截面静态研究</a><a class="toc-link level-3" href="#convertible-h-25" data-report-link="convertible">价格及特征表现</a><a class="toc-link level-3" href="#convertible-h-26" data-report-link="convertible">价格分组研究</a><a class="toc-link level-3" href="#convertible-h-27" data-report-link="convertible">剩余期限分组研究</a><a class="toc-link level-3" href="#convertible-h-28" data-report-link="convertible">行业分布情况</a><a class="toc-link level-2" href="#convertible-h-29" data-report-link="convertible">动态变化研究</a><a class="toc-link level-3" href="#convertible-h-30" data-report-link="convertible">等权基准与正股联动的情况</a><a class="toc-link level-3" href="#convertible-h-31" data-report-link="convertible">价格分组研究</a><a class="toc-link level-3" href="#convertible-h-32" data-report-link="convertible">双低策略的表现情况</a><a class="toc-link level-3" href="#convertible-h-33" data-report-link="convertible">长期估值时序</a><a class="toc-link level-2" href="#convertible-h-34" data-report-link="convertible">研究有效性说明</a><a class="toc-link level-3" href="#convertible-h-35" data-report-link="convertible">标的覆盖程度</a><a class="toc-link level-3" href="#convertible-h-36" data-report-link="convertible">指数走势复刻程度</a><a class="toc-link level-2" href="#convertible-h-37" data-report-link="convertible">配置价值分析</a><a class="toc-link level-1" href="#convertible-h-38" data-report-link="convertible">在组合中配置可转债的原因及风险</a><a class="toc-link level-2" href="#convertible-h-39" data-report-link="convertible">可转债的优点</a><a class="toc-link level-3" href="#convertible-h-40" data-report-link="convertible">减少大类资产轮动时的割裂感</a><a class="toc-link level-3" href="#convertible-h-41" data-report-link="convertible">优化组合的有效前沿、降低波动率</a><a class="toc-link level-2" href="#convertible-h-42" data-report-link="convertible">可转债的风险</a><a class="toc-link level-3" href="#convertible-h-43" data-report-link="convertible">转债自身定价风险</a><a class="toc-link level-3" href="#convertible-h-44" data-report-link="convertible">正股估值风险</a><a class="toc-link level-3" href="#convertible-h-45" data-report-link="convertible">股债均衡与偏股弹性风险</a><a class="toc-link level-1" href="#convertible-h-46" data-report-link="convertible">资料及数据来源</a></nav>
+<nav class="toc-panel" aria-label="可转债研究目录" data-toc-panel="convertible"><a class="toc-link level-0" href="#convertible-title" data-report-link="convertible">可转债资产研究报告</a><a class="toc-link level-1" href="#convertible-h-1" data-report-link="convertible">什么是可转债</a><a class="toc-link level-2" href="#convertible-h-2" data-report-link="convertible">可转债的定义</a><a class="toc-link level-2" href="#convertible-h-3" data-report-link="convertible">公司发行可转债的原因</a><a class="toc-link level-2" href="#convertible-h-4" data-report-link="convertible">可转债的赎回条款</a><a class="toc-link level-3" href="#convertible-h-5" data-report-link="convertible">赎回条款（发行人权利）</a><a class="toc-link level-3" href="#convertible-h-6" data-report-link="convertible">转股价格向下修正条款（下修，投资者保护）</a><a class="toc-link level-3" href="#convertible-h-7" data-report-link="convertible">回售条款（投资者权利）</a><a class="toc-link level-3" href="#convertible-h-8" data-report-link="convertible">中美条款核心差异与总结</a><a class="toc-link level-2" href="#convertible-h-9" data-report-link="convertible">可转债的反稀释保护</a><a class="toc-link level-1" href="#convertible-h-10" data-report-link="convertible">可转债的常见概念</a><a class="toc-link level-2" href="#convertible-h-11" data-report-link="convertible">投资价值（纯债价值）</a><a class="toc-link level-2" href="#convertible-h-12" data-report-link="convertible">投资溢价（纯债溢价率）</a><a class="toc-link level-2" href="#convertible-h-13" data-report-link="convertible">转股价格和转换比例</a><a class="toc-link level-2" href="#convertible-h-14" data-report-link="convertible">转换价值</a><a class="toc-link level-2" href="#convertible-h-15" data-report-link="convertible">转股溢价</a><a class="toc-link level-2" href="#convertible-h-16" data-report-link="convertible">转换价值和投资价值的关系</a><a class="toc-link level-1" href="#convertible-h-17" data-report-link="convertible">国外市场</a><a class="toc-link level-2" href="#convertible-h-18" data-report-link="convertible">可转债历史上相对于股票和公司债的表现</a><a class="toc-link level-2" href="#convertible-h-19" data-report-link="convertible">危机＆扩张时期可转债的表现</a><a class="toc-link level-2" href="#convertible-h-20" data-report-link="convertible">美国可转债市场未来情况的可能性</a><a class="toc-link level-2" href="#convertible-h-21" data-report-link="convertible">对投资者的启示</a><a class="toc-link level-1" href="#convertible-h-22" data-report-link="convertible">中国市场</a><a class="toc-link level-2" href="#convertible-h-23" data-report-link="convertible">研究样本及口径</a><a class="toc-link level-2" href="#convertible-h-24" data-report-link="convertible">截面静态研究</a><a class="toc-link level-3" href="#convertible-h-25" data-report-link="convertible">价格及特征表现</a><a class="toc-link level-3" href="#convertible-h-26" data-report-link="convertible">价格分组研究</a><a class="toc-link level-3" href="#convertible-h-27" data-report-link="convertible">剩余期限分组研究</a><a class="toc-link level-3" href="#convertible-h-28" data-report-link="convertible">行业分布情况</a><a class="toc-link level-2" href="#convertible-h-29" data-report-link="convertible">动态变化研究</a><a class="toc-link level-3" href="#convertible-h-30" data-report-link="convertible">等权基准与正股联动的情况</a><a class="toc-link level-3" href="#convertible-h-31" data-report-link="convertible">价格分组研究</a><a class="toc-link level-3" href="#convertible-h-32" data-report-link="convertible">双低策略的表现情况</a><a class="toc-link level-3" href="#convertible-h-33" data-report-link="convertible">长期估值时序</a><a class="toc-link level-2" href="#convertible-h-34" data-report-link="convertible">研究有效性说明</a><a class="toc-link level-3" href="#convertible-h-35" data-report-link="convertible">标的覆盖程度</a><a class="toc-link level-3" href="#convertible-h-36" data-report-link="convertible">指数走势复刻程度</a><a class="toc-link level-2" href="#convertible-h-37" data-report-link="convertible">配置价值分析</a><a class="toc-link level-1" href="#convertible-h-38" data-report-link="convertible">在组合中配置可转债的原因及风险</a><a class="toc-link level-2" href="#convertible-h-39" data-report-link="convertible">可转债的优点</a><a class="toc-link level-3" href="#convertible-h-40" data-report-link="convertible">减少大类资产轮动时的割裂感</a><a class="toc-link level-3" href="#convertible-h-41" data-report-link="convertible">优化组合的有效前沿、降低波动率</a><a class="toc-link level-2" href="#convertible-h-42" data-report-link="convertible">可转债的风险</a><a class="toc-link level-3" href="#convertible-h-43" data-report-link="convertible">转债自身定价风险</a><a class="toc-link level-4" href="#convertible-h-44" data-report-link="convertible">从目前全市场来看：便宜的期权属性变弱，但相对债底的防守属性仍在</a><a class="toc-link level-4" href="#convertible-h-45" data-report-link="convertible">从近一年大涨的影响来看：正股上涨贡献有限，更多是资金买入驱动</a><a class="toc-link level-5" href="#convertible-h-46" data-report-link="convertible">中价组：价格小涨，转股价值下降</a><a class="toc-link level-5" href="#convertible-h-47" data-report-link="convertible">高价组：从小而偏股性强，变成大而混杂</a><a class="toc-link level-4" href="#convertible-h-48" data-report-link="convertible">小结</a><a class="toc-link level-3" href="#convertible-h-49" data-report-link="convertible">正股估值风险</a><a class="toc-link level-3" href="#convertible-h-50" data-report-link="convertible">可转债弹性测算</a><a class="toc-link level-1" href="#convertible-h-51" data-report-link="convertible">资料及数据来源</a></nav>
       </div>
     </aside>
     <main class="content">
@@ -1278,7 +1243,6 @@
 <figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image16.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image16.png" alt="Drawing 15" loading="lazy" width="552" height="260"></button></figure>
 <div class="table-wrap"><table><tr><th>中国市场的可转债指数投资范围有限，仅作为知识拓展即可</th></tr></table></div>
 <h2 id="convertible-h-22"><strong>中国市场</strong></h2>
-<div class="table-wrap"><table><tr><th>核心判断<br>当前样本的转债均价处于过去三年约 91.6% 分位，双低值处于约 93.0% 分位，价格水位偏高；但转股溢价率中位数 35.2% 处于约 3.3% 分位，说明本轮高价格更多来自平价和权益弹性修复，而不是期权溢价继续扩张。</th></tr></table></div>
 <h3 id="convertible-h-23"><strong>研究样本及口径</strong></h3>
 <p class="report-paragraph">本轮研究宇宙为 207 只沪深当前行情样本中日线跨度超过三年、且最近仍有交易记录的可转债。研究面板从 2023-05-19 至 2026-05-18，共 724 个交易日、149,762 条债券-日期记录。</p>
 <p class="report-paragraph"><strong>重要边界：</strong>207只长日线当前上市样本，不代表历史全发行样本。该口径有存续样本偏差，适合研究当前可交易长历史池的资产特征和组合表现，不适合直接回答发行制度、退市方式或条款事件问题。</p>
@@ -1286,7 +1250,7 @@
 <h3 id="convertible-h-24"><strong>截面静态研究</strong></h3>
 <h4 id="convertible-h-25"><strong>价格及特征表现</strong></h4>
 <p class="report-paragraph">截至 2026-05-18，207只样本转债均价 151.7 元，价格中位数 132.1 元。价格分布上，低价券不足五分之一，中价券是当前主力，高价券虽然数量较少但显著抬高了均价。</p>
-<div class="table-wrap"><table><tr><th>指标</th><th>均值/中位数</th><th>25分位</th><th>75分位</th><th>历史分位</th></tr><tr><td>转债价格</td><td>151.7 / 132.1</td><td>124.5</td><td>143.4</td><td>91.6%</td></tr><tr><td>转股价值</td><td>113.1 / 96.4</td><td>73.0</td><td>126.5</td><td>92.3%</td></tr><tr><td>转股溢价率</td><td>53.5% / 35.2%</td><td>14.2%</td><td>68.8%</td><td>3.3%</td></tr><tr><td>纯债溢价率</td><td>39.3% / 19.8%</td><td>12.7%</td><td>37.2%</td><td>71.1%</td></tr><tr><td>双低值</td><td>205.2 / 183.1</td><td>155.6</td><td>213.7</td><td>93.0%</td></tr></table></div>
+<div class="table-wrap"><table><tr><th>指标</th><th>均值/中位数</th><th>25分位</th><th>75分位</th></tr><tr><td>转债价格</td><td>151.7 / 132.1</td><td>124.5</td><td>143.4</td></tr><tr><td>转股价值</td><td>113.1 / 96.4</td><td>73.0</td><td>126.5</td></tr><tr><td>转股溢价率</td><td>53.5% / 35.2%</td><td>14.2%</td><td>68.8%</td></tr><tr><td>纯债溢价率</td><td>39.3% / 19.8%</td><td>12.7%</td><td>37.2%</td></tr><tr><td>双低值</td><td>205.2 / 183.1</td><td>155.6</td><td>213.7</td></tr></table></div>
 <div class="table-wrap"><table><tr><th>价格组</th><th>数量</th><th>均价</th><th>转股溢价率中位数</th><th>纯债溢价率中位数</th><th>双低值中位数</th></tr><tr><td>低价(&lt;120)</td><td>36</td><td>109.3</td><td>39.3%</td><td>2.5%</td><td>149.5</td></tr><tr><td>中价(120-140)</td><td>110</td><td>130.3</td><td>52.5%</td><td>18.2%</td><td>184.9</td></tr><tr><td>高价(&gt;=140)</td><td>61</td><td>215.5</td><td>13.1%</td><td>61.7%</td><td>185.3</td></tr></table></div>
 <figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image17.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image17.png" alt="Drawing 16" loading="lazy" width="552" height="354"></button></figure>
 <h4 id="convertible-h-26"><strong>价格分组研究</strong></h4>
@@ -1342,7 +1306,7 @@
 <div class="table-wrap"><table><tr><th>指标</th><th>结果</th><th>说明</th></tr><tr><td>指数成分数量</td><td>318只</td><td>剔除数据来源尾行后统计</td></tr><tr><td>207样本中属于指数成分</td><td>200只</td><td>207样本中另有7只未进入指数</td></tr><tr><td>成分数量覆盖率</td><td>62.9%</td><td>按债券只数计算</td></tr><tr><td>指数权重覆盖率</td><td>71.1%</td><td>覆盖指数权重71.1%，未覆盖28.9%</td></tr><tr><td>成交金额覆盖率</td><td>55.2%</td><td>按指数文件当日结算金额计算</td></tr><tr><td>动态日收益R²</td><td>94.6%</td><td>共同区间内207等权基准对000832.CSI日收益的解释比例</td></tr></table></div>
 <p class="report-paragraph">从剩余期限来看，和筛选的条件一样，交易日大于3年的可转债基本已经实现全覆盖（可转债的发行期限一般为6年）：</p>
 <div class="table-wrap"><table><tr><th>剩余期限</th><th>指数成分</th><th>指数权重</th><th>覆盖成分</th><th>覆盖权重</th><th>权重覆盖率</th></tr><tr><td>&lt;=0.5年</td><td>39</td><td>9.9%</td><td>38</td><td>9.8%</td><td>99.1%</td></tr><tr><td>0.5-1年</td><td>23</td><td>9.7%</td><td>23</td><td>9.7%</td><td>100.0%</td></tr><tr><td>1-2年</td><td>63</td><td>30.1%</td><td>63</td><td>30.1%</td><td>100.0%</td></tr><tr><td>2-3年</td><td>77</td><td>22.0%</td><td>76</td><td>21.5%</td><td>97.9%</td></tr><tr><td>&gt;3年</td><td>116</td><td>28.3%</td><td>0</td><td>0.0%</td><td>0.0%</td></tr></table></div>
-<p class="report-paragraph">从价格组来看，近三年新发的债券主要集中在中价和高价组，207样本中没有对这部分特性进行描述：</p>
+<p class="report-paragraph">从价格组来看，近三年新发的债券主要集中在中价和高价组，207样本中没有对这部分特性进行描述（在“可转债的风险部分”对这部分内容进行了补充）：</p>
 <div class="table-wrap"><table><tr><th>价格带</th><th>指数成分</th><th>指数权重</th><th>覆盖成分</th><th>覆盖权重</th><th>权重覆盖率</th></tr><tr><td>低价(&lt;120)</td><td>39</td><td>26.9%</td><td>39</td><td>26.9%</td><td>100.0%</td></tr><tr><td>中价(120-140)</td><td>142</td><td>40.2%</td><td>105</td><td>30.9%</td><td>77.0%</td></tr><tr><td>高价(&gt;=140)</td><td>137</td><td>32.9%</td><td>56</td><td>13.3%</td><td>40.5%</td></tr></table></div>
 <h4 id="convertible-h-36"><strong>指数走势复刻程度</strong></h4>
 <p class="report-paragraph">动态对比采用AkShare获取的中证转债指数000832.CSI历史行情，并与207只样本等权基准在共同交易日上比较。本次共同区间为2023-05-22至2026-05-18。</p>
@@ -1354,7 +1318,7 @@
 <p class="report-paragraph">基于 207 只长日线当前上市可转债样本，本研究认为：当前可转债指数仍具备一定配置价值，但更适合作为<span style="color: #D83931;">“中等权益弹性 + 下行缓冲”的平衡型资产，而不是低估值防守资产</span>。</p>
 <p class="report-paragraph">首先，从收益风险特征看，可转债指数的配置效率较高。样本期内，207 只可转债等权基准累计收益约 23.0%，年化收益约 7.2%，与正股等权指数的年化收益基本接近；但可转债年化波动仅约 11.1%，显著低于正股等权指数的 23.9%，最大回撤也由正股的 -33.1% 收窄至 -17.6%。这说明，在过去三年市场环境中，可转债指数并不是依靠更高收益取胜，而是通过较低波动和较浅回撤改善了持有体验和复利效率。</p>
 <p class="report-paragraph">其次，从正股联动看，可转债指数具备较清晰的缓冲属性。可转债与正股日收益相关系数约 0.85，说明其仍然高度受权益市场驱动；但上行捕获率约 46.0%，下行捕获率约 43.6%，在正股极端下跌和月度下跌阶段，下行捕获进一步下降。这意味着可转债指数并不能完全脱离权益市场，但在权益下跌时通常能够压缩损失幅度，在组合中可作为权益资产的低波动替代或增强型防守配置。</p>
-<p class="report-paragraph"><span style="color: #D83931;">但从估值角度看，当前并不是非常舒适的低位配置区间</span>。截至最新截面，样本转债均价约 151.7 元，价格历史分位约 91.6%；双低值历史分位约 93.0%；<span style="color: #D83931;">纯债溢价率也处在偏高位置。这表明当前可转债整体价格水位不低，债底保护相较低价阶段有所减弱</span>。与此同时，<span style="color: #D83931;">转股溢价率中位数约 35.2%，处于过去三年较低分位，说明当前高价格更多来自正股平价抬升，而不是单纯由期权溢价扩张推动</span>。因此，当前配置可转债指数的核心逻辑不应是“便宜”，而应是“保留权益弹性，同时控制组合波动”。</p>
+<p class="report-paragraph"><span style="color: #D83931;">但从估值角度看，当前并不是非常舒适的低位配置区间</span>。截至最新截面，样本转债均价约 151.7 元，价格历史分位约 91.6%；双低值历史分位约 93.0%；<span style="color: #D83931;">纯债溢价率也处在偏高位置。这表明当前可转债整体价格水位不低，债底保护相较低价阶段有所减弱</span>。因此，当前配置可转债指数的核心逻辑不应是“便宜”，而应是“保留权益弹性，同时控制组合波动”。</p>
 <p class="report-paragraph">行业结构也决定了配置可转债指数的风险来源。按发行只数看，样本更集中于医药生物、基础化工、电力设备、电子、计算机等制造和成长行业；按发行规模看，银行和电力设备占比明显提升。所以若配置规模加权型指数，则会更偏金融、大型产业主体和偏信用属性。</p>
 <p class="report-paragraph"><strong>综合来看，当前可转债指数的配置价值主要体现在三点：第一，相比直接配置正股，可转债指数在历史样本中提供了接近的收益和更低的回撤；第二，相比纯债资产，可转债仍保留较强权益上行参与能力；第三，在市场不确定性较高、但仍希望保留权益敞口的环境下，可转债指数适合作为股债之间的中间资产。</strong></p>
 <h2 id="convertible-h-38"><strong>在组合中配置可转债的原因及风险</strong></h2>
@@ -1369,29 +1333,123 @@
 <p class="report-paragraph">二是正股估值风险，需从相对估值维度判断转债对应正股的估值水平，可通过构建“可转债正股PB/沪深300PB”、“可转债正股收益率/沪深300收益率”两大指标，对比正股相对大盘的估值分位，判断其估值是否处于合理区间。</p>
 <p class="report-paragraph">三是股债属性失衡风险，需明确转债当前的股性强弱与债底保护能力，即其在下跌行情中的防御空间，这类问题可通过敏感性测试量化分析，评估不同市场环境下转债的收益弹性与回撤保护效果。</p>
 <h4 id="convertible-h-43"><strong>转债自身定价风险</strong></h4>
-<p class="report-paragraph"><strong>从全市场看，可转债整体定价偏高，但风险总体可控。</strong></p>
+<h5 id="convertible-h-44"><strong>从目前全市场来看：便宜的期权属性变弱，但相对债底的防守属性仍在</strong></h5>
 <div class="table-wrap"><table><tr><th>价格组</th><th>样本数</th><th>价格中位数</th><th>纯债溢价率中位数</th><th>转股溢价率中位数</th><th>双低中位数</th></tr><tr><td>低价(&lt;120)</td><td>40</td><td>114.13</td><td>3.0%</td><td>42.0%</td><td>154.29</td></tr><tr><td>中价(120-140)</td><td>143</td><td>131.38</td><td>20.6%</td><td>54.7%</td><td>187.77</td></tr><tr><td>高价(&gt;=140)</td><td>147</td><td>163.81</td><td>65.2%</td><td>26.4%</td><td>205.09</td></tr></table></div>
-<p class="report-paragraph">低价组纯债溢价率中位数仅 3%，定价风险极低；中价组纯债与转股溢价率中位数均高于低价组，定价性价比偏弱，但价格中位数约 131，风险仍相对可控；高价组转股溢价率偏低，但纯债溢价率显著抬升，本质上承担更高正股波动风险，与其高弹性定位相符。</p>
 <figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image32.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image32.png" alt="Drawing 31" loading="lazy" width="552" height="347"></button></figure>
-<h4 id="convertible-h-44"><strong>正股估值风险</strong></h4>
+<p class="report-paragraph">低价组纯债溢价率中位数仅 3%，定价风险极低；中价组纯债与转股溢价率中位数均高于低价组，定价性价比偏弱；高价组转股溢价率相对偏低，但纯债溢价率显著抬升，本质上承担更高正股波动风险，与其高弹性定位相符。</p>
+<p class="report-paragraph">而可转债中价组风险是否可控？高价组当前转股溢价率是否合理？我们可按到期期限进一步拆分，通过观察不同价格组关键指标在1-2 年、2-4 年、4-6 年三个剩余期限组别中的历史分位，区分哪些组别属于真实高估，哪些仅是期限结构导致的表观偏高。下文统计了当前截面及 2021 年初以来转股溢价率历史分位的具体情况。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image33.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image33.png" alt="Drawing 32" loading="lazy" width="552" height="300"></button></figure>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image34.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image34.png" alt="Drawing 33" loading="lazy" width="552" height="300"></button></figure>
+<p class="report-paragraph">将剩余期限和价格组进行细分后，观察当前截面的历史分位可以发现，市场更像是“股性端偏贵、债性端尚可”，而不是全面泡沫化。<span style="color: #D83931;">转债价格相对正股转股价值已经偏贵，未来要获得较好收益，需要正股继续明显上涨来消化高转股溢价率。</span></p>
+<h5 id="convertible-h-45"><strong>从近一年大涨的影响来看：正股上涨贡献有限，更多是资金买入驱动</strong></h5>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image35.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image35.png" alt="Drawing 34" loading="lazy" width="552" height="319"></button></figure>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image36.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image36.png" alt="Drawing 35" loading="lazy" width="552" height="319"></button></figure>
+<p class="report-paragraph">2024年末，可转债市场迎来一轮显著上涨。数据显示，6个价格组别中，转股溢价率中位数及历史分位均于年末快速抬升，而纯债溢价率表现相对稳定，历史分位普遍处于低位。<span style="color: #D83931;">该现象表明，中价、高价组可转债的定价结构在过去一年出现明显变化，深入剖析这一特征，有助于更清晰地理解可转债的定价逻辑。</span></p>
+<div class="table-wrap"><table><tr><th>注：每月月末对价格组和到期时间进行重新划分，到期时间低于一年的可转债被剔除</th></tr></table></div>
+<h5 id="convertible-h-46"><strong>中价组：价格小涨，转股价值下降</strong></h5>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>整体特征：价格小涨，转股价值下降</strong></p>
+<p class="report-paragraph">2025 年 1 月至 2026 年 5 月，中价组整体核心指标变化如下：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/1-Microsoft_Excel_Worksheet1.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">GgKRQN</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">2025-01-01 00:00</th><th style="text-align: left; font-weight: 800;">2026-05-01 00:00</th><th style="text-align: left; font-weight: 800;">变动</th></tr><tr><td style="text-align: left;">样本数量</td><td style="text-align: left;">106 只</td><td style="text-align: left;">126 只</td><td style="text-align: left;">小幅增加</td></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">126.9</td><td style="text-align: left;">130.4</td><td style="text-align: left;">上涨 2.8%</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">100.3</td><td style="text-align: left;">84.7</td><td style="text-align: left;">下降 15.6%</td></tr><tr><td style="text-align: left;">纯债价值</td><td style="text-align: left;">104.4</td><td style="text-align: left;">108.9</td><td style="text-align: left;">上升 4.4%</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">26.30%</td><td style="text-align: left;">53.40%</td><td style="text-align: left;">大幅上行</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">21.90%</td><td style="text-align: left;">20.00%</td><td style="text-align: left;">基本持平</td></tr></table></div></div>
+</section>
+<p class="report-paragraph"><span style="color: #D83931;">可以看出中价组转股溢价率大幅抬升，并非源于转债价格上涨，而是转股价值显著回落。</span>转债价格仅小幅上行，但转股价值明显走弱，导致转债相对转股价值的溢价被动扩大。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>存量样本验证：同批转债呈现一致特征</strong></p>
+<p class="report-paragraph">2025 年 1 月与 2026 年 5 月均留在中价组的存量转债共 38 只，其指标变化与整体趋势完全一致：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/2-Microsoft_Excel_Worksheet2.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">pAoDT2</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">2025-01-01 00:00</th><th style="text-align: left; font-weight: 800;">2026-05-01 00:00</th></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">127.3</td><td style="text-align: left;">132.9</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">103</td><td style="text-align: left;">89.3</td></tr><tr><td style="text-align: left;">纯债价值</td><td style="text-align: left;">103.7</td><td style="text-align: left;">108.3</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">24.80%</td><td style="text-align: left;">48.70%</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">22.60%</td><td style="text-align: left;">24.00%</td></tr></table></div></div>
+</section>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>样本结构迁移：超七成成员为新纳入转债</strong></p>
+<p class="report-paragraph">2026 年 5 月中价组共 126 只转债，仅 38 只为 2025 年 1 月的存量成员，88 只为新纳入样本，占比约 70%。</p>
+<p class="report-paragraph">新纳入样本来源集中：78 只来自原低价组，9 只为新上市或补数据样本，仅 1 只来自高价组。这类低价组升级而来的转债，2026 年 5 月呈现典型特征：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/3-Microsoft_Excel_Worksheet3.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">0EesSe</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">新纳入中价组转债</th></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">128.8</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">78.2</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">65.00%</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">18.00%</td></tr></table></div></div>
+</section>
+<p class="report-paragraph">这类转债因价格升至 120-140 元进入中价组，但转股价值偏低，天然携带高转股溢价率，直接推高了中价组整体溢价水平。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>样本流出：高股性转债退出中价组</strong></p>
+<p class="report-paragraph">2025 年 1 月中价组 106 只转债中，68 只于 2026 年 5 月退出：27 只涨至高价组，23 只因剩余期限不足 1 年被剔除。</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/4-Microsoft_Excel_Worksheet4.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">34ayzn</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">退出中价组转债</th></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">154.5</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">130.2</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">21.00%</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">48.20%</td></tr></table></div></div>
+</section>
+<p class="report-paragraph"><span style="color: #D83931;">综上，中价组已从 “正股驱动、溢价合理” 的组合，转变为资金托底、转股价值偏弱、高溢价集中的样本池。</span>纯债溢价率未同步抬升，印证此轮行情由配置资金推动，而非正股基本面驱动。</p>
+<h5 id="convertible-h-47"><strong>高价组：</strong><strong>从小而偏股性强，变成大而混杂</strong></h5>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>整体特征：价格微涨、转股价值走弱、溢价抬升</strong></p>
+<p class="report-paragraph">2025 年 1 月至 2026 年 5 月，高价组整体核心指标变化如下：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/5-Microsoft_Excel_Worksheet5.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">WraDUb</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">2025-01-01 00:00</th><th style="text-align: left; font-weight: 800;">2026-05-01 00:00</th><th style="text-align: left; font-weight: 800;">变动</th></tr><tr><td style="text-align: left;">样本数量</td><td style="text-align: left;">26 只</td><td style="text-align: left;">115 只</td><td style="text-align: left;">大幅扩容</td></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">166</td><td style="text-align: left;">172.4</td><td style="text-align: left;">上涨 3.8%</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">136.6</td><td style="text-align: left;">132.6</td><td style="text-align: left;">小幅回落</td></tr><tr><td style="text-align: left;">纯债价值</td><td style="text-align: left;">103</td><td style="text-align: left;">103.4</td><td style="text-align: left;">基本持平</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">12.00%</td><td style="text-align: left;">31.00%</td><td style="text-align: left;">显著上行</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">77.90%</td><td style="text-align: left;">70.00%</td><td style="text-align: left;">小幅下降</td></tr></table></div></div>
+</section>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>存量样本：转债价格跑赢转股价值</strong></p>
+<p class="report-paragraph">2025 年 1 月高价组 26 只转债中，仅 13 只留存至 2026 年 5 月，指标变化极具代表性：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/6-Microsoft_Excel_Worksheet6.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">yrri52</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">2025-01-01 00:00</th><th style="text-align: left; font-weight: 800;">2026-05-01 00:00</th></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">161.7</td><td style="text-align: left;">336.6</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">148.6</td><td style="text-align: left;">261.6</td></tr><tr><td style="text-align: left;">纯债价值</td><td style="text-align: left;">98.8</td><td style="text-align: left;">107.6</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">8.60%</td><td style="text-align: left;">26.20%</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">79.60%</td><td style="text-align: left;">212.70%</td></tr></table></div></div>
+</section>
+<p class="report-paragraph"><span style="color: #D83931;">这类标的呈现正股大涨、转债价格涨幅超过转股价值的特征</span>：正股驱动转股价值抬升，但资金溢价进一步推高转债价格，最终导致转股溢价率被动上行。与中价组 “转股价值回落推高溢价” 的逻辑形成本质区别。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>样本池扩容：近九成成员为新纳入转债</strong></p>
+<p class="report-paragraph">2026 年 5 月高价组样本扩容至 115 只，仅 13 只为存量老成员，102 只为新纳入样本，占比近 89%。 新纳入转债 2026 年 5 月核心特征：</p>
+<section class="embedded-workbook">
+  <div class="embedded-workbook-head">
+    <span>完整电子表格</span>
+    <a href="report_assets/convertible/workbooks/7-Microsoft_Excel_Worksheet7.xlsx" download>下载原始 Excel</a>
+  </div>
+  <div class="embedded-sheet"><div class="embedded-sheet-name">YUki0a</div><div class="table-wrap embedded-table-wrap"><table class="embedded-table"><colgroup><col style="width: 104px;"><col style="width: 104px;"></colgroup><tr><th style="text-align: left; font-weight: 800;">指标</th><th style="text-align: left; font-weight: 800;">新纳入高价组转债</th></tr><tr><td style="text-align: left;">转债价格</td><td style="text-align: left;">165.4</td></tr><tr><td style="text-align: left;">转股价值</td><td style="text-align: left;">129.1</td></tr><tr><td style="text-align: left;">转股溢价率</td><td style="text-align: left;">31.30%</td></tr><tr><td style="text-align: left;">纯债溢价率</td><td style="text-align: left;">66.50%</td></tr></table></div></div>
+</section>
+<p class="report-paragraph">新增样本并非均为 “高股性、低溢价” 标的，多数价格达标但转股价值支撑不足，天然携带较高转股溢价率入场，直接拉高高价组整体溢价水平。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;"><strong>新成员来源拆解：三类标的不同特征</strong></p>
+<p class="report-paragraph">新纳入高价组的 102 只转债，来源分为三类，溢价驱动作用差异显著：</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;">原中价组（27 只）：正股驱动型。2025-2026 年正股与转债价格同步上涨，转股溢价率仅小幅抬升（21.2%→23.3%），溢价压力可控。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;">原低价组（33 只）：正股修复型。转股价值从 68.1 修复至 141.4，带动转债价格上行，转股溢价率反而下降（65.6%→15.2%），并非溢价抬升主因。</p>
+<p class="report-paragraph list-paragraph" style="--list-indent: 0;">2025 年 1 月无数据 / 新上市（42 只）：溢价抬升核心推手。价格 163.7 元、转股价值仅 112.0 元，转股溢价率高达 47.1%，显著拉高高价组整体溢价中枢。</p>
+<p class="report-paragraph"><span style="color: #D83931;">综上，高价组已从2025 年 “小而精、高股性、低溢价” 的优质标的池，转变为2026 年 “大而杂、价格高位、转股价值支撑分化” 的混合样本池，溢价升高成为结构性变化的必然结果。</span></p>
+<h5 id="convertible-h-48"><strong>小结</strong></h5>
+<p class="report-paragraph">综合中价组和高价组的变化，可以得到一个较清晰的判断：<span style="color: #D83931;">2025-2026年可转债市场上涨，更多体现为可转债资产自身被资金买入和重新定价，而不是正股转股价值的同步改善</span>。</p>
+<p class="report-paragraph">中价组表现为转债价格被托住、转股价值下降、转股溢价率快速上升；高价组表现为样本大幅扩容，较多个券被买入高价区间，但转股价值支撑不足。二者共同说明，当前可转债市场的主要风险集中在股性端，即转债价格相对转股价值偏贵。</p>
+<p class="report-paragraph">不过，纯债溢价率并未同步大幅上升，说明当前并不是全面泡沫化。债底保护仍然存在，转债相对纯债价值并未显著失控。与两类溢价率均处于中位的市场相比，该结构的主要问题在于进攻性价比下降：正股上涨初期可能更多体现为转股溢价率压缩，而非转债价格同步上涨；若正股震荡或配置需求边际减弱，转股溢价率回落可能带来估值回撤。</p>
+<p class="report-paragraph">因此，当前市场并非典型的债底端全面高估，但股性端估值已经偏贵。其回撤风险主要来自转股溢价率压缩，而不是纯债价值崩塌。只有在正股下跌、转债配置需求减弱、纯债溢价率同步抬升后再回落等情形同时出现时，回撤风险才会显著放大。</p>
+<h4 id="convertible-h-49"><strong>正股估值风险</strong></h4>
 <p class="report-paragraph"><strong>核心风险并非 “相对估值过高”，而在于估值折价能否转化为后续收益。</strong>筛选存续期超过 3 年的 207 只可转债正股，与沪深 300 进行指标对比后发现：可转债正股池长期并未跑输大盘；从等权 PB 口径看，其估值并不贵，反而显著低于自身历史相对估值水平。</p>
-<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image33.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image33.png" alt="Drawing 32" loading="lazy" width="552" height="302"></button></figure>
-<h4 id="convertible-h-45"><strong>股债均衡与偏股弹性风险</strong></h4>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image44.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image44.png" alt="Drawing 36" loading="lazy" width="552" height="302"></button></figure>
+<h4 id="convertible-h-50"><strong>可转债弹性测算</strong></h4>
 <p class="report-paragraph">在探讨可转债的股性/债性均衡的过程中，核心指标为“账面股价传导系数=转股价值/可转债价格”，含义是：如果正股整体变化1%，转股价值也变化1%，而转股价值占转债价格的比例代表正股价格变化对转债价格的理论影响程度。</p>
 <p class="report-paragraph">单个可转债账面股价传导系数的例子如下：</p>
-<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image34.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image34.png" alt="Drawing 33" loading="lazy" width="552" height="310"></button></figure>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image45.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image45.png" alt="Drawing 37" loading="lazy" width="552" height="310"></button></figure>
+<p class="report-paragraph">放到全市场就是对每只转债都这么算，然后按指数权重加总：</p>
 <div class="table-wrap"><table><tr><th>指标</th><th>指数权重口径</th><th>说明</th></tr><tr><td>有效转债数</td><td>318</td><td>指数权重口径只统计有000832权重的成分</td></tr><tr><td>账面股价传导系数</td><td>72.9%</td><td>转股价值/转债价格，越高说明越偏股</td></tr><tr><td>债底缓冲比例</td><td>23.1%</td><td>转债价格高于纯债价值的比例</td></tr><tr><td>正股-10%情景</td><td>-6.1%</td><td>指数权重口径估算转债收益</td></tr><tr><td>正股+10%情景</td><td>7.3%</td><td>指数权重口径估算转债收益</td></tr></table></div>
-<p class="report-paragraph">基于当前截面，指数权重口径下的账面股价传导系数约为72.9%。这意味着，在不考虑转股溢价率变化、流动性冲击和风险偏好变化的静态假设下，正股整体上涨1%，可转债市场价格约有0.7%左右的上行传导。</p>
-<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image35.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image35.png" alt="Drawing 34" loading="lazy" width="552" height="318"></button></figure>
+<p class="report-paragraph"><span style="color: #D83931;">基于当前截面</span>，指数权重口径下的账面股价传导系数约为72.9%。这意味着，在不考虑转股溢价率变化、流动性冲击和风险偏好变化的静态假设下，正股整体上涨1%，可转债市场价格约有0.7%左右的上行传导。</p>
+<figure class="report-figure"><button class="image-zoom" type="button" data-image-src="report_assets/convertible/image46.png" aria-label="查看图片" style="--image-width: 552px;"><img src="report_assets/convertible/image46.png" alt="Drawing 38" loading="lazy" width="552" height="318"></button></figure>
 <p class="report-paragraph">情景测算进一步加入债底保护：正股上涨时，估算转债价格等于当前转债价格加上转股价值乘以正股涨幅；正股下跌时，同样先按转股价值传导，再要求估算后的转债价格不低于纯债价值。结果显示，若正股整体下跌10%，可转债市场估算跌幅约为-6.1%；若正股整体上涨10%，估算涨幅约为7.3%。因此，当前可转债市场可以概括为约七成股性暴露，同时仍保留一定债底缓冲。</p>
 <p class="report-paragraph">需要注意的是，本测算属于静态截面分析，主要用于刻画当前市场结构，而不是对未来收益进行预测。实际市场中，可转债价格还会受到转股溢价率变化、利率水平、信用风险、流动性、赎回预期和投资者风险偏好影响；在快速下跌阶段，转债价格也可能阶段性低于理论债底支撑。</p>
-<h2 id="convertible-h-46"><strong>资料及数据来源</strong></h2>
+<h2 id="convertible-h-51"><strong>资料及数据来源</strong></h2>
 <p class="report-paragraph"><strong>参考资料：</strong></p>
 <p class="report-paragraph">安联保险集团：2025_12_10_Convertible.pdf</p>
 <p class="report-paragraph">Calamos：Overview CB and MCB.pdf</p>
 <p class="report-paragraph"><strong>自建数据库（中国市场部分）：</strong></p>
 <p class="report-paragraph">cb_research_universe_207.csv</p>
-<p class="report-paragraph">cb_research_valuation_207.csv</p></article>
+<p class="report-paragraph">cb_research_valuation_207.csv</p>
+<p class="report-paragraph">cb_full_market_grid_monthly_dual_premium.csv</p>
+<p class="report-paragraph">cb_full_market_monthly_snapshot.csv</p></article>
     </main>
   </div>
   <div class="lightbox" id="lightbox" aria-hidden="true">

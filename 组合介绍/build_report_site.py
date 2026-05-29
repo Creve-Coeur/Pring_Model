@@ -708,6 +708,12 @@ def build_page(reports: list[dict[str, object]]) -> str:
       color: #667085;
     }}
 
+    .toc-link.level-5 {{
+      padding-left: 54px;
+      font-size: 12px;
+      color: #7a8494;
+    }}
+
     .content {{
       min-width: 0;
       padding: 38px clamp(18px, 4vw, 58px) 72px;
