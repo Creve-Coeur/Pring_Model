@@ -126,11 +126,11 @@
     },
     {
       "date": "2026-06-01",
-      "totalAssets": 29141.9,
-      "holdingMarketValue": 29141.9,
-      "dailyPnL": 73.7,
+      "totalAssets": 29105.3,
+      "holdingMarketValue": 29105.3,
+      "dailyPnL": 37.1,
       "positionRatio": 1.0,
-      "nav": 0.971397
+      "nav": 0.970177
     }
   ]
 }
