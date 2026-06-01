@@ -2,3 +2,4 @@ __pycache__/
 *.py[cod]
 .netlify/
 .git_backup/
+.tencent_deploy.local.json
