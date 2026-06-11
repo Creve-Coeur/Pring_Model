@@ -6,8 +6,8 @@
     "tradeDate": "2026-05-11",
     "snapshotDate": "2026-06-11",
     "sourceFile": "20260611_银河.xlsx",
-    "generatedAt": "2026-06-11 17:08:04",
-    "siteRefreshedAt": "2026-06-11 17:08:05",
+    "generatedAt": "2026-06-11 17:11:32",
+    "siteRefreshedAt": "2026-06-11 17:11:33",
     "navBaseDate": "2026-05-11",
     "navBaseAssets": 30000.0,
     "benchmarkName": "沪深300",
@@ -131,6 +131,10 @@
     {
       "date": "2026-06-09",
       "nav": 0.957034
+    },
+    {
+      "date": "2026-06-10",
+      "nav": 0.947267
     },
     {
       "date": "2026-06-11",
