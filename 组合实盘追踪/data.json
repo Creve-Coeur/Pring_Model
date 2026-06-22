@@ -25,7 +25,7 @@
       "国证2000",
       "创业板"
     ],
-    "navHistoryPatchedAt": "2026-06-22 15:49:31"
+    "navHistoryPatchedAt": "2026-06-22 15:52:38"
   },
   "overview": {
     "totalAssets": 29065.02,
@@ -158,6 +158,11 @@
     {
       "date": "2026-06-17",
       "nav": 0.973557,
+      "isSimulated": true
+    },
+    {
+      "date": "2026-06-18",
+      "nav": 0.969123,
       "isSimulated": true
     },
     {

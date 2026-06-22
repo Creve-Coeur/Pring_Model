@@ -233,6 +233,16 @@
       "note": "由补齐缺失组合净值脚本根据上一条总资产和手工输入当日盈亏模拟"
     },
     {
+      "date": "2026-06-18",
+      "totalAssets": 29073.7,
+      "holdingMarketValue": 29073.7,
+      "dailyPnL": -133.0,
+      "positionRatio": 1.0,
+      "nav": 0.969123,
+      "isSimulated": true,
+      "note": "由补齐缺失组合净值脚本根据上一条总资产和手工输入当日盈亏模拟"
+    },
+    {
       "date": "2026-06-22",
       "totalAssets": 29065.02,
       "holdingMarketValue": 29056.3,
